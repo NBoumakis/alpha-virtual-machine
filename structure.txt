@@ -11,9 +11,12 @@ memory
     |___ memcell
     |___ stack
     |___ code_segment
+    |___ const_values
 
 library
+    |___ environment
     |___ functions
+    |___ reporting
 
 table
 
