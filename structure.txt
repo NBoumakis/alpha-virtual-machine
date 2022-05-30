@@ -1,0 +1,20 @@
+instruction
+
+loader
+
+executer
+    |___ decode
+    |___ execute
+    |___ register
+
+memory
+    |___ memcell
+    |___ stack
+    |___ code_segment
+
+library
+    |___ functions
+
+table
+
+report
