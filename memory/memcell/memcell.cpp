@@ -12,7 +12,7 @@ number::number(double) {
 number::~number() {
 }
 
-string::string(std::string) {
+string::string(std::string &) {
 }
 
 string::~string() {

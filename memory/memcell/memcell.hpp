@@ -17,7 +17,7 @@ public:
     ~memcell();
 };
 
-class number {
+class number : public memcell {
 private:
     double value;
 
@@ -26,11 +26,11 @@ public:
     ~number();
 };
 
-class string {
+class string : public memcell {
 private:
     std::string value;
 
 public:
-    string(std::string);
+    string(std::string &);
     ~string();
 };
