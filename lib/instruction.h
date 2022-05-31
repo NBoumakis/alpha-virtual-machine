@@ -1,8 +1,8 @@
 #ifndef __INSTRUCTION_H
 #define __INSTRUCTION_H
 
-#include "lib/icode.h"
-#include "lib/vmarg.h"
+#include "icode.h"
+#include "vmarg.h"
 #include <list>
 #include <vector>
 
