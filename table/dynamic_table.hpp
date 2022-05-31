@@ -1,3 +1,6 @@
+#ifndef __DYNAMIC_TABLE_H
+#define __DYNAMIC_TABLE_H
+
 #include "memory/memcell/memcell.hpp"
 #include <string>
 #include <unordered_map>
@@ -18,3 +21,5 @@ public:
     void inc_ref_counter();
     void dec_ref_counter();
 };
+
+#endif /* __DYNAMIC_TABLE_H */
