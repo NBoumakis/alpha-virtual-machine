@@ -1,5 +1,5 @@
-#include "types.h"
-#include "symbol.h"
+#include "lib/types.h"
+#include "lib/symbol.h"
 #include <cassert>
 
 exprValue::exprValue(exprType type) {

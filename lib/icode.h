@@ -1,7 +1,7 @@
 #ifndef __ICODE_H
 #define __ICODE_H
 
-#include "types.h"
+#include "lib/types.h"
 #include <stack>
 #include <vector>
 

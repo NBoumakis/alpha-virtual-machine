@@ -1,7 +1,7 @@
 #ifndef __VMARGS_H
 #define __VMARGS_H
 
-#include "types.h"
+#include "lib/types.h"
 
 enum vmarg_t { instruction_label,
                global_var,

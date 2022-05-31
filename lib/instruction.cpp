@@ -1,4 +1,4 @@
-#include <instruction.h>
+#include "lib/instruction.hpp"
 
 #undef FIELD_WIDTH
 #define FIELD_WIDTH 15

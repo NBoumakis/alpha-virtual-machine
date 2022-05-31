@@ -1,5 +1,5 @@
-#include "vmarg.h"
-#include "const_pool.h"
+#include "lib/vmarg.h"
+#include "lib/const_pool.h"
 #include <cassert>
 
 vmarg::vmarg(const exprValue *arg) {

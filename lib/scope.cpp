@@ -1,5 +1,5 @@
-#include "scope.h"
-#include "symbol.h"
+#include "lib/scope.h"
+#include "lib/symbol.h"
 
 #include <algorithm>
 #include <cassert>

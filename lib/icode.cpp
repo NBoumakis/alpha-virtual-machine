@@ -1,5 +1,5 @@
-#include "icode.h"
-#include "temp_vars.h"
+#include "lib/icode.h"
+#include "lib/temp_vars.h"
 #include <cassert>
 #include <vector>
 

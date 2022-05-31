@@ -1,8 +1,8 @@
 #ifndef __SCOPESPACE_H
 #define __SCOPESPACE_H
 
-#include "icode.h"
-#include "symbol.h"
+#include "lib/icode.h"
+#include "lib/symbol.h"
 #include <stack>
 #include <vector>
 

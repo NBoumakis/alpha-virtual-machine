@@ -1,7 +1,7 @@
 #ifndef __SCOPE_H
 #define __SCOPE_H
 
-#include "symbol.h"
+#include "lib/symbol.h"
 #include <list>
 #include <map>
 #include <string>

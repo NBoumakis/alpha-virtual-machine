@@ -1,7 +1,7 @@
 #ifndef __TYPES_H
 #define __TYPES_H
 
-#include "symbol.h"
+#include "lib/symbol.h"
 #include <list>
 #include <string>
 #include <utility>

@@ -1,7 +1,7 @@
 #ifndef __CONST_POOL_H
 #define __CONST_POOL_H
 
-#include "symbol.h"
+#include "lib/symbol.h"
 #include <string>
 #include <vector>
 

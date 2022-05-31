@@ -1,5 +1,5 @@
-#include "symbol_table.h"
-#include "scope.h"
+#include "lib/symbol_table.h"
+#include "lib/scope.h"
 #include <unordered_set>
 
 Scope symbolTableObj;

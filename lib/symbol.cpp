@@ -1,4 +1,4 @@
-#include "symbol.h"
+#include "lib/symbol.h"
 #include <cassert>
 #include <string>
 

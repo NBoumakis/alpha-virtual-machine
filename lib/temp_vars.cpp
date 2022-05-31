@@ -1,6 +1,6 @@
-#include "scope_space.h"
-#include "symbol.h"
-#include "symbol_table.h"
+#include "lib/scope_space.h"
+#include "lib/symbol.h"
+#include "lib/symbol_table.h"
 #include <string>
 
 extern int yylineno;

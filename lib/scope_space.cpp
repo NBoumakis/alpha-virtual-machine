@@ -1,4 +1,4 @@
-#include "scope_space.h"
+#include "lib/scope_space.h"
 #include <cassert>
 #include <string>
 
