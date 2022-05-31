@@ -1,3 +1,5 @@
+#include <string>
+
 enum memcell_type {
     number_m,
     string_m,
@@ -22,4 +24,13 @@ private:
 public:
     number(double);
     ~number();
+};
+
+class string {
+private:
+    std::string value;
+
+public:
+    string(std::string);
+    ~string();
 };
