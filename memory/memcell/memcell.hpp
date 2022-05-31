@@ -15,12 +15,6 @@ public:
     ~memcell();
 };
 
-memcell::memcell() {
-}
-
-memcell::~memcell() {
-}
-
 class number {
 private:
     double value;
@@ -29,9 +23,3 @@ public:
     number(double);
     ~number();
 };
-
-number::number(double) {
-}
-
-number::~number() {
-}
