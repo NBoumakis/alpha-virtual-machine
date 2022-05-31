@@ -15,6 +15,9 @@ class memcell {
 public:
     memcell();
     ~memcell();
+
+    virtual operator std::string() = 0;
+    virtual operator bool() = 0;
 };
 
 class number : public memcell {
