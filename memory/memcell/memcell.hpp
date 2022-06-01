@@ -16,6 +16,8 @@ public:
     memcell();
     ~memcell();
 
+    friend memcell *translate_operand(vmarg *, memcell *);
+
     virtual operator std::string() = 0;
     virtual operator bool() = 0;
     virtual void operator=(memcell *); // avm_assign
