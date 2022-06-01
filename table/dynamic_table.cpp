@@ -22,3 +22,11 @@ dynamic_table::~dynamic_table(){
 void dynamic_table::inc_ref_counter(){
     ++refCounter;
 }
+
+void dynamic_table::dec_ref_counter(){
+    assert(refCounter > 0);
+
+    if (!(--refCounter)){
+        ~dynamic_table();
+    }
+}
