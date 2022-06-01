@@ -1,21 +1,46 @@
 loader
+    |___ loader.hpp
+    |___ loader.cpp
 
 executer
     |___ decode
+    |   |___ decode.hpp
+    |   |___ decode.cpp
     |___ execute
-    |___ register
+    |   |___ execute_funcs*.hpp
+    |   |___ execute_funcs*.cpp
+    |   |___ execute.hpp
+    |   |___ execute.cpp
+    |___ cpu.hpp
+    |___ cpu.cpp
 
 memory
     |___ memcell
+    |   |___ memcell.hpp
+    |   |___ memcell.cpp
     |___ stack
+    |   |___ program_stack.hpp
+    |   |___ program_stack.cpp
     |___ code_segment
+    |   |___ code_segment.hpp
+    |   |___ code_segment.cpp
     |___ const_values
+        |___ const_values.hpp
+        |___ const_values.cpp
 
 library
     |___ environment
+    |   |___ environment.hpp
+    |   |___ environment.cpp
     |___ functions
+    |   |___ libfunc.hpp
+    |   |___ libfunc.cpp
     |___ reporting
+        |___ reporting.hpp
+        |___ reporting.cpp
 
 table
+    |___ dynamic_table.hpp
+    |___ dynamic_table.cpp
 
-util
+lib (ready)
