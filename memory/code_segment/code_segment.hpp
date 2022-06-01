@@ -11,4 +11,6 @@ public:
 
     void insert(instruction &);
     instruction &operator[](unsigned long);
+
+    unsigned long size();
 };
