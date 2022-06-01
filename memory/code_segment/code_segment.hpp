@@ -1,17 +1,14 @@
-#include "instruction/instruction.hpp"
-#include <vector>
+#include "lib/instruction.hpp"
+#include <deque>
 
 class code_segment {
 private:
-    std::vector<instruction> instructions;
+    std::deque<instruction> instructions;
 
 public:
-    code_segment(/* args */);
+    code_segment();
     ~code_segment();
+
+    void insert(instruction &);
+    instruction &operator[](unsigned long);
 };
-
-code_segment::code_segment(/* args */) {
-}
-
-code_segment::~code_segment() {
-}
