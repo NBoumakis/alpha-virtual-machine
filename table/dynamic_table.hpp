@@ -4,6 +4,7 @@
 #include "memory/memcell/memcell.hpp"
 #include <string>
 #include <unordered_map>
+#include "assert.h"
 
 class dynamic_table {
 private:
