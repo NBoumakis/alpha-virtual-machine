@@ -19,6 +19,14 @@ dynamic_table::~dynamic_table(){
     numIndexed.clear();
 }
 
+memcell *dynamic_table::get_elem(const memcell *) const{
+    
+}
+
+void dynamic_table::set_elem(const memcell *key, const memcell *value){
+    
+}
+
 void dynamic_table::inc_ref_counter(){
     ++refCounter;
 }
