@@ -18,6 +18,7 @@ public:
 
     virtual operator std::string() = 0;
     virtual operator bool() = 0;
+    virtual void operator=(memcell *); // avm_assign
 };
 
 class number : public memcell {
