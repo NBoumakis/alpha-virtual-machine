@@ -1,12 +1,12 @@
-loader
+loader                          (Νίκος)
     |___ loader.hpp
     |___ loader.cpp
 
 executer
-    |___ decode
+    |___ decode                 (Νίκος)
     |   |___ decode.hpp
     |   |___ decode.cpp
-    |___ execute
+    |___ execute                (Κατερίνα)
     |   |___ execute_funcs*.hpp
     |   |___ execute_funcs*.cpp
     |   |___ execute.hpp
@@ -15,31 +15,31 @@ executer
     |___ cpu.cpp
 
 memory
-    |___ memcell
+    |___ memcell                (Κωνσταντίνα)
     |   |___ memcell.hpp
     |   |___ memcell.cpp
-    |___ stack
+    |___ stack                  (Νίκος)
     |   |___ program_stack.hpp
     |   |___ program_stack.cpp
-    |___ code_segment
+    |___ code_segment           (Κατερίνα)
     |   |___ code_segment.hpp
     |   |___ code_segment.cpp
-    |___ const_values
+    |___ const_values           (Νίκος)
         |___ const_values.hpp
         |___ const_values.cpp
 
 library
-    |___ environment
+    |___ environment            (Νίκος)
     |   |___ environment.hpp
     |   |___ environment.cpp
-    |___ functions
+    |___ functions              (Κατερίνα)
     |   |___ libfunc.hpp
     |   |___ libfunc.cpp
-    |___ reporting
+    |___ reporting              (Νίκος)
         |___ reporting.hpp
         |___ reporting.cpp
 
-table
+table                           (Κωνσταντίνα)
     |___ dynamic_table.hpp
     |___ dynamic_table.cpp
 
