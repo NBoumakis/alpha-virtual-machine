@@ -16,6 +16,8 @@ public:
     memcell *pop();
 
     memcell *operator[](unsigned long);
+
+    unsigned long size();
 };
 
 #endif /* __PROGRAM_STACK_H */
