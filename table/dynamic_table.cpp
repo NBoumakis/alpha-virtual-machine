@@ -18,3 +18,7 @@ dynamic_table::~dynamic_table(){
 
     numIndexed.clear();
 }
+
+void dynamic_table::inc_ref_counter(){
+    ++refCounter;
+}
