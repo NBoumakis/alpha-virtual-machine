@@ -1,3 +1,4 @@
+#include "lib/vmarg.h"
 #include <string>
 
 enum memcell_type {
