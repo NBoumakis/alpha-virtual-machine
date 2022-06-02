@@ -25,7 +25,7 @@ public:
     virtual void setNumber(const double number);
     virtual double getNumber(void) const = 0;
 
-    virtual void setString(const std::string string&);
+    virtual void setString(const std::string &string);
     virtual std::string getString(void) const = 0;
     
     virtual void setBool(const bool boolean);
@@ -34,11 +34,9 @@ public:
     virtual void setUserFunc(const unsigned long userfunc);
     virtual unsigned long getUserFunc(void) const = 0;
     
-    virtual void setLibFunc(const std::string libfunc&);
+    virtual void setLibFunc(const std::string &libfunc);
     virtual std::string getLibFunc(void) const = 0;
 
-    virtual operator std::string() = 0;
-    virtual operator bool() = 0;
 
     virtual void operator=(memcell *); // avm_assign
     virtual std::string getTypeName() = 0;
@@ -65,7 +63,7 @@ public:
     stringMemcell();
     ~stringMemcell() = default;
 
-    void setString(const std::string string&);
+    void setString(const std::string &string);
     std::string getString(void) const override;
     memcell_type getType(void) const override;
 };
@@ -104,7 +102,7 @@ public:
     libfuncMemcell();
     ~libfuncMemcell() = default;
 
-    void setLibFunc(const std::string userfunc&);
+    void setLibFunc(const std::string &userfunc);
     std::string getLibFunc(void) const override;
     memcell_type getType(void) const override;
 };
