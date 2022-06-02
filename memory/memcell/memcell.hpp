@@ -21,28 +21,26 @@ public:
 
     friend memcell *translate_operand(vmarg *, memcell *);
 
-    
     virtual void setNumber(const double number);
     virtual double getNumber(void) const = 0;
 
     virtual void setString(const std::string &string);
     virtual std::string getString(void) const = 0;
-    
+
     virtual void setBool(const bool boolean);
     virtual bool getBool(void) const = 0;
 
     virtual void setUserFunc(const unsigned long userfunc);
     virtual unsigned long getUserFunc(void) const = 0;
-    
+
     virtual void setLibFunc(const std::string &libfunc);
     virtual std::string getLibFunc(void) const = 0;
-
 
     virtual void operator=(memcell *); // avm_assign
     virtual std::string getTypeName() = 0;
 };
 
-class numberMemcell final: public memcell {
+class numberMemcell final : public memcell {
 private:
     double value;
 
@@ -55,7 +53,7 @@ public:
     memcell_type getType(void) const override;
 };
 
-class stringMemcell final: public memcell {
+class stringMemcell final : public memcell {
 private:
     std::string value;
 
@@ -68,7 +66,7 @@ public:
     memcell_type getType(void) const override;
 };
 
-class boolMemcell final: public memcell {
+class boolMemcell final : public memcell {
 private:
     bool value;
 
@@ -81,7 +79,7 @@ public:
     memcell_type getType(void) const override;
 };
 
-class userfuncMemcell final: public memcell {
+class userfuncMemcell final : public memcell {
 private:
     unsigned long value;
 
@@ -94,7 +92,7 @@ public:
     memcell_type getType(void) const override;
 };
 
-class libfuncMemcell final: public memcell {
+class libfuncMemcell final : public memcell {
 private:
     std::string value;
 

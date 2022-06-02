@@ -2,9 +2,9 @@
 #define __DYNAMIC_TABLE_H
 
 #include "memory/memcell/memcell.hpp"
+#include <cassert>
 #include <string>
 #include <unordered_map>
-#include "assert.h"
 
 class dynamic_table {
 private:
