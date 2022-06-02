@@ -89,12 +89,15 @@ private:
     std::string value;
 
 public:
-    stringMemcell();
+    stringMemcell(std::string &);
     ~stringMemcell() = default;
 
     void setString(const std::string &string);
     std::string getString(void) const override;
     memcell_type getType(void) const override;
+    std::string getTypeName() const override;
+    operator std::string() override;
+    operator bool() override;
 };
 
 class boolMemcell final : public memcell {
