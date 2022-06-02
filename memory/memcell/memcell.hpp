@@ -50,3 +50,12 @@ public:
     bool(bool);
     ~bool();
 };
+
+class libfunc : public memcell {
+private:
+    std::string value;
+
+public:
+    libfunc(std::string &);
+    ~libfunc();
+};
