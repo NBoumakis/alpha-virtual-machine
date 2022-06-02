@@ -73,12 +73,15 @@ private:
     double value;
 
 public:
-    numberMemcell();
+    numberMemcell(double);
     ~numberMemcell() = default;
 
     void setNumber(const double number);
     double getNumber(void) const override;
     memcell_type getType(void) const override;
+    std::string getTypeName() const override;
+    operator std::string() override;
+    operator bool() override;
 };
 
 class stringMemcell final : public memcell {
