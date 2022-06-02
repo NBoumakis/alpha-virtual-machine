@@ -7,3 +7,7 @@
 #include "executer/execute/execute_funcs_table.hpp"
 
 execute::execute() {}
+
+std::function<void(instruction *)>execute:: operator[](vmopcode op){
+    return dispatch.at(op);
+}
