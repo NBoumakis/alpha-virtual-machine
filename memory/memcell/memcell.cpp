@@ -93,3 +93,11 @@ void userfuncMemcell::setUserFunc(const unsigned long userfunc) {
 unsigned long userfuncMemcell::getUserFunc(void) const override {
     return this->value;
 }
+
+memcell_type userfuncMemcell::getType(void) const override {
+    return memcell_type::userfunc_m;
+}
+
+std::string userfuncMemcell::getTypeName() const override {
+    return "userfunc";
+}
