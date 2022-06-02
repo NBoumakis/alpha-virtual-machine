@@ -33,3 +33,11 @@ void stringMemcell::setString(const std::string &string) {
 std::string stringMemcell::getString(void) const override {
     return this->value;
 }
+
+memcell_type stringMemcell::getType(void) const override {
+    return memcell_type::string_m;
+}
+
+std::string stringMemcell::getTypeName() const override {
+    return "string";
+}
