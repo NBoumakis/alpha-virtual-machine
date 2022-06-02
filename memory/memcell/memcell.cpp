@@ -21,3 +21,15 @@ memcell_type numberMemcell::getType(void) const override {
 std::string numberMemcell::getTypeName() const override {
     return "number";
 }
+
+stringMemcell::stringMemcell(const std::string &string) {
+    setString(string);
+}
+
+void stringMemcell::setString(const std::string &string) {
+    this->value = string;
+}
+
+std::string stringMemcell::getString(void) const override {
+    return this->value;
+}
