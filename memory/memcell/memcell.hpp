@@ -15,7 +15,7 @@ enum class memcell_type {
 class memcell {
 public:
     memcell();
-    ~memcell();
+    virtual ~memcell() = default;
 
     virtual memcell_type getType(void) const = 0;
 
@@ -24,7 +24,9 @@ public:
     virtual void setNumber(const double number);
     virtual double getNumber(void) const = 0;
 
-    virtual operator std::string() = 0;
+    virtual void setString(const std::string string&);
+    virtual std::string getString(void) const = 0;
+    
     virtual operator dynamic_table() = 0;
     virtual operator userfunc() = 0;
     virtual operator libfunc() = 0;    
@@ -37,18 +39,25 @@ private:
     double value;
 
 public:
+    numberMemcell();
+    ~numberMemcell() = default;
+
     void setNumber(const double);
     double getNumber(void) const override;
     memcell_type getType() const override;
 };
 
-class string : public memcell {
+class stringMemcell : public memcell {
 private:
     std::string value;
 
 public:
-    string(std::string &);
-    ~string();
+    stringMemcell();
+    ~stringMemcell() = default;
+
+    void setString(const std::string&);
+    double getString(void) const override;
+    memcell_type getType() const override;
 };
 
 class bool : public memcell {
