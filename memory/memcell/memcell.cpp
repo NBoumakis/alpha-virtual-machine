@@ -21,6 +21,9 @@ std::string numberMemcell::getTypeName() const override {
     return "number";
 }
 
+numberMemcell::operator std::string() override {}
+numberMemcell::operator bool() override {}
+
 stringMemcell::stringMemcell(const std::string &string) {
     setString(string);
 }
@@ -40,6 +43,9 @@ memcell_type stringMemcell::getType(void) const override {
 std::string stringMemcell::getTypeName() const override {
     return "string";
 }
+
+stringMemcell::operator std::string() override {}
+stringMemcell::operator bool() override {}
 
 boolMemcell::boolMemcell(const bool boolean) {
     setBool(boolean);
@@ -61,6 +67,9 @@ std::string boolMemcell::getTypeName() const override {
     return "bool";
 }
 
+boolMemcell::operator std::string() override {}
+boolMemcell::operator bool() override {}
+
 dynamicTableMemcell::dynamicTableMemcell(const dynamic_table table) {
     setDynamicTable(table);
 }
@@ -80,6 +89,9 @@ memcell_type dynamicTableMemcell::getType(void) const override {
 std::string dynamicTableMemcell::getTypeName() const override {
     return "table";
 }
+
+dynamicTableMemcell::operator std::string() override {}
+dynamicTableMemcell::operator bool() override {}
 
 userfuncMemcell::userfuncMemcell(const unsigned long userfunc) {
     setUserFunc(userfunc);
@@ -101,6 +113,9 @@ std::string userfuncMemcell::getTypeName() const override {
     return "userfunc";
 }
 
+userfuncMemcell::operator std::string() override {}
+userfuncMemcell::operator bool() override {}
+
 libfuncMemcell::libfuncMemcell(const std::string &libfunc) {
     setLibFunc(libfunc);
 }
@@ -120,6 +135,9 @@ memcell_type libfuncMemcell::getType(void) const override {
 std::string libfuncMemcell::getTypeName() const override {
     return "libfunc";
 }
+
+libfuncMemcell::operator std::string() override {}
+libfuncMemcell::operator bool() override {}
 
 void memcell::assign(memcell *&lv, memcell *rv) {
     if (lv == rv)
