@@ -31,7 +31,10 @@ public:
     virtual void setBool(const bool boolean);
     virtual bool getBool(void) const = 0;
 
+    virtual void setUserFunc(unsigned long userfunc);
+    virtual unsigned long getUserFunc(void) const = 0;
     
+
     virtual void operator=(memcell *); // avm_assign
 };
 
@@ -43,12 +46,12 @@ public:
     numberMemcell();
     ~numberMemcell() = default;
 
-    void setNumber(const double);
+    void setNumber(const double number);
     double getNumber(void) const override;
-    memcell_type getType() const override;
+    memcell_type getType(void) const override;
 };
 
-class stringMemcell : public memcell {
+class stringMemcell final: public memcell {
 private:
     std::string value;
 
@@ -56,32 +59,35 @@ public:
     stringMemcell();
     ~stringMemcell() = default;
 
-    void setString(const std::string&);
+    void setString(const std::string string&);
     double getString(void) const override;
-    memcell_type getType() const override;
+    memcell_type getType(void) const override;
 };
 
-class boolMemcell : public memcell {
+class boolMemcell final: public memcell {
 private:
     bool value;
 
 public:
-    bool();
-    ~bool() = default;
+    boolMemcell();
+    ~boolMemcell() = default;
 
     void setBool(const bool boolean);
     bool getBool(void) const override;
-    memcell_type getType() const override;
+    memcell_type getType(void) const override;
 };
 
-//maybe change the structure
-class userfunc : public memcell {
+class userfuncMemcell final: public memcell {
 private:
     unsigned long value;
 
 public:
-    userfunc(unsigned long);
-    ~userfunc();
+    userfuncMemcell();
+    ~userfuncMemcell() = default;
+
+    void setUserFunc(unsigned long userfunc);
+    unsigned long getUserFunc(void) const override;
+    memcell_type getType(void) const override;
 };
 
 class libfunc : public memcell {
