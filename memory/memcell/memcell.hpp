@@ -21,7 +21,9 @@ public:
 
     friend memcell *translate_operand(vmarg *, memcell *);
 
-    virtual operator number() = 0;
+    virtual void setNumber(const double number);
+    virtual double getNumber(void) const = 0;
+
     virtual operator std::string() = 0;
     virtual operator dynamic_table() = 0;
     virtual operator userfunc() = 0;
@@ -30,13 +32,14 @@ public:
     virtual void operator=(memcell *); // avm_assign
 };
 
-class number : public memcell {
+class numberMemcell final: public memcell {
 private:
     double value;
 
 public:
-    number(double);
-    ~number();
+    void setNumber(const double);
+    double getNumber(void) const override;
+    memcell_type getType() const override;
 };
 
 class string : public memcell {
