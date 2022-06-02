@@ -2,6 +2,10 @@
 
 static memcell *assign(memcell *&lv, memcell *rv);
 
+numberMemcell::numberMemcell(const double number) {
+    setNumber(number);
+}
+
 void numberMemcell::setNumber(const double number) {
     this->value = number;
 }
