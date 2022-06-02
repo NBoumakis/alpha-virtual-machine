@@ -175,4 +175,4 @@ public:
     operator bool() override;
 };
 
-#endif /* __MEMCELL_H */
+#endif /* ___MEMCELL_H */
