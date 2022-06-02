@@ -1,7 +1,7 @@
 #include "lib/vmarg.h"
 #include <string>
 
-enum memcell_type {
+enum class memcell_type {
     number_m,
     string_m,
     bool_m,
