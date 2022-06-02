@@ -60,3 +60,15 @@ memcell_type boolMemcell::getType(void) const override {
 std::string boolMemcell::getTypeName() const override {
     return "bool";
 }
+
+dynamicTableMemcell::dynamicTableMemcell(const dynamic_table table) {
+    setDynamicTable(table);
+}
+
+void dynamicTableMemcell::setDynamicTable(const dynamic_table table) {
+    this->value = table;
+}
+
+dynamic_table dynamicTableMemcell::getDynamicTable(void) override {
+    return this->value;
+}

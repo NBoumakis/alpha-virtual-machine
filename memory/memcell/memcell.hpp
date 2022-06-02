@@ -2,6 +2,7 @@
 #define __MEMCELL_H
 
 #include "lib/vmarg.h"
+#include "table/dynamic_table.hpp"
 #include <string>
 
 enum class memcell_type {
