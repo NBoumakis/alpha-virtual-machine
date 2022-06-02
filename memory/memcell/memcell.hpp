@@ -105,12 +105,15 @@ private:
     bool value;
 
 public:
-    boolMemcell();
+    boolMemcell(bool);
     ~boolMemcell() = default;
 
     void setBool(const bool boolean);
     bool getBool(void) const override;
     memcell_type getType(void) const override;
+    std::string getTypeName() const override;
+    operator std::string() override;
+    operator bool() override;
 };
 
 class userfuncMemcell final : public memcell {
