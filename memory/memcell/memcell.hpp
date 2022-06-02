@@ -14,7 +14,7 @@ enum class memcell_type {
 
 class memcell {
 public:
-    memcell();
+    memcell() = default;
     virtual ~memcell() = default;
 
     virtual memcell_type getType(void) const = 0;
@@ -22,7 +22,10 @@ public:
     friend memcell *translate_operand(vmarg *, memcell *);
 
     virtual void setNumber(const double number);
-    virtual double getNumber(void) const = 0;
+    virtual double getNumber(void) const{
+        assert(false);
+        return 0;
+    };
 
     virtual void setString(const std::string &string);
     virtual std::string getString(void) const = 0;
@@ -35,6 +38,10 @@ public:
 
     virtual void setLibFunc(const std::string &libfunc);
     virtual std::string getLibFunc(void) const = 0;
+
+
+    virtual operator std::string() = 0;
+    virtual operator bool() = 0;
 
     virtual void operator=(memcell *); // avm_assign
     virtual std::string getTypeName() = 0;
