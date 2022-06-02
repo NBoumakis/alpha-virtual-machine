@@ -17,7 +17,7 @@ public:
     memcell();
     ~memcell();
 
-    memcell_type type;
+    virtual memcell_type getType(void) const = 0;
 
     friend memcell *translate_operand(vmarg *, memcell *);
 
