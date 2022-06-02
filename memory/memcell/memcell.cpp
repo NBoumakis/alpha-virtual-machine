@@ -49,6 +49,7 @@ boolMemcell::boolMemcell(const bool boolean) {
 void boolMemcell::setBool(const bool boolean) {
     this->value = boolean;
 }
+
 bool boolMemcell::getBool(void) const override {
     return this->value;
 }
@@ -69,6 +70,14 @@ void dynamicTableMemcell::setDynamicTable(const dynamic_table table) {
     this->value = table;
 }
 
-dynamic_table dynamicTableMemcell::getDynamicTable(void) override {
+dynamic_table dynamicTableMemcell::getDynamicTable(void) const override {
     return this->value;
+}
+
+memcell_type dynamicTableMemcell::getType(void) const override {
+    return memcell_type::table_m;
+}
+
+std::string dynamicTableMemcell::getTypeName() const override {
+    return "table";
 }
