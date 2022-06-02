@@ -41,3 +41,14 @@ memcell_type stringMemcell::getType(void) const override {
 std::string stringMemcell::getTypeName() const override {
     return "string";
 }
+
+boolMemcell::boolMemcell(const bool boolean) {
+    setBool(boolean);
+}
+
+void boolMemcell::setBool(const bool boolean) {
+    this->value = boolean;
+}
+bool boolMemcell::getBool(void) const override {
+    return this->value;
+}
