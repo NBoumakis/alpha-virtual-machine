@@ -41,3 +41,12 @@ public:
     string(std::string &);
     ~string();
 };
+
+class bool : public memcell {
+private:
+    bool value;
+
+public:
+    bool(bool);
+    ~bool();
+};
