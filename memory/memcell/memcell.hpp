@@ -17,6 +17,8 @@ public:
     memcell();
     ~memcell();
 
+    memcell_type type;
+
     friend memcell *translate_operand(vmarg *, memcell *);
 
     virtual operator number() = 0;
