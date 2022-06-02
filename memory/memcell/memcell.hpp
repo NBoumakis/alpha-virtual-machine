@@ -1,3 +1,6 @@
+#ifndef __MEMCELL_H
+#define __MEMCELL_H
+
 #include "lib/vmarg.h"
 #include <string>
 
@@ -171,3 +174,5 @@ public:
     operator std::string() override;
     operator bool() override;
 };
+
+#endif /* __MEMCELL_H */
