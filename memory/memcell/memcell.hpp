@@ -137,10 +137,13 @@ private:
     std::string value;
 
 public:
-    libfuncMemcell();
+    libfuncMemcell(std::string &);
     ~libfuncMemcell() = default;
 
     void setLibFunc(const std::string &userfunc);
     std::string getLibFunc(void) const override;
     memcell_type getType(void) const override;
+    std::string getTypeName() const override;
+    operator std::string() override;
+    operator bool() override;
 };
