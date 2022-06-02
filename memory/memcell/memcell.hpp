@@ -3,7 +3,20 @@
 
 #include "lib/vmarg.h"
 #include "table/dynamic_table.hpp"
+#include <cassert>
+#include <functional>
+#include <iostream>
 #include <string>
+#include <unordered_map>
+
+static const std::unordered_map < memcell_type, std::function<memcell *(memcell const &)> dispatch = {
+                                                    {memcell_type::number_m, [](memcell const &) -> memcell * { return new numberMemcell; }},
+                                                    {memcell_type::string_m, [](memcell const &) -> memcell * { return new stringMemcell; }},
+                                                    {memcell_type::bool_m, [](memcell const &) -> memcell * { return new boolMemcell; }},
+                                                    {memcell_type::table_m, [](memcell const &) -> memcell * { return new dynamicTableMemcell; }},
+                                                    {memcell_type::userfunc_m, [](memcell const &) -> memcell * { return new userfuncMemcell; }},
+                                                    {memcell_type::libfunc_m, [](memcell const &) -> memcell * { return new libfuncMemcell; }},
+};
 
 enum class memcell_type {
     number_m,
@@ -20,8 +33,6 @@ class memcell {
 public:
     memcell() = default;
     virtual ~memcell() = default;
-
-    virtual memcell_type getType(void) const = 0;
 
     friend memcell *translate_operand(vmarg *, memcell *);
 
@@ -77,6 +88,8 @@ public:
     virtual operator bool() = 0;
 
     virtual void operator=(memcell *); // avm_assign
+    void assign(memcell &*, memcell *);
+    virtual memcell_type getType(void) const = 0;
     virtual std::string getTypeName() = 0;
 };
 

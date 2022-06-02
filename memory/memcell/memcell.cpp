@@ -1,6 +1,5 @@
 #include "memory/memcell/memcell.hpp"
-
-static memcell *assign(memcell *&lv, memcell *rv);
+#include "library/reporting/reporting.hpp"
 
 numberMemcell::numberMemcell(const double number) {
     setNumber(number);
@@ -120,4 +119,28 @@ memcell_type libfuncMemcell::getType(void) const override {
 
 std::string libfuncMemcell::getTypeName() const override {
     return "libfunc";
+}
+
+void memcell::assign(memcell *&lv, memcell *rv) {
+    if (lv == rv)
+        return;
+
+    if (lv->getType() == memcell_type::table_m &&
+        rv->getType() == memcell_type::table_m &&
+        lv->getDynamicTable() == rv->getDynamicTable())
+        return;
+
+    if (rv->getType() == memcell_type::undefined_m)
+        warning("Assigning from undefined content!");
+
+    memcell::~memcell();
+
+    lv = dispatch.at(rv->getType())(*rv);
+
+    if (lv->getType() == memcell_type::string_m)
+        lv->setString(rv->getString());
+    else {
+        if (lv->getType() == memcell_type::table_m)
+            lv->getDynamicTable().inc_ref_counter();
+    }
 }
