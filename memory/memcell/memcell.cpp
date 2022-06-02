@@ -81,3 +81,15 @@ memcell_type dynamicTableMemcell::getType(void) const override {
 std::string dynamicTableMemcell::getTypeName() const override {
     return "table";
 }
+
+userfuncMemcell::userfuncMemcell(const unsigned long userfunc) {
+    setUserFunc(userfunc);
+}
+
+void userfuncMemcell::setUserFunc(const unsigned long userfunc) {
+    this->value = userfunc;
+}
+
+unsigned long userfuncMemcell::getUserFunc(void) const override {
+    return this->value;
+}
