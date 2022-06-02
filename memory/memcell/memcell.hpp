@@ -121,12 +121,15 @@ private:
     unsigned long value;
 
 public:
-    userfuncMemcell();
+    userfuncMemcell(unsigned long);
     ~userfuncMemcell() = default;
 
     void setUserFunc(const unsigned long userfunc);
     unsigned long getUserFunc(void) const override;
     memcell_type getType(void) const override;
+    std::string getTypeName() const override;
+    operator std::string() override;
+    operator bool() override;
 };
 
 class libfuncMemcell final : public memcell {
