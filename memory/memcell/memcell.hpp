@@ -21,16 +21,17 @@ public:
 
     friend memcell *translate_operand(vmarg *, memcell *);
 
+    
     virtual void setNumber(const double number);
     virtual double getNumber(void) const = 0;
 
     virtual void setString(const std::string string&);
     virtual std::string getString(void) const = 0;
     
-    virtual operator dynamic_table() = 0;
-    virtual operator userfunc() = 0;
-    virtual operator libfunc() = 0;    
-    virtual operator bool() = 0;
+    virtual void setBool(const bool boolean);
+    virtual bool getBool(void) const = 0;
+
+    
     virtual void operator=(memcell *); // avm_assign
 };
 
@@ -60,13 +61,17 @@ public:
     memcell_type getType() const override;
 };
 
-class bool : public memcell {
+class boolMemcell : public memcell {
 private:
     bool value;
 
 public:
-    bool(bool);
-    ~bool();
+    bool();
+    ~bool() = default;
+
+    void setBool(const bool boolean);
+    bool getBool(void) const override;
+    memcell_type getType() const override;
 };
 
 //maybe change the structure
