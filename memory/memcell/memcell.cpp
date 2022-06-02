@@ -101,3 +101,15 @@ memcell_type userfuncMemcell::getType(void) const override {
 std::string userfuncMemcell::getTypeName() const override {
     return "userfunc";
 }
+
+libfuncMemcell::libfuncMemcell(const std::string &libfunc) {
+    setLibFunc(libfunc);
+}
+
+void libfuncMemcell::setLibFunc(const std::string &userfunc) {
+    this->value = userfunc;
+}
+
+std::string libfuncMemcell::getLibFunc(void) const override {
+    return this->value;
+}
