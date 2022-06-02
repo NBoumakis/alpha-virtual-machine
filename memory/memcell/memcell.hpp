@@ -51,6 +51,15 @@ public:
     ~bool();
 };
 
+class userfunc : public memcell {
+private:
+    unsigned long value;
+
+public:
+    userfunc(unsigned long);
+    ~userfunc();
+};
+
 class libfunc : public memcell {
 private:
     std::string value;
