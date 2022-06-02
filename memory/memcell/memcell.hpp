@@ -21,24 +21,45 @@ public:
 
     friend memcell *translate_operand(vmarg *, memcell *);
 
-    virtual void setNumber(const double number);
-    virtual double getNumber(void) const{
+    virtual void setNumber(const double number) {
+        assert(false);
+    }
+    virtual double getNumber(void) const {
         assert(false);
         return 0;
     };
 
-    virtual void setString(const std::string &string);
-    virtual std::string getString(void) const = 0;
+    virtual void setString(const std::string &string) {
+        assert(false);
+    }
+    virtual std::string getString(void) const {
+        assert(false);
+        return "";
+    }
 
-    virtual void setBool(const bool boolean);
-    virtual bool getBool(void) const = 0;
+    virtual void setBool(const bool boolean) {
+        assert(false);
+    }
+    virtual bool getBool(void) const {
+        assert(false);
+        return false;
+    }
 
-    virtual void setUserFunc(const unsigned long userfunc);
-    virtual unsigned long getUserFunc(void) const = 0;
+    virtual void setUserFunc(const unsigned long userfunc) {
+        assert(false);
+    }
+    virtual unsigned long getUserFunc(void) const {
+        assert(false);
+        return 0;
+    }
 
-    virtual void setLibFunc(const std::string &libfunc);
-    virtual std::string getLibFunc(void) const = 0;
-
+    virtual void setLibFunc(const std::string &libfunc) {
+        assert(false);
+    }
+    virtual std::string getLibFunc(void) const {
+        assert(false);
+        return "";
+    }
 
     virtual operator std::string() = 0;
     virtual operator bool() = 0;
