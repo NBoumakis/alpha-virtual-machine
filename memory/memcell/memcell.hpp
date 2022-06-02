@@ -19,7 +19,11 @@ public:
 
     friend memcell *translate_operand(vmarg *, memcell *);
 
+    virtual operator number() = 0;
     virtual operator std::string() = 0;
+    virtual operator dynamic_table() = 0;
+    virtual operator userfunc() = 0;
+    virtual operator libfunc() = 0;    
     virtual operator bool() = 0;
     virtual void operator=(memcell *); // avm_assign
 };
@@ -51,6 +55,7 @@ public:
     ~bool();
 };
 
+//maybe change the structure
 class userfunc : public memcell {
 private:
     unsigned long value;
