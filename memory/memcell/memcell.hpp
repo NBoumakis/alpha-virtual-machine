@@ -45,6 +45,14 @@ public:
         return false;
     }
 
+    virtual void setDynamicTable(const dynamic_table table) {
+        assert(false);
+    }
+    virtual dynamic_table getDynamicTable(void) const {
+        assert(false);
+        return nullptr;
+    }
+
     virtual void setUserFunc(const unsigned long userfunc) {
         assert(false);
     }
@@ -110,6 +118,22 @@ public:
 
     void setBool(const bool boolean);
     bool getBool(void) const override;
+    memcell_type getType(void) const override;
+    std::string getTypeName() const override;
+    operator std::string() override;
+    operator bool() override;
+};
+
+class dynamicTableMemcell final : public memcell {
+private:
+    dynamic_table value;
+
+public:
+    dynamicTableMemcell(dynamic_table);
+    ~dynamicTableMemcell() = default;
+
+    void setDynamicTable(const dynamic_table table);
+    dynamic_table getDynamicTable(void) override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
     operator std::string() override;
