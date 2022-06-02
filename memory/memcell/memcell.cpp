@@ -52,3 +52,11 @@ void boolMemcell::setBool(const bool boolean) {
 bool boolMemcell::getBool(void) const override {
     return this->value;
 }
+
+memcell_type boolMemcell::getType(void) const override {
+    return memcell_type::bool_m;
+}
+
+std::string boolMemcell::getTypeName() const override {
+    return "bool";
+}
