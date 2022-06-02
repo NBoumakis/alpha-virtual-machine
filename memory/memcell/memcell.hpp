@@ -37,8 +37,11 @@ public:
     virtual void setLibFunc(const std::string libfunc&);
     virtual std::string getLibFunc(void) const = 0;
 
+    virtual operator std::string() = 0;
+    virtual operator bool() = 0;
 
     virtual void operator=(memcell *); // avm_assign
+    virtual std::string getTypeName() = 0;
 };
 
 class numberMemcell final: public memcell {
