@@ -2,11 +2,11 @@
 #include "library/reporting/reporting.hpp"
 
 // sub-class numberMemcell
-numberMemcell::numberMemcell(const double number) {
+numberMemcell::numberMemcell(double number) {
     setNumber(number);
 }
 
-void numberMemcell::setNumber(const double number) {
+void numberMemcell::setNumber(double number) {
     this->value = number;
 }
 
@@ -24,6 +24,10 @@ std::string numberMemcell::getTypeName() const {
 
 numberMemcell::operator std::string() const {}
 numberMemcell::operator bool() const {}
+
+bool numberMemcell::operator==(const memcell *op) const {
+    // TODO
+}
 
 // sub-class stringMemcell
 stringMemcell::stringMemcell(const std::string &string) {
@@ -49,12 +53,16 @@ std::string stringMemcell::getTypeName() const {
 stringMemcell::operator std::string() const {}
 stringMemcell::operator bool() const {}
 
+bool stringMemcell::operator==(const memcell *op) const {
+    // TODO
+}
+
 // sub-class boolMemcell
-boolMemcell::boolMemcell(bool boolean) {
+boolMemcell::boolMemcell(const bool boolean) {
     setBool(boolean);
 }
 
-void boolMemcell::setBool(bool boolean) {
+void boolMemcell::setBool(const bool boolean) {
     this->value = boolean;
 }
 
@@ -72,6 +80,10 @@ std::string boolMemcell::getTypeName() const {
 
 boolMemcell::operator std::string() const {}
 boolMemcell::operator bool() const {}
+
+bool boolMemcell::operator==(const memcell *op) const {
+    // TODO
+}
 
 // sub-class dynamicTableMemcell
 dynamicTableMemcell::dynamicTableMemcell(dynamic_table *table) {
@@ -97,6 +109,10 @@ std::string dynamicTableMemcell::getTypeName() const {
 dynamicTableMemcell::operator std::string() const {}
 dynamicTableMemcell::operator bool() const {}
 
+bool dynamicTableMemcell::operator==(const memcell *op) const {
+    // TODO
+}
+
 // sub-class userfuncMemcell
 userfuncMemcell::userfuncMemcell(const unsigned long userfunc) {
     setUserFunc(userfunc);
@@ -120,6 +136,10 @@ std::string userfuncMemcell::getTypeName() const {
 
 userfuncMemcell::operator std::string() const {}
 userfuncMemcell::operator bool() const {}
+
+bool userfuncMemcell::operator==(const memcell *op) const {
+    // TODO
+}
 
 // sub-class libfuncMemcell
 libfuncMemcell::libfuncMemcell(const std::string &libfunc) {
@@ -145,6 +165,10 @@ std::string libfuncMemcell::getTypeName() const {
 libfuncMemcell::operator std::string() const {}
 libfuncMemcell::operator bool() const {}
 
+bool libfuncMemcell::operator==(const memcell *op) const {
+    // TODO
+}
+
 // sub-class nilMemcell
 memcell_type nilMemcell::getType(void) const {
     return memcell_type::nil_m;
@@ -157,6 +181,10 @@ std::string nilMemcell::getTypeName() const {
 nilMemcell::operator std::string() const {}
 nilMemcell::operator bool() const {}
 
+bool nilMemcell::operator==(const memcell *op) const {
+    // TODO
+}
+
 // sub-class undefMemcell
 memcell_type undefMemcell::getType(void) const {
     return memcell_type::undefined_m;
@@ -166,6 +194,11 @@ std::string nilMemcell::getTypeName() const {
     return "undefined";
 }
 
+bool undefMemcell::operator==(const memcell *op) const {
+    // TODO
+}
+
+// avm_assign
 const std::unordered_map<memcell_type, std::function<memcell *(memcell const &)>> dispatch = {
     {memcell_type::number_m, [](memcell const &) -> memcell * { return new numberMemcell; }},
     {memcell_type::string_m, [](memcell const &) -> memcell * { return new stringMemcell; }},

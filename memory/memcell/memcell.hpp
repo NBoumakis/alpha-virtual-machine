@@ -75,6 +75,9 @@ public:
         return "";
     }
 
+    virtual memcell_type getType(void) const = 0;
+    virtual std::string getTypeName() const = 0;
+
     virtual operator std::string() const = 0;
     virtual operator bool() const = 0;
 
@@ -82,8 +85,6 @@ public:
     virtual bool operator!=(const memcell *op) const {
         return !(*this == *op);
     }
-    virtual memcell_type getType(void) const = 0;
-    virtual std::string getTypeName() const = 0;
 };
 
 class numberMemcell final : public memcell {
