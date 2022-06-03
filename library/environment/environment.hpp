@@ -16,7 +16,7 @@ public:
     ~environment();
 
     void call_save_environment();
-    void call_libfunc(std::string &);
+    void call_libfunc(const std::string &);
 
     Function *get_funcinfo(unsigned long);
     unsigned long get_envvalue(unsigned long);
