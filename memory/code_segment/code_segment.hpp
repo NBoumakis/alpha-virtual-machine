@@ -1,3 +1,6 @@
+#ifndef __CODE_SEGMENT_HPP
+#define __CODE_SEGMENT_HPP
+
 #include "lib/instruction.hpp"
 #include <deque>
 
@@ -14,3 +17,5 @@ public:
 
     unsigned long size();
 };
+
+#endif /* __CODE_SEGMENT_HPP */
