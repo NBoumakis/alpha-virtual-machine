@@ -146,8 +146,8 @@ libfuncMemcell::libfuncMemcell(const std::string &libfunc) {
     setLibFunc(libfunc);
 }
 
-void libfuncMemcell::setLibFunc(const std::string &userfunc) {
-    this->value = userfunc;
+void libfuncMemcell::setLibFunc(const std::string &libfunc) {
+    this->value = libfunc;
 }
 
 std::string libfuncMemcell::getLibFunc(void) const {
