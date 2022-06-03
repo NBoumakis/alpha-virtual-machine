@@ -111,6 +111,8 @@ private:
     std::string value;
 
 public:
+    stringMemcell() = default;
+    stringMemcell(stringMemcell const &b) = default;
     stringMemcell(const std::string &);
     ~stringMemcell() = default;
 
@@ -128,7 +130,9 @@ private:
     bool value;
 
 public:
-    boolMemcell(const bool);
+    boolMemcell() = default;
+    boolMemcell(boolMemcell const &b) = default;
+    boolMemcell(bool);
     ~boolMemcell() = default;
 
     void setBool(const bool boolean);
@@ -142,14 +146,16 @@ public:
 
 class dynamicTableMemcell final : public memcell {
 private:
-    dynamic_table value;
+    dynamic_table *value;
 
 public:
+    dynamicTableMemcell() = default;
+    dynamicTableMemcell(dynamicTableMemcell const &b) = default;
     dynamicTableMemcell(const dynamic_table);
     ~dynamicTableMemcell() = default;
 
-    void setDynamicTable(const dynamic_table table);
-    dynamic_table getDynamicTable(void) const override;
+    void setDynamicTable(const dynamic_table *table);
+    dynamic_table *getDynamicTable(void) const override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
     operator std::string() const override;
@@ -162,6 +168,8 @@ private:
     unsigned long value;
 
 public:
+    userfuncMemcell() = default;
+    userfuncMemcell(userfuncMemcell const &b) = default;
     userfuncMemcell(const unsigned long);
     ~userfuncMemcell() = default;
 
@@ -179,6 +187,8 @@ private:
     std::string value;
 
 public:
+    libfuncMemcell() = default;
+    libfuncMemcell(libfuncMemcell const &b) = default;
     libfuncMemcell(const std::string &);
     ~libfuncMemcell() = default;
 
