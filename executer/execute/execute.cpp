@@ -9,11 +9,11 @@
 execute::execute() {
     dispatch.insert({assign_vmiop, execute_assign});
 
-    dispatch.insert({add_vmiop, execute_add});
-    dispatch.insert({sub_vmiop, execute_sub});
-    dispatch.insert({mul_vmiop, execute_mul});
-    dispatch.insert({div_vmiop, execute_div});
-    dispatch.insert({mod_vmiop, execute_mod});
+    dispatch.insert({add_vmiop, execute_arithmetic});
+    dispatch.insert({sub_vmiop, execute_arithmetic});
+    dispatch.insert({mul_vmiop, execute_arithmetic});
+    dispatch.insert({div_vmiop, execute_arithmetic});
+    dispatch.insert({mod_vmiop, execute_arithmetic});
 
     dispatch.insert({jeq_vmiop, execute_jeq});
     dispatch.insert({jne_vmiop, execute_jne});

@@ -8,6 +8,7 @@
 double add_impl(double x, double y) { return x + y; }
 double sub_impl(double x, double y) { return x - y; }
 double mul_impl(double x, double y) { return x * y; }
+// TODO error checking
 double div_impl(double x, double y) { return x / y; }
 double mod_impl(double x, double y) { return ((unsigned)x) % ((unsigned)y); }
 
@@ -18,7 +19,7 @@ static std::unordered_map<vmopcode, std::function<double(double, double)>> arith
     {div_vmiop, div_impl},
     {mod_vmiop, mod_impl}};
 
-static void execute_arithmetic(instruction *instr) {
+void execute_arithmetic(instruction *instr) {
     memcell *lv = translate_operand(instr->result, (memcell *)nullptr);
     memcell *rv1 = translate_operand(instr->arg1, cpu::ax);
     memcell *rv2 = translate_operand(instr->arg1, cpu::bx);
@@ -34,13 +35,3 @@ static void execute_arithmetic(instruction *instr) {
         lv->setNumber((arithm_funcs.at(instr->opcode))(rv1->getNumber(), rv2->getNumber()));
     }
 }
-
-void execute_add(instruction *) {}
-
-void execute_sub(instruction *);
-
-void execute_mul(instruction *);
-
-void execute_div(instruction *);
-
-void execute_mod(instruction *);
