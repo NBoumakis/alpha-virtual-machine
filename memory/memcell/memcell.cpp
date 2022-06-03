@@ -136,8 +136,8 @@ std::string libfuncMemcell::getTypeName() const {
     return "libfunc";
 }
 
-libfuncMemcell::operator std::string() {}
-libfuncMemcell::operator bool() {}
+libfuncMemcell::operator std::string() const {}
+libfuncMemcell::operator bool() const {}
 
 const std::unordered_map<memcell_type, std::function<memcell *(memcell const &)>> dispatch = {
     {memcell_type::number_m, [](memcell const &) -> memcell * { return new numberMemcell; }},
