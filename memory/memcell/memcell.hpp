@@ -9,13 +9,13 @@
 #include <string>
 #include <unordered_map>
 
-static const std::unordered_map < memcell_type, std::function<memcell *(memcell const &)> dispatch = {
-                                                    {memcell_type::number_m, [](memcell const &) -> memcell * { return new numberMemcell; }},
-                                                    {memcell_type::string_m, [](memcell const &) -> memcell * { return new stringMemcell; }},
-                                                    {memcell_type::bool_m, [](memcell const &) -> memcell * { return new boolMemcell; }},
-                                                    {memcell_type::table_m, [](memcell const &) -> memcell * { return new dynamicTableMemcell; }},
-                                                    {memcell_type::userfunc_m, [](memcell const &) -> memcell * { return new userfuncMemcell; }},
-                                                    {memcell_type::libfunc_m, [](memcell const &) -> memcell * { return new libfuncMemcell; }},
+static const std::unordered_map<memcell_type, std::function<memcell *(memcell const &)>> dispatch = {
+    {memcell_type::number_m, [](memcell const &) -> memcell * { return new numberMemcell(0); }},
+    {memcell_type::string_m, [](memcell const &) -> memcell * { return new stringMemcell(""); }},
+    {memcell_type::bool_m, [](memcell const &) -> memcell * { return new boolMemcell(false); }},
+    {memcell_type::table_m, [](memcell const &) -> memcell * { return new dynamicTableMemcell(dynamic_table()); }},
+    {memcell_type::userfunc_m, [](memcell const &) -> memcell * { return new userfuncMemcell(0); }},
+    {memcell_type::libfunc_m, [](memcell const &) -> memcell * { return new libfuncMemcell(""); }},
 };
 
 enum class memcell_type {
@@ -65,7 +65,8 @@ public:
     }
     virtual dynamic_table getDynamicTable(void) const {
         assert(false);
-        return nullptr;
+        dynamic_table tableObj = dynamic_table();
+        return tableObj;
     }
 
     virtual void setUserFunc(const unsigned long userfunc) {
@@ -88,9 +89,9 @@ public:
     virtual operator bool() = 0;
 
     virtual void operator=(memcell *); // avm_assign
-    void assign(memcell &*, memcell *);
+    void assign(memcell *&, memcell *);
     virtual memcell_type getType(void) const = 0;
-    virtual std::string getTypeName() = 0;
+    virtual std::string getTypeName() const = 0;
 };
 
 class numberMemcell final : public memcell {
