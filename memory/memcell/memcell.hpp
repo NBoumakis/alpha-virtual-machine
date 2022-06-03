@@ -201,5 +201,5 @@ public:
     bool operator==(const memcell *op) const override;
 };
 
-void assign(memcell *&, memcell *);
+memcell *assign(memcell *&, memcell *);
 #endif /* ___MEMCELL_H */

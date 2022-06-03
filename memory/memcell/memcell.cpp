@@ -139,26 +139,20 @@ std::string libfuncMemcell::getTypeName() const override {
 libfuncMemcell::operator std::string() override {}
 libfuncMemcell::operator bool() override {}
 
-void memcell::assign(memcell *&lv, memcell *rv) {
-    if (lv == rv)
-        return;
+const std::unordered_map<memcell_type, std::function<memcell *(memcell const &)>> dispatch = {
+    {memcell_type::number_m, [](memcell const &) -> memcell * { return new numberMemcell; }},
+    {memcell_type::string_m, [](memcell const &) -> memcell * { return new stringMemcell; }},
+    {memcell_type::bool_m, [](memcell const &) -> memcell * { return new boolMemcell; }},
+    {memcell_type::table_m, [](memcell const &) -> memcell * { return new dynamicTableMemcell; }},
+    {memcell_type::userfunc_m, [](memcell const &) -> memcell * { return new userfuncMemcell; }},
+    {memcell_type::libfunc_m, [](memcell const &) -> memcell * { return new libfuncMemcell; }},
+    {memcell_type::nil_m, [](memcell const &) -> memcell * { return new nilMemcell; }},
+};
 
-    if (lv->getType() == memcell_type::table_m &&
-        rv->getType() == memcell_type::table_m &&
-        lv->getDynamicTable() == rv->getDynamicTable())
-        return;
-
-    if (rv->getType() == memcell_type::undefined_m)
-        warning("Assigning from undefined content!");
-
-    memcell::~memcell();
+memcell *assign(memcell *&lv, memcell *rv) {
+    delete lv;
 
     lv = dispatch.at(rv->getType())(*rv);
 
-    if (lv->getType() == memcell_type::string_m)
-        lv->setString(rv->getString());
-    else {
-        if (lv->getType() == memcell_type::table_m)
-            lv->getDynamicTable().inc_ref_counter();
-    }
+    return lv;
 }
