@@ -135,7 +135,7 @@ public:
     boolMemcell(bool);
     ~boolMemcell() = default;
 
-    void setBool(const bool boolean);
+    void setBool(bool boolean);
     bool getBool(void) const override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;

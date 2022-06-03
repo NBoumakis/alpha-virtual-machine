@@ -47,11 +47,11 @@ std::string stringMemcell::getTypeName() const {
 stringMemcell::operator std::string() const {}
 stringMemcell::operator bool() const {}
 
-boolMemcell::boolMemcell(const bool boolean) {
+boolMemcell::boolMemcell(bool boolean) {
     setBool(boolean);
 }
 
-void boolMemcell::setBool(const bool boolean) {
+void boolMemcell::setBool(bool boolean) {
     this->value = boolean;
 }
 
