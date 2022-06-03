@@ -100,8 +100,10 @@ public:
     double getNumber(void) const override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
+
     operator std::string() const override;
     operator bool() const override;
+    bool operator==(const memcell *op) const override;
 };
 
 class stringMemcell final : public memcell {
@@ -118,6 +120,7 @@ public:
     std::string getTypeName() const override;
     operator std::string() const override;
     operator bool() const override;
+    bool operator==(const memcell *op) const override;
 };
 
 class boolMemcell final : public memcell {
@@ -134,6 +137,7 @@ public:
     std::string getTypeName() const override;
     operator std::string() const override;
     operator bool() const override;
+    bool operator==(const memcell *op) const override;
 };
 
 class dynamicTableMemcell final : public memcell {
@@ -150,6 +154,7 @@ public:
     std::string getTypeName() const override;
     operator std::string() const override;
     operator bool() const override;
+    bool operator==(const memcell *op) const override;
 };
 
 class userfuncMemcell final : public memcell {
@@ -166,6 +171,7 @@ public:
     std::string getTypeName() const override;
     operator std::string() const override;
     operator bool() const override;
+    bool operator==(const memcell *op) const override;
 };
 
 class libfuncMemcell final : public memcell {
@@ -182,6 +188,7 @@ public:
     std::string getTypeName() const override;
     operator std::string() const override;
     operator bool() const override;
+    bool operator==(const memcell *op) const override;
 };
 
 void assign(memcell *&, memcell *);
