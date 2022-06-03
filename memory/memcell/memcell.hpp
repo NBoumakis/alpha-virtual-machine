@@ -9,15 +9,6 @@
 #include <string>
 #include <unordered_map>
 
-static const std::unordered_map<memcell_type, std::function<memcell *(memcell const &)>> dispatch = {
-    {memcell_type::number_m, [](memcell const &) -> memcell * { return new numberMemcell(0); }},
-    {memcell_type::string_m, [](memcell const &) -> memcell * { return new stringMemcell(""); }},
-    {memcell_type::bool_m, [](memcell const &) -> memcell * { return new boolMemcell(false); }},
-    {memcell_type::table_m, [](memcell const &) -> memcell * { return new dynamicTableMemcell(dynamic_table()); }},
-    {memcell_type::userfunc_m, [](memcell const &) -> memcell * { return new userfuncMemcell(0); }},
-    {memcell_type::libfunc_m, [](memcell const &) -> memcell * { return new libfuncMemcell(""); }},
-};
-
 enum class memcell_type {
     number_m,
     string_m,
@@ -60,13 +51,12 @@ public:
         return false;
     }
 
-    virtual void setDynamicTable(const dynamic_table table) {
+    virtual void setDynamicTable(const dynamic_table *table) {
         assert(false);
     }
-    virtual dynamic_table getDynamicTable(void) const {
+    virtual dynamic_table *getDynamicTable(void) const {
         assert(false);
-        dynamic_table tableObj = dynamic_table();
-        return tableObj;
+        return nullptr;
     }
 
     virtual void setUserFunc(const unsigned long userfunc) {
@@ -85,11 +75,13 @@ public:
         return "";
     }
 
-    virtual operator std::string() = 0;
-    virtual operator bool() = 0;
+    virtual operator std::string() const = 0;
+    virtual operator bool() const = 0;
 
-    virtual void operator=(memcell *); // avm_assign
-    void assign(memcell *&, memcell *);
+    virtual bool operator==(const memcell *op) const = 0;
+    virtual bool operator!=(const memcell *op) const {
+        return !(*this == *op);
+    }
     virtual memcell_type getType(void) const = 0;
     virtual std::string getTypeName() const = 0;
 };
@@ -99,15 +91,17 @@ private:
     double value;
 
 public:
-    numberMemcell(const double);
+    numberMemcell() = default;
+    numberMemcell(numberMemcell const &b) = default;
+    numberMemcell(double);
     ~numberMemcell() = default;
 
-    void setNumber(const double number);
+    void setNumber(double number);
     double getNumber(void) const override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
-    operator std::string() override;
-    operator bool() override;
+    operator std::string() const override;
+    operator bool() const override;
 };
 
 class stringMemcell final : public memcell {
@@ -122,8 +116,8 @@ public:
     std::string getString(void) const override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
-    operator std::string() override;
-    operator bool() override;
+    operator std::string() const override;
+    operator bool() const override;
 };
 
 class boolMemcell final : public memcell {
@@ -138,8 +132,8 @@ public:
     bool getBool(void) const override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
-    operator std::string() override;
-    operator bool() override;
+    operator std::string() const override;
+    operator bool() const override;
 };
 
 class dynamicTableMemcell final : public memcell {
@@ -154,8 +148,8 @@ public:
     dynamic_table getDynamicTable(void) const override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
-    operator std::string() override;
-    operator bool() override;
+    operator std::string() const override;
+    operator bool() const override;
 };
 
 class userfuncMemcell final : public memcell {
@@ -170,8 +164,8 @@ public:
     unsigned long getUserFunc(void) const override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
-    operator std::string() override;
-    operator bool() override;
+    operator std::string() const override;
+    operator bool() const override;
 };
 
 class libfuncMemcell final : public memcell {
@@ -186,8 +180,9 @@ public:
     std::string getLibFunc(void) const override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
-    operator std::string() override;
-    operator bool() override;
+    operator std::string() const override;
+    operator bool() const override;
 };
 
+void assign(memcell *&, memcell *);
 #endif /* ___MEMCELL_H */
