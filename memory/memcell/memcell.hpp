@@ -27,7 +27,7 @@ public:
 
     friend memcell *translate_operand(vmarg *, memcell *);
 
-    virtual void setNumber(const double number) {
+    virtual void setNumber(double number) {
         assert(false);
     }
     virtual double getNumber(void) const {
@@ -51,7 +51,7 @@ public:
         return false;
     }
 
-    virtual void setDynamicTable(const dynamic_table *table) {
+    virtual void setDynamicTable(dynamic_table *table) {
         assert(false);
     }
     virtual dynamic_table *getDynamicTable(void) const {
@@ -151,10 +151,10 @@ private:
 public:
     dynamicTableMemcell() = default;
     dynamicTableMemcell(dynamicTableMemcell const &b) = default;
-    dynamicTableMemcell(const dynamic_table);
+    dynamicTableMemcell(dynamic_table *);
     ~dynamicTableMemcell() = default;
 
-    void setDynamicTable(const dynamic_table *table);
+    void setDynamicTable(dynamic_table *table);
     dynamic_table *getDynamicTable(void) const override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;

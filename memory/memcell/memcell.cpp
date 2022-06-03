@@ -70,15 +70,15 @@ std::string boolMemcell::getTypeName() const {
 boolMemcell::operator std::string() const {}
 boolMemcell::operator bool() const {}
 
-dynamicTableMemcell::dynamicTableMemcell(const dynamic_table table) {
+dynamicTableMemcell::dynamicTableMemcell(dynamic_table *table) {
     setDynamicTable(table);
 }
 
-void dynamicTableMemcell::setDynamicTable(const dynamic_table table) {
+void dynamicTableMemcell::setDynamicTable(dynamic_table *table) {
     this->value = table;
 }
 
-dynamic_table dynamicTableMemcell::getDynamicTable(void) const {
+dynamic_table *dynamicTableMemcell::getDynamicTable(void) const {
     return this->value;
 }
 
