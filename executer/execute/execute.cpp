@@ -17,10 +17,10 @@ execute::execute() {
 
     dispatch.insert({jeq_vmiop, execute_jeq});
     dispatch.insert({jne_vmiop, execute_jne});
-    dispatch.insert({jle_vmiop, execute_jle});
-    dispatch.insert({jge_vmiop, execute_jge});
-    dispatch.insert({jlt_vmiop, execute_jlt});
-    dispatch.insert({jgt_vmiop, execute_jgt});
+    dispatch.insert({jle_vmiop, execute_ordered});
+    dispatch.insert({jge_vmiop, execute_ordered});
+    dispatch.insert({jlt_vmiop, execute_ordered});
+    dispatch.insert({jgt_vmiop, execute_ordered});
 
     dispatch.insert({call_vmiop, execute_call});
     dispatch.insert({pusharg_vmiop, execute_pusharg});
