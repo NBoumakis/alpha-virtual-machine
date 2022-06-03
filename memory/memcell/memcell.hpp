@@ -217,6 +217,16 @@ public:
     bool operator==(const memcell *op) const override;
 };
 
+class undefMemcell final : public memcell {
+public:
+    undefMemcell() = default;
+    undefMemcell(undefMemcell const &b) = default;
+    ~undefMemcell() = default;
+
+    memcell_type getType(void) const override;
+    std::string getTypeName() const override;
+};
+
 memcell *assign(memcell *&, memcell *);
 
 #endif /* ___MEMCELL_H */

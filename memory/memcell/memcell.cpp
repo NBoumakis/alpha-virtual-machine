@@ -145,7 +145,7 @@ std::string libfuncMemcell::getTypeName() const {
 libfuncMemcell::operator std::string() const {}
 libfuncMemcell::operator bool() const {}
 
-// sub-class nillMemcell
+// sub-class nilMemcell
 memcell_type nilMemcell::getType(void) const {
     return memcell_type::nil_m;
 }
@@ -157,6 +157,15 @@ std::string nilMemcell::getTypeName() const {
 nilMemcell::operator std::string() const {}
 nilMemcell::operator bool() const {}
 
+// sub-class undefMemcell
+memcell_type undefMemcell::getType(void) const {
+    return memcell_type::undefined_m;
+}
+
+std::string nilMemcell::getTypeName() const {
+    return "undefined";
+}
+
 const std::unordered_map<memcell_type, std::function<memcell *(memcell const &)>> dispatch = {
     {memcell_type::number_m, [](memcell const &) -> memcell * { return new numberMemcell; }},
     {memcell_type::string_m, [](memcell const &) -> memcell * { return new stringMemcell; }},
@@ -165,6 +174,7 @@ const std::unordered_map<memcell_type, std::function<memcell *(memcell const &)>
     {memcell_type::userfunc_m, [](memcell const &) -> memcell * { return new userfuncMemcell; }},
     {memcell_type::libfunc_m, [](memcell const &) -> memcell * { return new libfuncMemcell; }},
     {memcell_type::nil_m, [](memcell const &) -> memcell * { return new nilMemcell; }},
+    {memcell_type::undefined_m, [](memcell const &) -> memcell * { return new undefMemcell; }},
 };
 
 memcell *assign(memcell *&lv, memcell *rv) {
