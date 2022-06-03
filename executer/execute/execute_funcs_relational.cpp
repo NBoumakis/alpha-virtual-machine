@@ -2,13 +2,13 @@
 #include "executer/cpu.hpp"
 #include "lib/vmarg.h"
 #include "memory/memcell/memcell.hpp"
-#include <assert.h>
+#include <cassert>
 #include <functional>
 #include <unordered_map>
 
 void execute_jeq(instruction *instr) {
 
-    assert(instr->result.type == vmarg_t::instruction_label);
+    assert(instr->result->type == vmarg_t::instruction_label);
 
     memcell *rv1 = translate_operand(instr->arg1, cpu::ax);
     memcell *rv2 = translate_operand(instr->arg1, cpu::bx);
@@ -34,7 +34,7 @@ void execute_jeq(instruction *instr) {
 
 void execute_jne(instruction *instr) {
 
-    assert(instr->result.type == vmarg_t::instruction_label);
+    assert(instr->result->type == vmarg_t::instruction_label);
 
     memcell *rv1 = translate_operand(instr->arg1, cpu::ax);
     memcell *rv2 = translate_operand(instr->arg1, cpu::bx);
