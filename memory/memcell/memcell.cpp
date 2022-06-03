@@ -1,6 +1,7 @@
 #include "memory/memcell/memcell.hpp"
 #include "library/reporting/reporting.hpp"
 
+// sub-class numberMemcell
 numberMemcell::numberMemcell(const double number) {
     setNumber(number);
 }
@@ -24,6 +25,7 @@ std::string numberMemcell::getTypeName() const {
 numberMemcell::operator std::string() const {}
 numberMemcell::operator bool() const {}
 
+// sub-class stringMemcell
 stringMemcell::stringMemcell(const std::string &string) {
     setString(string);
 }
@@ -47,6 +49,7 @@ std::string stringMemcell::getTypeName() const {
 stringMemcell::operator std::string() const {}
 stringMemcell::operator bool() const {}
 
+// sub-class boolMemcell
 boolMemcell::boolMemcell(bool boolean) {
     setBool(boolean);
 }
@@ -70,6 +73,7 @@ std::string boolMemcell::getTypeName() const {
 boolMemcell::operator std::string() const {}
 boolMemcell::operator bool() const {}
 
+// sub-class dynamicTableMemcell
 dynamicTableMemcell::dynamicTableMemcell(dynamic_table *table) {
     setDynamicTable(table);
 }
@@ -93,6 +97,7 @@ std::string dynamicTableMemcell::getTypeName() const {
 dynamicTableMemcell::operator std::string() const {}
 dynamicTableMemcell::operator bool() const {}
 
+// sub-class userfuncMemcell
 userfuncMemcell::userfuncMemcell(const unsigned long userfunc) {
     setUserFunc(userfunc);
 }
@@ -116,6 +121,7 @@ std::string userfuncMemcell::getTypeName() const {
 userfuncMemcell::operator std::string() const {}
 userfuncMemcell::operator bool() const {}
 
+// sub-class libfuncMemcell
 libfuncMemcell::libfuncMemcell(const std::string &libfunc) {
     setLibFunc(libfunc);
 }
@@ -138,6 +144,18 @@ std::string libfuncMemcell::getTypeName() const {
 
 libfuncMemcell::operator std::string() const {}
 libfuncMemcell::operator bool() const {}
+
+// sub-class nillMemcell
+memcell_type nilMemcell::getType(void) const {
+    return memcell_type::nil_m;
+}
+
+std::string nilMemcell::getTypeName() const {
+    return "nil";
+}
+
+nilMemcell::operator std::string() const {}
+nilMemcell::operator bool() const {}
 
 const std::unordered_map<memcell_type, std::function<memcell *(memcell const &)>> dispatch = {
     {memcell_type::number_m, [](memcell const &) -> memcell * { return new numberMemcell; }},
