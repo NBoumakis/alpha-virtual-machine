@@ -5,15 +5,7 @@ dynamic_table::dynamic_table() {
 }
 
 dynamic_table::~dynamic_table() {
-    for (auto &memObj : strIndexed) {
-        memObj.second->~memcell();
-    }
-
     strIndexed.clear();
-
-    for (auto &memObj : numIndexed) {
-        memObj.second->~memcell();
-    }
 
     numIndexed.clear();
 }
@@ -54,10 +46,10 @@ void dynamic_table::inc_ref_counter() {
 }
 
 void dynamic_table::dec_ref_counter() {
-    dynamic_table obj;
+    dynamic_table *obj = new dynamic_table();
     assert(refCounter > 0);
 
     if (!(--refCounter)) {
-        obj.~dynamic_table();
+        delete obj;
     }
 }
