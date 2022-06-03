@@ -19,13 +19,13 @@ dynamic_table::~dynamic_table() {
 }
 
 memcell *dynamic_table::get_elem(const memcell *key) const {
-    switch (key->type) {
+    switch (key->getType()) {
 
-    case number_m:
-        return numIndexed.at(key);
+    case memcell_type::number_m:
+        return numIndexed.at(key->getNumber());
 
-    case string_m:
-        return strIndexed.at(key);
+    case memcell_type::string_m:
+        return strIndexed.at(key->getString());
 
     default:
         assert(false);
@@ -34,14 +34,14 @@ memcell *dynamic_table::get_elem(const memcell *key) const {
 
 void dynamic_table::set_elem(const memcell *key, const memcell *value) {
 
-    switch (key->type) {
+    switch (key->getType()) {
 
-    case number_m:
-        numIndexed.insert(std::pair<std::string, memcell *>(key, value));
+    case memcell_type::number_m:
+        numIndexed.insert(key, value);
         break;
 
-    case string_m:
-        strIndexed.insert(std::pair<std::string, memcell *>(key, value));
+    case memcell_type::string_m:
+        strIndexed.insert(key, value);
         break;
 
     default:
@@ -54,9 +54,10 @@ void dynamic_table::inc_ref_counter() {
 }
 
 void dynamic_table::dec_ref_counter() {
+    dynamic_table obj;
     assert(refCounter > 0);
 
     if (!(--refCounter)) {
-        ~dynamic_table();
+        obj.~dynamic_table();
     }
 }
