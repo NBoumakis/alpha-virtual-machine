@@ -121,6 +121,7 @@ public:
     std::string getString(void) const override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
+
     operator std::string() const override;
     operator bool() const override;
     bool operator==(const memcell *op) const override;
@@ -140,6 +141,7 @@ public:
     bool getBool(void) const override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
+
     operator std::string() const override;
     operator bool() const override;
     bool operator==(const memcell *op) const override;
@@ -159,6 +161,7 @@ public:
     dynamic_table *getDynamicTable(void) const override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
+
     operator std::string() const override;
     operator bool() const override;
     bool operator==(const memcell *op) const override;
@@ -178,6 +181,7 @@ public:
     unsigned long getUserFunc(void) const override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
+
     operator std::string() const override;
     operator bool() const override;
     bool operator==(const memcell *op) const override;
@@ -197,15 +201,13 @@ public:
     std::string getLibFunc(void) const override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
+
     operator std::string() const override;
     operator bool() const override;
     bool operator==(const memcell *op) const override;
 };
 
 class nilMemcell final : public memcell {
-private:
-    std::string value;
-
 public:
     nilMemcell() = default;
     nilMemcell(nilMemcell const &b) = default;
@@ -213,6 +215,7 @@ public:
 
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
+
     operator std::string() const override;
     operator bool() const override;
     bool operator==(const memcell *op) const override;
@@ -226,6 +229,7 @@ public:
 
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
+
     operator std::string() const override;
     operator bool() const override;
     bool operator==(const memcell *op) const override;
