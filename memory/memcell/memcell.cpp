@@ -21,8 +21,8 @@ std::string numberMemcell::getTypeName() const {
     return "number";
 }
 
-numberMemcell::operator std::string() {}
-numberMemcell::operator bool() {}
+numberMemcell::operator std::string() const {}
+numberMemcell::operator bool() const {}
 
 stringMemcell::stringMemcell(const std::string &string) {
     setString(string);
@@ -44,8 +44,8 @@ std::string stringMemcell::getTypeName() const {
     return "string";
 }
 
-stringMemcell::operator std::string() {}
-stringMemcell::operator bool() {}
+stringMemcell::operator std::string() const {}
+stringMemcell::operator bool() const {}
 
 boolMemcell::boolMemcell(const bool boolean) {
     setBool(boolean);
@@ -67,8 +67,8 @@ std::string boolMemcell::getTypeName() const {
     return "bool";
 }
 
-boolMemcell::operator std::string() {}
-boolMemcell::operator bool() {}
+boolMemcell::operator std::string() const {}
+boolMemcell::operator bool() const {}
 
 dynamicTableMemcell::dynamicTableMemcell(const dynamic_table table) {
     setDynamicTable(table);
@@ -90,8 +90,8 @@ std::string dynamicTableMemcell::getTypeName() const {
     return "table";
 }
 
-dynamicTableMemcell::operator std::string() {}
-dynamicTableMemcell::operator bool() {}
+dynamicTableMemcell::operator std::string() const {}
+dynamicTableMemcell::operator bool() const {}
 
 userfuncMemcell::userfuncMemcell(const unsigned long userfunc) {
     setUserFunc(userfunc);
@@ -113,8 +113,8 @@ std::string userfuncMemcell::getTypeName() const {
     return "userfunc";
 }
 
-userfuncMemcell::operator std::string() {}
-userfuncMemcell::operator bool() {}
+userfuncMemcell::operator std::string() const {}
+userfuncMemcell::operator bool() const {}
 
 libfuncMemcell::libfuncMemcell(const std::string &libfunc) {
     setLibFunc(libfunc);
