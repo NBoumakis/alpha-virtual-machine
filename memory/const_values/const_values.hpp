@@ -21,10 +21,10 @@ public:
     void insert_libfunc(unsigned long, std::string);
     void insert_userfunc(unsigned long, Function *);
 
-    double get_number(unsigned long);
-    std::string get_string(unsigned long);
-    std::string get_libfunc(unsigned long);
-    Function *get_userfunc(unsigned long);
+    double &get_number(unsigned long);
+    std::string &get_string(unsigned long);
+    std::string &get_libfunc(unsigned long);
+    Function *&get_userfunc(unsigned long);
 };
 
 #endif /* __CONST_VALUES_H */
