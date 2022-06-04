@@ -171,6 +171,10 @@ std::string dynamicTableMemcell::getTypeName() const {
     return "table";
 }
 
+memcell *dynamicTableMemcell::copy(memcell const *b) {
+    return new dynamicTableMemcell(*dynamic_cast<dynamicTableMemcell const *>(b));
+}
+
 dynamicTableMemcell::operator std::string() const {}
 dynamicTableMemcell::operator bool() const {}
 
