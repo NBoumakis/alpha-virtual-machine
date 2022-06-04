@@ -56,7 +56,9 @@ stringMemcell::operator std::string() const {}
 stringMemcell::operator bool() const {}
 
 bool stringMemcell::operator==(const memcell *op) const {
-    // TODO
+    assert(op);
+
+    return ((this->getType() == op->getType()) && (this->getString() == op->getString()));
 }
 
 // sub-class boolMemcell
