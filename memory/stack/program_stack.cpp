@@ -12,7 +12,7 @@ memcell *program_stack::pop() {
     return top;
 }
 
-memcell *program_stack::operator[](unsigned long index) {
+memcell *&program_stack::operator[](unsigned long index) {
     return this->stack.at(index);
 }
 

@@ -15,7 +15,7 @@ public:
     void push(memcell *);
     memcell *pop();
 
-    memcell *operator[](unsigned long);
+    memcell *&operator[](unsigned long);
 
     unsigned long size();
 };
