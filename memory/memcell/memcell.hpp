@@ -97,6 +97,7 @@ public:
     numberMemcell(double);
     ~numberMemcell() = default;
 
+    memcell *copy(memcell const *b) override;
     void setNumber(double number);
     double getNumber(void) const override;
     memcell_type getType(void) const override;
@@ -117,6 +118,7 @@ public:
     stringMemcell(const std::string &);
     ~stringMemcell() = default;
 
+    memcell *copy(memcell const *b) override;
     void setString(const std::string &string);
     std::string getString(void) const override;
     memcell_type getType(void) const override;
@@ -137,6 +139,7 @@ public:
     boolMemcell(bool);
     ~boolMemcell() = default;
 
+    memcell *copy(memcell const *b) override;
     void setBool(bool boolean);
     bool getBool(void) const override;
     memcell_type getType(void) const override;
@@ -157,6 +160,7 @@ public:
     dynamicTableMemcell(dynamic_table *);
     ~dynamicTableMemcell() = default;
 
+    memcell *copy(memcell const *b) override;
     void setDynamicTable(dynamic_table *table);
     dynamic_table *getDynamicTable(void) const override;
     memcell_type getType(void) const override;
@@ -177,6 +181,7 @@ public:
     userfuncMemcell(const unsigned long);
     ~userfuncMemcell() = default;
 
+    memcell *copy(memcell const *b) override;
     void setUserFunc(const unsigned long userfunc);
     unsigned long getUserFunc(void) const override;
     memcell_type getType(void) const override;
@@ -197,6 +202,7 @@ public:
     libfuncMemcell(const std::string &);
     ~libfuncMemcell() = default;
 
+    memcell *copy(memcell const *b) override;
     void setLibFunc(const std::string &userfunc);
     std::string getLibFunc(void) const override;
     memcell_type getType(void) const override;
@@ -213,6 +219,7 @@ public:
     nilMemcell(nilMemcell const &b) = default;
     ~nilMemcell() = default;
 
+    memcell *copy(memcell const *b) override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
 
@@ -227,6 +234,7 @@ public:
     undefMemcell(undefMemcell const &b) = default;
     ~undefMemcell() = default;
 
+    memcell *copy(memcell const *b) override;
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
 
