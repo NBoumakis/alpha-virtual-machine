@@ -116,6 +116,10 @@ std::string boolMemcell::getTypeName() const {
     return "bool";
 }
 
+memcell *boolMemcell::copy(memcell const *b) {
+    return new boolMemcell(*dynamic_cast<boolMemcell const *>(b));
+}
+
 boolMemcell::operator std::string() const {}
 boolMemcell::operator bool() const {}
 
