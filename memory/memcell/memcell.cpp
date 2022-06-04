@@ -27,6 +27,9 @@ numberMemcell::operator bool() const {}
 
 bool numberMemcell::operator==(const memcell *op) const {
     // TODO
+    assert(op);
+
+    return (*this == *op);
 }
 
 // sub-class stringMemcell
@@ -196,6 +199,9 @@ std::string nilMemcell::getTypeName() const {
 
 bool undefMemcell::operator==(const memcell *op) const {
     // TODO
+    assert(op);
+
+    warning("Cannot assign from a undefined r-value");
 }
 
 // avm_assign
