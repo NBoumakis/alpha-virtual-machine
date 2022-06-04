@@ -50,6 +50,6 @@ void dynamic_table::dec_ref_counter() {
     assert(refCounter > 0);
 
     if (!(--refCounter)) {
-        delete obj;
+        delete this;
     }
 }
