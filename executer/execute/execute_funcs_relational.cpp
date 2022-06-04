@@ -20,7 +20,7 @@ void execute_jeq(instruction *instr) {
     } else if (rv1->getType() == memcell_type::nil_m || rv2->getType() == memcell_type::nil_m) {
         result = (rv1->getType() == memcell_type::nil_m) && (rv2->getType() == memcell_type::nil_m);
     } else if (rv1->getType() == memcell_type::bool_m || rv2->getType() == memcell_type::bool_m) {
-        result = (rv1->getBool() == rv2->getBool());
+        result = (static_cast<bool>(*rv1) == static_cast<bool>(*rv2));
     } else if (rv1->getType() != rv2->getType()) {
         // TODO
         // error:%s == %s is illegal
@@ -46,7 +46,7 @@ void execute_jne(instruction *instr) {
     } else if (rv1->getType() == memcell_type::nil_m || rv2->getType() == memcell_type::nil_m) {
         result = (rv1->getType() == memcell_type::nil_m) && (rv2->getType() == memcell_type::nil_m);
     } else if (rv1->getType() == memcell_type::bool_m || rv2->getType() == memcell_type::bool_m) {
-        result = (rv1->getBool() == rv2->getBool());
+        result = (static_cast<bool>(*rv1) != static_cast<bool>(*rv2));
     } else if (rv1->getType() != rv2->getType()) {
         // TODO
         // error:%s == %s is illegal
