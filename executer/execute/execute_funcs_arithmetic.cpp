@@ -28,7 +28,7 @@ void execute_arithmetic(instruction *instr) {
 
     if (rv1->getType() != memcell_type::number_m || rv2->getType() != memcell_type::number_m) {
         // FIXME
-        std::cerr << "not a number in arithmetic !";
+        std::cerr << "ERROR: not a number in arithmetic !";
         cpu::execution_finished = 1;
     } else {
         lv = new numberMemcell();
