@@ -156,7 +156,13 @@ userfuncMemcell::operator std::string() const {}
 userfuncMemcell::operator bool() const {}
 
 bool userfuncMemcell::operator==(const memcell *op) const {
-    // TODO
+    assert(op);
+
+    if (op->getType() == memcell_type::nil_m) {
+        return false;
+    } else {
+        return ((this->getType() == op->getType()) && (this->getDynamicTable() == op->getDynamicTable()));
+    }
 }
 
 // sub-class libfuncMemcell
@@ -216,7 +222,7 @@ bool undefMemcell::operator==(const memcell *op) const {
     // TODO
     assert(op);
 
-    // warning: "Cannot assign from a undefined r-value";
+    // run time error: "Cannot assign from a undefined r-value";
 }
 
 // avm_assign
