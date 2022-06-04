@@ -26,12 +26,21 @@ numberMemcell::operator std::string() const {}
 numberMemcell::operator bool() const {}
 
 bool numberMemcell::operator==(const memcell *op) const {
-    assert(op);
+    assert(op && op->getType() != memcell_type::undefined_m);
 
-    if ((this->getType() == op->getType()) && (this->getNumber() == op->getNumber())) {
-        return (this->getNumber() != 0);
-    } else {
+    switch (op->getType()) {
+
+    case memcell_type::bool_m:
+        return ((this->getNumber() != 0) && op->getBool());
+
+    case memcell_type::nil_m:
         return false;
+
+    case memcell_type::number_m:
+        return ((this->getNumber() != 0) && (op->getNumber() != 0) && (this->getNumber() == op->getNumber()));
+
+    default:
+        assert(false);
     }
 }
 
