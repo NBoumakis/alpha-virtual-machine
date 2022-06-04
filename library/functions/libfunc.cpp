@@ -9,7 +9,7 @@ void libfunc_typeof() {
 
     } else {
         delete cpu::retval;
-        cpu::retval = new stringMemcell((cpu::env)->get_actual(0UL).getTypeName());
+        cpu::retval = new stringMemcell(cpu::env.get_actual(0UL)->getTypeName());
     }
 }
 
