@@ -156,12 +156,21 @@ userfuncMemcell::operator std::string() const {}
 userfuncMemcell::operator bool() const {}
 
 bool userfuncMemcell::operator==(const memcell *op) const {
-    assert(op);
+    assert(op && op->getType() != memcell_type::undefined_m);
 
-    if (op->getType() == memcell_type::nil_m) {
+    switch (op->getType()) {
+
+    case memcell_type::nil_m:
         return false;
-    } else {
-        return ((this->getType() == op->getType()) && (this->getDynamicTable() == op->getDynamicTable()));
+
+    case memcell_type::bool_m:
+        return op->getBool();
+
+    case memcell_type::userfunc_m:
+        return (this->getUserFunc() == op->getUserFunc());
+
+    default:
+        assert(false);
     }
 }
 
