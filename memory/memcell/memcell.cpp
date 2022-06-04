@@ -94,7 +94,30 @@ boolMemcell::operator std::string() const {}
 boolMemcell::operator bool() const {}
 
 bool boolMemcell::operator==(const memcell *op) const {
-    // TODO
+    assert(op && op->getType() != memcell_type::undefined_m);
+
+    switch (op->getType()) {
+
+    case memcell_type::nil_m:
+        return false;
+
+    case memcell_type::bool_m:
+        return (this->getBool() && op->getBool());
+
+    case memcell_type::table_m:
+    case memcell_type::userfunc_m:
+    case memcell_type::libfunc_m:
+        return (this->getBool());
+
+    case memcell_type::number_m:
+        return ((op->getNumber() != 0) && this->getBool());
+
+    case memcell_type::string_m:
+        return ((op->getString() != "") && this->getBool());
+
+    default:
+        assert(false);
+    }
 }
 
 // sub-class dynamicTableMemcell
