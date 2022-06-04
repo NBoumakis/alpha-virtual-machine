@@ -22,6 +22,10 @@ std::string numberMemcell::getTypeName() const {
     return "number";
 }
 
+memcell *numberMemcell::copy(memcell const *b) {
+    return new numberMemcell(*dynamic_cast<numberMemcell const *>(b));
+}
+
 numberMemcell::operator std::string() const {}
 numberMemcell::operator bool() const {}
 
