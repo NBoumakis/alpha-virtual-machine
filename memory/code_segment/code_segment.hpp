@@ -9,8 +9,8 @@ private:
     std::deque<instruction> instructions;
 
 public:
-    code_segment();
-    ~code_segment();
+    code_segment() = default;
+    ~code_segment() = default;
 
     void insert(instruction &);
     instruction &operator[](unsigned long);
