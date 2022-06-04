@@ -1,6 +1,6 @@
-#include "execute_funcs_table.hpp"
-#include "cpu.hpp"
-#include "memcell.hpp"
+#include "executer/execute/execute_funcs_table.hpp"
+#include "executer/cpu.hpp"
+#include "memory/memcell/memcell.hpp"
 #include "table/dynamic_table.hpp"
 #include <assert.h>
 
