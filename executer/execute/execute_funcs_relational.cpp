@@ -15,15 +15,15 @@ void execute_jeq(instruction *instr) {
     bool result;
 
     if (rv1->getType() == memcell_type::undefined_m || rv2->getType() == memcell_type::undefined_m) {
-        // TODO
-        // error:'undef' involved in equality !
+        // FIXME
+        std::cerr << "ERROR: 'undef' involved in equality!";
     } else if (rv1->getType() == memcell_type::nil_m || rv2->getType() == memcell_type::nil_m) {
         result = (rv1->getType() == memcell_type::nil_m) && (rv2->getType() == memcell_type::nil_m);
     } else if (rv1->getType() == memcell_type::bool_m || rv2->getType() == memcell_type::bool_m) {
         result = (static_cast<bool>(*rv1) == static_cast<bool>(*rv2));
     } else if (rv1->getType() != rv2->getType()) {
-        // TODO
-        // error:%s == %s is illegal
+        // FIXME
+        std::cerr << "ERROR: " << rv1->getTypeName() << " == " << rv2->getTypeName() << "is illegal!";
     } else {
         result = (*rv1 == *rv2);
     }
@@ -41,15 +41,15 @@ void execute_jne(instruction *instr) {
     bool result;
 
     if (rv1->getType() == memcell_type::undefined_m || rv2->getType() == memcell_type::undefined_m) {
-        // TODO
-        // error:'undef' involved in equality !
+        // FIXME
+        std::cerr << "ERROR: 'undef' involved in equality!";
     } else if (rv1->getType() == memcell_type::nil_m || rv2->getType() == memcell_type::nil_m) {
         result = (rv1->getType() == memcell_type::nil_m) && (rv2->getType() == memcell_type::nil_m);
     } else if (rv1->getType() == memcell_type::bool_m || rv2->getType() == memcell_type::bool_m) {
         result = (static_cast<bool>(*rv1) != static_cast<bool>(*rv2));
     } else if (rv1->getType() != rv2->getType()) {
-        // TODO
-        // error:%s == %s is illegal
+        // FIXME
+        std::cerr << "ERROR: " << rv1->getTypeName() << " != " << rv2->getTypeName() << "is illegal!";
     } else {
         result = (*rv1 != *rv2);
     }
@@ -79,7 +79,8 @@ void execute_ordered(instruction *instr) {
     if (rv1->getType() == memcell_type::number_m && rv2->getType() == memcell_type::number_m) {
         result = ordered_funcs.at(instr->opcode)(rv1->getNumber(), rv2->getNumber());
     } else {
-        // error : only numbers
+        // FIXME
+        std::cerr << "ERROR:comparisons are only allowed between numbers";
     }
 
     if (!cpu::execution_finished && result)
