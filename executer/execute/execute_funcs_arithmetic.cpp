@@ -1,6 +1,6 @@
-#include "executer\execute\execute_funcs_arithmetic.hpp"
-#include "executer\cpu.hpp"
-#include "memory\memcell\memcell.hpp"
+#include "executer/execute/execute_funcs_arithmetic.hpp"
+#include "executer/cpu.hpp"
+#include "memory/memcell/memcell.hpp"
 #include <assert.h>
 #include <functional>
 #include <unordered_map>
