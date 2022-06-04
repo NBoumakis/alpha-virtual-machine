@@ -3,6 +3,7 @@
 #include "environment.hpp"
 #include "memcell.hpp"
 #include <assert.h>
+#include <iostream>
 
 void execute_call(instruction *instr) {
     memcell *func = translate_operand(instr->result, cpu::ax);
@@ -30,8 +31,8 @@ void execute_call(instruction *instr) {
 
     default: {
         std::string s = static_cast<std::string>(*func);
-        // TODO
-        // avm_error:call cannot bind %s to function
+        // FIXME
+        std::cerr << "call : cannot bind " << s << " to function !";
         cpu::execution_finished = 1;
     }
     }
@@ -41,8 +42,8 @@ void execute_pusharg(instruction *instr) {
     memcell *arg = translate_operand(instr->arg1, cpu::ax);
     assert(arg);
 
-    assign(cpu::stack[cpu::top], arg);
-    //++totalActuals;
+    cpu::stack.push(arg);
+    ++cpu::env.total_actuals;
 
     cpu::stack.push(arg);
 }
@@ -52,7 +53,7 @@ void execute_funcenter(instruction *instr) {
     assert(func);
     assert(cpu::pc == func->getUserFunc());
 
-    // totalActuals =0;
+    cpu::env.total_actuals = 0;
     Function *func_info = cpu::env.get_funcinfo(cpu::pc);
     cpu::topsp = cpu::top;
     cpu::top = cpu::top - func_info->totalLocals;
