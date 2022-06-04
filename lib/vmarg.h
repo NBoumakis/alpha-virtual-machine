@@ -1,7 +1,7 @@
 #ifndef __VMARGS_H
 #define __VMARGS_H
 
-#include "lib/types.h"
+#include <string>
 
 enum vmarg_t { instruction_label,
                global_var,
@@ -22,7 +22,6 @@ public:
 
     std::string to_string();
 
-    vmarg(const exprValue *arg);
     vmarg(vmarg_t type);
     vmarg(vmarg_t type, unsigned long val);
 };

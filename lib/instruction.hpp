@@ -1,16 +1,7 @@
 #ifndef __INSTRUCTION_H
 #define __INSTRUCTION_H
 
-#include "lib/icode.h"
 #include "lib/vmarg.h"
-#include <list>
-#include <vector>
-
-class instruction;
-class incomplete_jump;
-
-extern std::vector<instruction *> instruction_vector;
-extern std::list<incomplete_jump> ij_list;
 
 enum vmopcode {
     assign_vmiop,
@@ -48,30 +39,7 @@ public:
     vmarg *result;
     unsigned long srcLine;
 
-    friend void patchIncompleteJumps();
-
-    instruction(vmopcode);
-    instruction(vmopcode, quad &);
     instruction(vmopcode, vmarg *, vmarg *, vmarg *);
 };
-
-class incomplete_jump {
-    unsigned long instrNo;
-    unsigned long iaddress;
-
-    friend void patchIncompleteJumps();
-
-public:
-    incomplete_jump(unsigned long instrNo, unsigned long iaddress) : instrNo(instrNo),
-                                                                     iaddress(iaddress) {}
-};
-
-void patchIncompleteJumps();
-
-unsigned long nextInstructionLabel();
-
-void emit_instruction(instruction *const &);
-
-std::string target_to_string();
 
 #endif /* __INSTRUCTION_H */
