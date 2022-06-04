@@ -8,9 +8,8 @@ void execute_newtable(instruction *instr) {
     memcell *lv = translate_operand(instr->result, (memcell *)nullptr);
     assert(lv);
 
-    // TODO
     lv = new dynamicTableMemcell();
-    lv->getDynamicTable().inc_ref_counter();
+    lv->getDynamicTable()->inc_ref_counter();
 }
 
 void execute_tablegetelem(instruction *instr) {
@@ -27,7 +26,7 @@ void execute_tablegetelem(instruction *instr) {
         // error:illegal use of type %s as table ,typeStrings[t->type]
         assign(lv, new nilMemcell());
     } else {
-        memcell *content = t->getDynamicTable().get_elem(i);
+        memcell *content = t->getDynamicTable()->get_elem(i);
 
         if (content) {
             assign(lv, content);
@@ -50,6 +49,6 @@ void execute_tablesetelem(instruction *instr) {
     if (t->getType() != memcell_type::table_m) {
         // error : illegal use of type %s as table
     } else {
-        t->getDynamicTable().set_elem(i, c);
+        t->getDynamicTable()->set_elem(i, c);
     }
 }
