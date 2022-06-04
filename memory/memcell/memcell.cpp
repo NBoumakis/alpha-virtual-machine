@@ -206,7 +206,13 @@ nilMemcell::operator std::string() const {}
 nilMemcell::operator bool() const {}
 
 bool nilMemcell::operator==(const memcell *op) const {
-    // TODO
+    assert(op && op->getType() == memcell_type::undefined_m);
+
+    if (op->getType() != memcell_type::nil_m) {
+        return false;
+    }
+
+    return true;
 }
 
 // sub-class undefMemcell
