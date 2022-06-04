@@ -3,8 +3,8 @@
 
 #include <fstream>
 
-void load_binary(std::ifstream &);
+bool load_binary(std::ifstream &);
 
-void load_text(std::ifstream &);
+bool load_text(std::ifstream &);
 
 #endif /* __LOADER_H */
