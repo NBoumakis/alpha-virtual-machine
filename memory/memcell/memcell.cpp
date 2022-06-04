@@ -28,7 +28,11 @@ numberMemcell::operator bool() const {}
 bool numberMemcell::operator==(const memcell *op) const {
     assert(op);
 
-    return ((this->getType() == op->getType()) && (this->getNumber() == op->getNumber()));
+    if ((this->getType() == op->getType()) && (this->getNumber() == op->getNumber())) {
+        return (this->getNumber() != 0);
+    } else {
+        return false;
+    }
 }
 
 // sub-class stringMemcell
@@ -114,7 +118,12 @@ dynamicTableMemcell::operator std::string() const {}
 dynamicTableMemcell::operator bool() const {}
 
 bool dynamicTableMemcell::operator==(const memcell *op) const {
-    // TODO
+    assert(op);
+
+    if (op->getType() == memcell_type::nil_m) {
+        return false;
+    } else {
+    }
 }
 
 // sub-class userfuncMemcell
