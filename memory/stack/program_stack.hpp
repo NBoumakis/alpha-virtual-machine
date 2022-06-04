@@ -9,8 +9,8 @@ private:
     std::deque<memcell *> stack;
 
 public:
-    program_stack();
-    ~program_stack();
+    program_stack() = default;
+    ~program_stack() = default;
 
     void push(memcell *);
     memcell *pop();
