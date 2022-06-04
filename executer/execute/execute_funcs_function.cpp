@@ -1,7 +1,7 @@
-#include "execute_funcs_function.hpp"
-#include "cpu.hpp"
-#include "environment.hpp"
-#include "memcell.hpp"
+#include "executer\execute\execute_funcs_function.hpp"
+#include "executer\cpu.hpp"
+#include "library\environment\environment.hpp"
+#include "memory\memcell\memcell.hpp"
 #include <assert.h>
 #include <iostream>
 
