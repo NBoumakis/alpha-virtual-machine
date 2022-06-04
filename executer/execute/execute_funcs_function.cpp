@@ -32,7 +32,7 @@ void execute_call(instruction *instr) {
     default: {
         std::string s = static_cast<std::string>(*func);
         // FIXME
-        std::cerr << "call : cannot bind " << s << " to function !";
+        std::cerr << "ERROR: call : cannot bind " << s << " to function !";
         cpu::execution_finished = 1;
     }
     }
