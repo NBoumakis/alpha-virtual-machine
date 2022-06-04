@@ -122,12 +122,21 @@ dynamicTableMemcell::operator std::string() const {}
 dynamicTableMemcell::operator bool() const {}
 
 bool dynamicTableMemcell::operator==(const memcell *op) const {
-    assert(op);
+    assert(op && op->getType() != memcell_type::undefined_m);
 
-    if (op->getType() == memcell_type::nil_m) {
+    switch (op->getType()) {
+
+    case memcell_type::nil_m:
         return false;
-    } else {
-        return ((this->getType() == op->getType()) && (this->getDynamicTable() == op->getDynamicTable()));
+
+    case memcell_type::bool_m:
+        return op->getBool();
+
+    case memcell_type::table_m:
+        return (this->getDynamicTable() == op->getDynamicTable());
+
+    default:
+        assert(false);
     }
 }
 
