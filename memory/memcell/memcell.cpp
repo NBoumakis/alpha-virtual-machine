@@ -326,6 +326,10 @@ std::string undefMemcell::getTypeName() const {
     return "undefined";
 }
 
+memcell *undefMemcell::copy(memcell const *b) {
+    return new undefMemcell(*dynamic_cast<undefMemcell const *>(b));
+}
+
 bool undefMemcell::operator==(const memcell *op) const {
     assert(op);
 
