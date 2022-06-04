@@ -22,7 +22,7 @@ enum class memcell_type {
 
 class memcell {
 public:
-    memcell() = default;
+    virtual memcell *copy(memcell const *) = 0;
     virtual ~memcell() = default;
 
     friend memcell *translate_operand(vmarg *, memcell *);
