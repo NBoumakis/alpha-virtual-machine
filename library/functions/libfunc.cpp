@@ -5,8 +5,8 @@ void libfunc_typeof() {
     unsigned long num_of_actuals = cpu::env.total_actuals();
 
     if (num_of_actuals != 1) {
-        // error one argument not expected in 'typeof'
-
+        // FIXME
+        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'";
     } else {
         delete cpu::retval;
         cpu::retval = new stringMemcell(cpu::env.get_actual(0UL)->getTypeName());
@@ -25,7 +25,8 @@ void libfunc_totalarguments() {
     delete cpu::retval;
 
     if (!p_topsp) {
-        // avm_error:totalarguments called outside a function
+        // FIXME
+        std::cerr << "ERROR: 'totalarguments' called outside a function !";
         cpu::retval = new nilMemcell();
     } else {
         cpu::retval = new numberMemcell(cpu::env.get_envvalue(p_topsp + 4)); // AVM_NUMACTUALS_OFFSET
