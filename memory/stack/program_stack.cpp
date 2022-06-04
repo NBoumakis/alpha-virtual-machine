@@ -11,3 +11,7 @@ memcell *program_stack::pop() {
 
     return top;
 }
+
+unsigned long program_stack::size() {
+    return this->stack.size();
+}
