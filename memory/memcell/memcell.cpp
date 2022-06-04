@@ -300,6 +300,10 @@ std::string nilMemcell::getTypeName() const {
     return "nil";
 }
 
+memcell *nilMemcell::copy(memcell const *b) {
+    return new nilMemcell(*dynamic_cast<nilMemcell const *>(b));
+}
+
 nilMemcell::operator std::string() const {}
 nilMemcell::operator bool() const {}
 
