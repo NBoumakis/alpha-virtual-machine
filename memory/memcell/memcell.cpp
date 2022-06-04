@@ -60,12 +60,21 @@ stringMemcell::operator std::string() const {}
 stringMemcell::operator bool() const {}
 
 bool stringMemcell::operator==(const memcell *op) const {
-    assert(op);
+    assert(op && op->getType() != memcell_type::undefined_m);
 
-    if ((this->getType() == op->getType()) && (this->getString() == op->getString())) {
-        return (this->getString() != "");
-    } else {
+    switch (op->getType()) {
+
+    case memcell_type::bool_m:
+        return ((this->getString() != "") && op->getBool());
+
+    case memcell_type::nil_m:
         return false;
+
+    case memcell_type::string_m:
+        return ((this->getString() != "") && (op->getString() != "") && (this->getString() == op->getString()));
+
+    default:
+        assert(false);
     }
 }
 
