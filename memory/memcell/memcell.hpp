@@ -22,7 +22,7 @@ enum class memcell_type {
 
 class memcell {
 public:
-    virtual memcell *copy(memcell const *) = 0;
+    memcell() = default;
     virtual ~memcell() = default;
 
     friend memcell *translate_operand(vmarg *, memcell *);
@@ -78,6 +78,8 @@ public:
     virtual memcell_type getType(void) const = 0;
     virtual std::string getTypeName() const = 0;
 
+    virtual memcell *copy(memcell const *) = 0;
+
     virtual operator std::string() const = 0;
     virtual operator bool() const = 0;
 
@@ -98,6 +100,7 @@ public:
     ~numberMemcell() = default;
 
     memcell *copy(memcell const *b) override;
+
     void setNumber(double number);
     double getNumber(void) const override;
     memcell_type getType(void) const override;
@@ -119,6 +122,7 @@ public:
     ~stringMemcell() = default;
 
     memcell *copy(memcell const *b) override;
+
     void setString(const std::string &string);
     std::string getString(void) const override;
     memcell_type getType(void) const override;
@@ -140,6 +144,7 @@ public:
     ~boolMemcell() = default;
 
     memcell *copy(memcell const *b) override;
+
     void setBool(bool boolean);
     bool getBool(void) const override;
     memcell_type getType(void) const override;
@@ -161,6 +166,7 @@ public:
     ~dynamicTableMemcell() = default;
 
     memcell *copy(memcell const *b) override;
+
     void setDynamicTable(dynamic_table *table);
     dynamic_table *getDynamicTable(void) const override;
     memcell_type getType(void) const override;
@@ -182,6 +188,7 @@ public:
     ~userfuncMemcell() = default;
 
     memcell *copy(memcell const *b) override;
+
     void setUserFunc(const unsigned long userfunc);
     unsigned long getUserFunc(void) const override;
     memcell_type getType(void) const override;
@@ -203,6 +210,7 @@ public:
     ~libfuncMemcell() = default;
 
     memcell *copy(memcell const *b) override;
+
     void setLibFunc(const std::string &userfunc);
     std::string getLibFunc(void) const override;
     memcell_type getType(void) const override;
@@ -220,6 +228,7 @@ public:
     ~nilMemcell() = default;
 
     memcell *copy(memcell const *b) override;
+
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
 
@@ -235,6 +244,7 @@ public:
     ~undefMemcell() = default;
 
     memcell *copy(memcell const *b) override;
+
     memcell_type getType(void) const override;
     std::string getTypeName() const override;
 
