@@ -190,7 +190,22 @@ libfuncMemcell::operator std::string() const {}
 libfuncMemcell::operator bool() const {}
 
 bool libfuncMemcell::operator==(const memcell *op) const {
-    // TODO
+    assert(op && op->getType() != memcell_type::undefined_m);
+
+    switch (op->getType()) {
+
+    case memcell_type::nil_m:
+        return false;
+
+    case memcell_type::bool_m:
+        return op->getBool();
+
+    case memcell_type::libfunc_m:
+        return (this->getLibFunc() == op->getLibFunc());
+
+    default:
+        assert(false);
+    }
 }
 
 // sub-class nilMemcell
@@ -206,7 +221,7 @@ nilMemcell::operator std::string() const {}
 nilMemcell::operator bool() const {}
 
 bool nilMemcell::operator==(const memcell *op) const {
-    assert(op && op->getType() == memcell_type::undefined_m);
+    assert(op && op->getType() != memcell_type::undefined_m);
 
     if (op->getType() != memcell_type::nil_m) {
         return false;
@@ -225,7 +240,6 @@ std::string undefMemcell::getTypeName() const {
 }
 
 bool undefMemcell::operator==(const memcell *op) const {
-    // TODO
     assert(op);
 
     // run time error: "Cannot assign from a undefined r-value";
