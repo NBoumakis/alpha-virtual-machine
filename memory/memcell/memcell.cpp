@@ -62,7 +62,11 @@ stringMemcell::operator bool() const {}
 bool stringMemcell::operator==(const memcell *op) const {
     assert(op);
 
-    return ((this->getType() == op->getType()) && (this->getString() == op->getString()));
+    if ((this->getType() == op->getType()) && (this->getString() == op->getString())) {
+        return (this->getString() != "");
+    } else {
+        return false;
+    }
 }
 
 // sub-class boolMemcell
