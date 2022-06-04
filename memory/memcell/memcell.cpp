@@ -127,6 +127,7 @@ bool dynamicTableMemcell::operator==(const memcell *op) const {
     if (op->getType() == memcell_type::nil_m) {
         return false;
     } else {
+        return ((this->getType() == op->getType()) && (this->getDynamicTable() == op->getDynamicTable()));
     }
 }
 
