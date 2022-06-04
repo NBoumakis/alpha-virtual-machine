@@ -69,6 +69,10 @@ std::string stringMemcell::getTypeName() const {
     return "string";
 }
 
+memcell *stringMemcell::copy(memcell const *b) {
+    return new stringMemcell(*dynamic_cast<stringMemcell const *>(b));
+}
+
 stringMemcell::operator std::string() const {}
 stringMemcell::operator bool() const {}
 
