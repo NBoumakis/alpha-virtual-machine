@@ -1,7 +1,7 @@
 #ifndef __ENVIRONMENT_H
 #define __ENVIRONMENT_H
 
-#include "lib/symbol.h"
+#include "lib/function.hpp"
 #include "memory/memcell/memcell.hpp"
 #include <functional>
 #include <string>

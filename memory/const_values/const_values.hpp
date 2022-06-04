@@ -1,7 +1,7 @@
 #ifndef __CONST_VALUES_H
 #define __CONST_VALUES_H
 
-#include "lib/symbol.h"
+#include "lib/function.hpp"
 #include <string>
 #include <unordered_map>
 
