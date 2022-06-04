@@ -218,6 +218,10 @@ std::string userfuncMemcell::getTypeName() const {
     return "userfunc";
 }
 
+memcell *userfuncMemcell::copy(memcell const *b) {
+    return new userfuncMemcell(*dynamic_cast<userfuncMemcell const *>(b));
+}
+
 userfuncMemcell::operator std::string() const {}
 userfuncMemcell::operator bool() const {}
 
