@@ -9,7 +9,7 @@ bool is_number(const std::string &s) {
     return !s.empty() && std::all_of(s.begin(), s.end(), ::isdigit);
 }
 
-static bool magicnumber(std::ifstream &in_file) {
+static bool magicnumber(std::ifstream &in_file) noexcept {
     unsigned number;
 
     if (in_file >> number) {
@@ -59,7 +59,7 @@ static bool strings(std::ifstream &in_file, std::unordered_map<unsigned long, st
     return true;
 }
 
-static bool numbers(std::ifstream &in_file) {
+static bool numbers(std::ifstream &in_file) noexcept {
     unsigned long total;
     std::string token;
 
@@ -143,7 +143,7 @@ static bool libfunctions(std::ifstream &in_file) {
     return true;
 }
 
-static bool arrays(std::ifstream &in_file) {
+static bool arrays(std::ifstream &in_file) noexcept {
     std::unordered_map<unsigned long, std::string> string_map;
 
     try {
@@ -173,7 +173,57 @@ static bool arrays(std::ifstream &in_file) {
     return userFunctions(in_file) && libfunctions(in_file);
 }
 
-static bool code(std::ifstream &in_file) {
+static bool code(std::ifstream &in_file) noexcept {
+    unsigned long total;
+    std::string token;
+
+    in_file >> token;
+
+    if (!is_number(token)) {
+        return false;
+    }
+
+    total = std::stoul(token);
+
+    for (unsigned long i = total; i; --i) {
+        vmopcode op;
+        std::string arg1TypeStr, arg2TypeStr, resultTypeStr;
+        vmarg *arg1 = nullptr, *arg2 = nullptr, *result = nullptr;
+
+        // Read opcode
+        in_file >> token;
+        op = static_cast<vmopcode>(std::stoi(token));
+
+        // Read argument types
+        in_file >> arg1TypeStr >> arg2TypeStr >> resultTypeStr;
+
+        // Parse arguments
+        try {
+            in_file >> token;
+            if (arg1TypeStr != "-1") {
+                arg1 = new vmarg(static_cast<vmarg_t>(std::stoi(arg1TypeStr)), std::stoul(token));
+            }
+
+            in_file >> token;
+            if (arg2TypeStr != "-1") {
+                arg2 = new vmarg(static_cast<vmarg_t>(std::stoi(arg2TypeStr)), std::stoul(token));
+            }
+
+            in_file >> token;
+            if (resultTypeStr != "-1") {
+                result = new vmarg(static_cast<vmarg_t>(std::stoi(resultTypeStr)), std::stoul(token));
+            }
+        } catch (const std::invalid_argument &e) {
+            std::cerr << e.what() << '\n';
+
+            return false;
+        }
+
+        instruction instr = instruction(op, arg1, arg2, result);
+        cpu::code.insert(instr);
+    }
+
+    return true;
 }
 
 bool load_text(std::ifstream &in_file) {
