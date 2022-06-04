@@ -1,4 +1,4 @@
-#include "code_segment.hpp"
+#include "memory/code_segment/code_segment.hpp"
 
 unsigned long code_segment::size() {
     return instructions.size();
