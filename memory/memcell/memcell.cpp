@@ -265,6 +265,10 @@ std::string libfuncMemcell::getTypeName() const {
     return "libfunc";
 }
 
+memcell *libfuncMemcell::copy(memcell const *b) {
+    return new libfuncMemcell(*dynamic_cast<libfuncMemcell const *>(b));
+}
+
 libfuncMemcell::operator std::string() const {}
 libfuncMemcell::operator bool() const {}
 
