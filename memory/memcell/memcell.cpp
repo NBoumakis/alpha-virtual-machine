@@ -214,7 +214,7 @@ memcell_type undefMemcell::getType(void) const {
     return memcell_type::undefined_m;
 }
 
-std::string nilMemcell::getTypeName() const {
+std::string undefMemcell::getTypeName() const {
     return "undefined";
 }
 
