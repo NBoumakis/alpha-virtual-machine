@@ -6,7 +6,7 @@
 #include <assert.h>
 
 void execute_newtable(instruction *instr) {
-    memcell *lv = translate_operand(instr->result);
+    memcell *lv = translate_operand(instr->arg1);
     assert(lv);
 
     lv = new dynamicTableMemcell();
@@ -14,13 +14,12 @@ void execute_newtable(instruction *instr) {
 }
 
 void execute_tablegetelem(instruction *instr) {
-    memcell *lv = translate_operand(instr->result);
-    memcell *t = translate_operand(instr->arg1);
-    memcell *i = translate_operand(instr->arg2, cpu::ax);
+    memcell *lv = translate_operand(instr->arg1);
+    memcell *t = translate_operand(instr->arg2);
+    memcell *i = translate_operand(instr->result, cpu::ax);
 
-    assert(lv || lv == cpu::retval);
-    assert(t && t > cpu::stack[cpu::top]);
-
+    assert(lv);
+    assert(t);
     assert(i);
 
     if (t->getType() != memcell_type::table_m) {
@@ -43,9 +42,9 @@ void execute_tablegetelem(instruction *instr) {
 }
 
 void execute_tablesetelem(instruction *instr) {
-    memcell *t = translate_operand(instr->result);
-    memcell *i = translate_operand(instr->arg1, cpu::ax);
-    memcell *c = translate_operand(instr->arg2, cpu::bx);
+    memcell *c = translate_operand(instr->arg1, cpu::bx);
+    memcell *t = translate_operand(instr->arg2);
+    memcell *i = translate_operand(instr->result, cpu::ax);
 
     assert(t && c && i);
 

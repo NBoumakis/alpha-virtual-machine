@@ -12,7 +12,7 @@ void execute_jeq(instruction *instr) {
     assert(instr->result->type == vmarg_t::instruction_label);
 
     memcell *rv1 = translate_operand(instr->arg1, cpu::ax);
-    memcell *rv2 = translate_operand(instr->arg1, cpu::bx);
+    memcell *rv2 = translate_operand(instr->arg2, cpu::bx);
     bool result;
 
     if (rv1->getType() == memcell_type::undefined_m || rv2->getType() == memcell_type::undefined_m) {
@@ -38,7 +38,7 @@ void execute_jne(instruction *instr) {
     assert(instr->result->type == vmarg_t::instruction_label);
 
     memcell *rv1 = translate_operand(instr->arg1, cpu::ax);
-    memcell *rv2 = translate_operand(instr->arg1, cpu::bx);
+    memcell *rv2 = translate_operand(instr->arg2, cpu::bx);
     bool result;
 
     if (rv1->getType() == memcell_type::undefined_m || rv2->getType() == memcell_type::undefined_m) {
@@ -72,7 +72,7 @@ static std::unordered_map<vmopcode, std::function<bool(double, double)>> ordered
 
 void execute_ordered(instruction *instr) {
     memcell *rv1 = translate_operand(instr->arg1, cpu::ax);
-    memcell *rv2 = translate_operand(instr->arg1, cpu::bx);
+    memcell *rv2 = translate_operand(instr->arg2, cpu::bx);
     bool result;
 
     assert(rv1 && rv2);

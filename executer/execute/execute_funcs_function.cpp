@@ -7,7 +7,7 @@
 #include <iostream>
 
 void execute_call(instruction *instr) {
-    memcell *func = translate_operand(instr->result, cpu::ax);
+    memcell *func = translate_operand(instr->arg1, cpu::ax);
     assert(func);
 
     cpu::env.call_save_environment();
@@ -50,7 +50,7 @@ void execute_pusharg(instruction *instr) {
 }
 
 void execute_funcenter(instruction *instr) {
-    memcell *func = translate_operand(instr->result, cpu::ax);
+    memcell *func = translate_operand(instr->arg1, cpu::ax);
     assert(func);
     assert(cpu::pc == func->getUserFunc());
 
