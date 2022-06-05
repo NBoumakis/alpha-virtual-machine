@@ -5,7 +5,7 @@
 #include <assert.h>
 
 void execute_assign(instruction *instr) {
-    memcell *lv = translate_operand(instr->result, (memcell *)nullptr);
+    memcell *lv = translate_operand(instr->result);
     memcell *rv = translate_operand(instr->arg1, cpu::ax);
 
     assert(lv && rv);

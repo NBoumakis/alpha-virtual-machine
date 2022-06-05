@@ -1,5 +1,6 @@
 #include "executer/execute/execute_funcs_arithmetic.hpp"
 #include "executer/cpu.hpp"
+#include "executer/decode/decode.hpp"
 #include "memory/memcell/memcell.hpp"
 #include <assert.h>
 #include <functional>
@@ -20,7 +21,7 @@ static std::unordered_map<vmopcode, std::function<double(double, double)>> arith
     {mod_vmiop, mod_impl}};
 
 void execute_arithmetic(instruction *instr) {
-    memcell *lv = translate_operand(instr->result, (memcell *)nullptr);
+    memcell *lv = translate_operand(instr->result);
     memcell *rv1 = translate_operand(instr->arg1, cpu::ax);
     memcell *rv2 = translate_operand(instr->arg1, cpu::bx);
 

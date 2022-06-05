@@ -1,11 +1,12 @@
 #include "executer/execute/execute_funcs_table.hpp"
 #include "executer/cpu.hpp"
+#include "executer/decode/decode.hpp"
 #include "memory/memcell/memcell.hpp"
 #include "table/dynamic_table.hpp"
 #include <assert.h>
 
 void execute_newtable(instruction *instr) {
-    memcell *lv = translate_operand(instr->result, (memcell *)nullptr);
+    memcell *lv = translate_operand(instr->result);
     assert(lv);
 
     lv = new dynamicTableMemcell();
@@ -13,8 +14,8 @@ void execute_newtable(instruction *instr) {
 }
 
 void execute_tablegetelem(instruction *instr) {
-    memcell *lv = translate_operand(instr->result, (memcell *)nullptr);
-    memcell *t = translate_operand(instr->arg1, (memcell *)nullptr);
+    memcell *lv = translate_operand(instr->result);
+    memcell *t = translate_operand(instr->arg1);
     memcell *i = translate_operand(instr->arg2, cpu::ax);
 
     assert(lv || lv == cpu::retval);
@@ -42,7 +43,7 @@ void execute_tablegetelem(instruction *instr) {
 }
 
 void execute_tablesetelem(instruction *instr) {
-    memcell *t = translate_operand(instr->result, (memcell *)nullptr);
+    memcell *t = translate_operand(instr->result);
     memcell *i = translate_operand(instr->arg1, cpu::ax);
     memcell *c = translate_operand(instr->arg2, cpu::bx);
 

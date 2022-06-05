@@ -1,5 +1,6 @@
 #include "executer/execute/execute_funcs_relational.hpp"
 #include "executer/cpu.hpp"
+#include "executer/decode/decode.hpp"
 #include "lib/vmarg.hpp"
 #include "memory/memcell/memcell.hpp"
 #include <cassert>
