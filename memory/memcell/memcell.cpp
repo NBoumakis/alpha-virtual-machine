@@ -124,7 +124,7 @@ bool boolMemcell::operator==(const memcell *op) const {
 
 // sub-class dynamicTableMemcell
 dynamicTableMemcell::dynamicTableMemcell(dynamic_table *table) {
-    setDynamicTable(table);
+    this->value = table;
 }
 
 void dynamicTableMemcell::setDynamicTable(dynamic_table *table) {
@@ -144,29 +144,24 @@ std::string dynamicTableMemcell::getTypeName() const {
 }
 
 memcell *dynamicTableMemcell::copy(memcell const *b) {
+    assert(b->getType() == memcell_type::table_m);
+
     return new dynamicTableMemcell(*dynamic_cast<dynamicTableMemcell const *>(b));
 }
 
-dynamicTableMemcell::operator std::string() const {}
-dynamicTableMemcell::operator bool() const {}
+dynamicTableMemcell::operator std::string() const {
+    return this->value->to_string();
+}
+
+dynamicTableMemcell::operator bool() const {
+    return true;
+}
 
 bool dynamicTableMemcell::operator==(const memcell *op) const {
-    assert(op && op->getType() != memcell_type::undefined_m);
+    // Redundant to check equality with nil
+    assert(op && op->getType() == memcell_type::table_m);
 
-    switch (op->getType()) {
-
-    case memcell_type::nil_m:
-        return false;
-
-    case memcell_type::bool_m:
-        return op->getBool();
-
-    case memcell_type::table_m:
-        return (this->getDynamicTable() == op->getDynamicTable());
-
-    default:
-        assert(false);
-    }
+    return true;
 }
 
 // sub-class userfuncMemcell

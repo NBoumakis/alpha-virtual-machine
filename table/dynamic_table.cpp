@@ -53,3 +53,17 @@ void dynamic_table::dec_ref_counter() {
         delete this;
     }
 }
+
+std::string dynamic_table::to_string() const {
+    std::string res = "[";
+
+    for (auto &elem : this->numIndexed) {
+        res += "\n\t{" + std::to_string(elem.first) + ":\t" + static_cast<std::string>(*elem.second) + "}";
+    }
+
+    for (auto &elem : this->strIndexed) {
+        res += "\n\t{" + elem.first + ":\t" + static_cast<std::string>(*elem.second) + "}";
+    }
+
+    res += "]";
+}

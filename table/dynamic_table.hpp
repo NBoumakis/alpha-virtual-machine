@@ -20,6 +20,8 @@ public:
     memcell *get_elem(const memcell *) const;
     void set_elem(const memcell *, memcell *);
 
+    std::string to_string() const;
+
     void inc_ref_counter();
     void dec_ref_counter();
 };
