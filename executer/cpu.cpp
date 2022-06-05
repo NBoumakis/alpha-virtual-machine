@@ -7,3 +7,4 @@ environment cpu::env;
 code_segment cpu::code;
 const_values cpu::pools;
 bool cpu::execution_finished;
+execute cpu::executer;

@@ -1,3 +1,4 @@
+#include "executer/execute/execute.hpp"
 #include "library/environment/environment.hpp"
 #include "memory/code_segment/code_segment.hpp"
 #include "memory/const_values/const_values.hpp"
@@ -13,6 +14,7 @@ public:
     static code_segment code;
     static const_values pools;
     static bool execution_finished;
+    static execute executer;
 
     cpu();
     ~cpu();
