@@ -13,8 +13,8 @@ private:
     std::unordered_map<unsigned long, Function *> userfunc_pool;
 
 public:
-    const_values();
-    ~const_values();
+    const_values() = default;
+    ~const_values() = default;
 
     void insert_number(unsigned long, double);
     void insert_string(unsigned long, std::string);

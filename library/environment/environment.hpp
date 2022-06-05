@@ -12,8 +12,8 @@ private:
     std::unordered_map<std::string, std::function<void()>> dispatch;
 
 public:
-    environment();
-    ~environment();
+    environment() = default;
+    ~environment() = default;
 
     void call_save_environment();
     void call_libfunc(const std::string &);
