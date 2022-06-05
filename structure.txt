@@ -18,13 +18,13 @@ memory
     |___ memcell                (Κωνσταντίνα)
     |   |___ memcell.hpp
     |   |___ memcell.cpp
-    |___ stack                  (Νίκος)
+    |___ stack                  (Νίκος ν)
     |   |___ program_stack.hpp
     |   |___ program_stack.cpp
     |___ code_segment           (Κατερίνα)
     |   |___ code_segment.hpp
     |   |___ code_segment.cpp
-    |___ const_values           (Νίκος)
+    |___ const_values           (Νίκος ν)
         |___ const_values.hpp
         |___ const_values.cpp
 
