@@ -1,10 +1,11 @@
 #ifndef __DYNAMIC_TABLE_H
 #define __DYNAMIC_TABLE_H
 
-#include "memory/memcell/memcell.hpp"
 #include <cassert>
 #include <string>
 #include <unordered_map>
+
+class memcell;
 
 class dynamic_table {
 private:
@@ -17,7 +18,7 @@ public:
     ~dynamic_table();
 
     memcell *get_elem(const memcell *) const;
-    void set_elem(const memcell *, const memcell *);
+    void set_elem(const memcell *, memcell *);
 
     void inc_ref_counter();
     void dec_ref_counter();

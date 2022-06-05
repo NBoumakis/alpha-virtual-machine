@@ -2,12 +2,12 @@
 #define __MEMCELL_H
 
 #include "lib/vmarg.hpp"
-#include "table/dynamic_table.hpp"
 #include <cassert>
 #include <functional>
 #include <iostream>
 #include <string>
-#include <unordered_map>
+
+class dynamic_table;
 
 enum class memcell_type {
     number_m,

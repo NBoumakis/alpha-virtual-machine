@@ -1,5 +1,6 @@
 #include "memory/memcell/memcell.hpp"
 #include "library/reporting/reporting.hpp"
+#include "table/dynamic_table.hpp"
 
 // sub-class numberMemcell
 numberMemcell::numberMemcell(double number) {

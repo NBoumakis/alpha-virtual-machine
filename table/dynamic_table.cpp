@@ -1,4 +1,5 @@
 #include "table/dynamic_table.hpp"
+#include "memory/memcell/memcell.hpp"
 
 dynamic_table::dynamic_table() {
     refCounter = 0;
@@ -24,16 +25,16 @@ memcell *dynamic_table::get_elem(const memcell *key) const {
     }
 }
 
-void dynamic_table::set_elem(const memcell *key, const memcell *value) {
+void dynamic_table::set_elem(const memcell *key, memcell *value) {
 
     switch (key->getType()) {
 
     case memcell_type::number_m:
-        numIndexed.insert(key, value);
+        numIndexed.insert({key->getNumber(), value});
         break;
 
     case memcell_type::string_m:
-        strIndexed.insert(key, value);
+        strIndexed.insert({key->getString(), value});
         break;
 
     default:
@@ -46,7 +47,6 @@ void dynamic_table::inc_ref_counter() {
 }
 
 void dynamic_table::dec_ref_counter() {
-    dynamic_table *obj = new dynamic_table();
     assert(refCounter > 0);
 
     if (!(--refCounter)) {
