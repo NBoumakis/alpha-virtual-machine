@@ -20,7 +20,6 @@ public:
 
     Function *get_funcinfo(unsigned long);
     unsigned long get_envvalue(unsigned long);
-    std::function<void()> get_libfunc(const std::string &);
 
     unsigned long total_actuals;
     memcell *get_actual(unsigned long);
