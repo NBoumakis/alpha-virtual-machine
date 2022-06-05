@@ -285,6 +285,14 @@ memcell *undefMemcell::copy(memcell const *b) {
     return new undefMemcell(*dynamic_cast<undefMemcell const *>(b));
 }
 
+undefMemcell::operator std::string() const {
+    return "undefined";
+}
+
+undefMemcell::operator bool() const {
+    assert(false);
+}
+
 bool undefMemcell::operator==(const memcell *op) const {
     assert(false);
 }
