@@ -253,20 +253,23 @@ std::string nilMemcell::getTypeName() const {
 }
 
 memcell *nilMemcell::copy(memcell const *b) {
+    assert(b && b->getType() == memcell_type::nil_m);
+
     return new nilMemcell(*dynamic_cast<nilMemcell const *>(b));
 }
 
-nilMemcell::operator std::string() const {}
-nilMemcell::operator bool() const {}
+nilMemcell::operator std::string() const {
+    return "nil";
+}
+
+nilMemcell::operator bool() const {
+    return false;
+}
 
 bool nilMemcell::operator==(const memcell *op) const {
-    assert(op && op->getType() != memcell_type::undefined_m);
+    assert(op && op->getType() == memcell_type::nil_m);
 
-    if (op->getType() != memcell_type::nil_m) {
-        return false;
-    }
-
-    return true;
+    return false;
 }
 
 // sub-class undefMemcell
