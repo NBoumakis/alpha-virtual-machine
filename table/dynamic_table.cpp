@@ -54,16 +54,60 @@ void dynamic_table::dec_ref_counter() {
     }
 }
 
+static void string_num_element(std::unordered_map<double, memcell *>::const_iterator elem, std::string &res) {
+    res += "\n\t" + std::to_string(elem->first) + ":\t";
+
+    if (elem->second->getType() == memcell_type::string_m)
+        res += "\"" + static_cast<std::string>(*elem->second) + "\"";
+    else
+        res += static_cast<std::string>(*elem->second);
+}
+
+static void string_str_element(std::unordered_map<std::string, memcell *>::const_iterator elem, std::string &res) {
+    res += "\n\t{ \"" + elem->first + "\":\t";
+
+    if (elem->second->getType() == memcell_type::string_m)
+        res += "\"" + static_cast<std::string>(*elem->second) + "\" }";
+    else
+        res += static_cast<std::string>(*elem->second);
+}
+
+void dynamic_table::numIndexed_toString(std::string &res) const {
+    auto elem = this->numIndexed.begin();
+
+    if (elem != this->numIndexed.end()) {
+        string_num_element(elem, res);
+
+        ++elem;
+    }
+    for (; elem != this->numIndexed.end(); ++elem) {
+        res += ",";
+        string_num_element(elem, res);
+    }
+}
+
+void dynamic_table::strIndexed_toString(std::string &res) const {
+    auto elem = this->strIndexed.begin();
+
+    if (elem != this->strIndexed.end()) {
+        res += ",";
+        string_str_element(elem, res);
+
+        ++elem;
+    }
+    for (; elem != this->strIndexed.end(); ++elem) {
+        res += ",";
+        string_str_element(elem, res);
+    }
+}
+
 std::string dynamic_table::to_string() const {
     std::string res = "[";
 
-    for (auto &elem : this->numIndexed) {
-        res += "\n\t{" + std::to_string(elem.first) + ":\t" + static_cast<std::string>(*elem.second) + "}";
-    }
-
-    for (auto &elem : this->strIndexed) {
-        res += "\n\t{" + elem.first + ":\t" + static_cast<std::string>(*elem.second) + "}";
-    }
+    numIndexed_toString(res);
+    strIndexed_toString(res);
 
     res += "]";
+
+    return res;
 }

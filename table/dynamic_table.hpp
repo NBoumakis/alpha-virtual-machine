@@ -13,6 +13,9 @@ private:
     std::unordered_map<std::string, memcell *> strIndexed;
     std::unordered_map<double, memcell *> numIndexed;
 
+    void numIndexed_toString(std::string &res) const;
+    void strIndexed_toString(std::string &res) const;
+
 public:
     dynamic_table();
     ~dynamic_table();
