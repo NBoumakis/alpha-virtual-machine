@@ -30,3 +30,7 @@ void environment::call_libfunc(const std::string &id) {
 Function *environment::get_funcinfo(unsigned long address) {
     return cpu::pools.get_userfunc(address);
 }
+
+unsigned long environment::get_envvalue(unsigned long index) {
+    return cpu::stack[index]->getNumber();
+}
