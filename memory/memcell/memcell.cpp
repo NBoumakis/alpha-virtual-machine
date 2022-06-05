@@ -286,9 +286,7 @@ memcell *undefMemcell::copy(memcell const *b) {
 }
 
 bool undefMemcell::operator==(const memcell *op) const {
-    assert(op);
-
-    // run time error: "Cannot assign from a undefined r-value";
+    assert(false);
 }
 
 // avm_assign
