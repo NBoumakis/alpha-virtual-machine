@@ -118,7 +118,7 @@ static bool userFunctions(std::ifstream &in_file) {
 
         in_file >> token;
 
-        cpu::pools.insert_userfunc(total - i, new Function(token, address, localsize));
+        cpu::pools.insert_userfunc(address, new Function(token, address, localsize));
     }
 
     return true;
@@ -201,7 +201,10 @@ static bool code(std::ifstream &in_file) noexcept {
         try {
             in_file >> token;
             if (arg1TypeStr != "-1") {
-                arg1 = new vmarg(static_cast<vmarg_t>(std::stoi(arg1TypeStr)), std::stoul(token));
+                if (arg1TypeStr != std::to_string(vmarg_t::user_func))
+                    arg1 = new vmarg(static_cast<vmarg_t>(std::stoi(arg1TypeStr)), std::stoul(token));
+                else
+                    arg1 = new vmarg(static_cast<vmarg_t>(std::stoi(arg1TypeStr)), cpu::pools.get_userfunc(std::stoul(token))->taddress);
             }
 
             in_file >> token;
