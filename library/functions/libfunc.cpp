@@ -2,7 +2,7 @@
 #include "memory/memcell/memcell.hpp"
 
 void libfunc_typeof() {
-    unsigned long num_of_actuals = cpu::env.total_actuals;
+    unsigned long num_of_actuals = cpu::env.get_totalactuals();
 
     if (num_of_actuals != 1) {
         // FIXME
@@ -14,7 +14,7 @@ void libfunc_typeof() {
 }
 
 void libfunc_print() {
-    unsigned long num_of_actuals = cpu::env.total_actuals;
+    unsigned long num_of_actuals = cpu::env.get_totalactuals();
 
     for (unsigned long i = 0; i < num_of_actuals; i++) {
         std::string s = static_cast<std::string>(*cpu::env.get_actual(i));
