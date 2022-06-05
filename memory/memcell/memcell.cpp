@@ -4,7 +4,7 @@
 
 // sub-class numberMemcell
 numberMemcell::numberMemcell(double number) {
-    setNumber(number);
+    this->value = number;
 }
 
 void numberMemcell::setNumber(double number) {
@@ -24,29 +24,23 @@ std::string numberMemcell::getTypeName() const {
 }
 
 memcell *numberMemcell::copy(memcell const *b) {
+    assert(b->getType() == memcell_type::number_m);
+
     return new numberMemcell(*dynamic_cast<numberMemcell const *>(b));
 }
 
-numberMemcell::operator std::string() const {}
-numberMemcell::operator bool() const {}
+numberMemcell::operator std::string() const {
+    return std::to_string(this->value);
+}
+
+numberMemcell::operator bool() const {
+    return this->value != 0;
+}
 
 bool numberMemcell::operator==(const memcell *op) const {
-    assert(op && op->getType() != memcell_type::undefined_m);
+    assert(op && op->getType() == memcell_type::number_m);
 
-    switch (op->getType()) {
-
-    case memcell_type::bool_m:
-        return ((this->getNumber() != 0) && op->getBool());
-
-    case memcell_type::nil_m:
-        return false;
-
-    case memcell_type::number_m:
-        return ((this->getNumber() != 0) && (op->getNumber() != 0) && (this->getNumber() == op->getNumber()));
-
-    default:
-        assert(false);
-    }
+    return this->value == op->getNumber();
 }
 
 // sub-class stringMemcell
