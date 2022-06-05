@@ -25,6 +25,7 @@ void execute_tablegetelem(instruction *instr) {
     if (t->getType() != memcell_type::table_m) {
         // FIXME
         std::cerr << "ERROR: illegal use of type " << t->getTypeName() << "as table !";
+        cpu::execution_finished = true;
         assign(lv, new nilMemcell());
     } else {
         memcell *content = t->getDynamicTable()->get_elem(i);
@@ -51,6 +52,7 @@ void execute_tablesetelem(instruction *instr) {
     if (t->getType() != memcell_type::table_m) {
         // FIXME
         std::cerr << "ERROR: illegal use of type " << t->getTypeName() << " as table!";
+        cpu::execution_finished = true;
     } else {
         t->getDynamicTable()->set_elem(i, c);
     }
