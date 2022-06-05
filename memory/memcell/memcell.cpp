@@ -44,12 +44,12 @@ bool numberMemcell::operator==(const memcell *op) const {
 }
 
 // sub-class stringMemcell
-stringMemcell::stringMemcell(const std::string &string) {
-    setString(string);
+stringMemcell::stringMemcell(const std::string &str) {
+    this->value = str;
 }
 
-void stringMemcell::setString(const std::string &string) {
-    this->value = string;
+void stringMemcell::setString(const std::string &str) {
+    this->value = str;
 }
 
 std::string stringMemcell::getString(void) const {
@@ -65,29 +65,23 @@ std::string stringMemcell::getTypeName() const {
 }
 
 memcell *stringMemcell::copy(memcell const *b) {
+    assert(b->getType() == memcell_type::string_m);
+
     return new stringMemcell(*dynamic_cast<stringMemcell const *>(b));
 }
 
-stringMemcell::operator std::string() const {}
-stringMemcell::operator bool() const {}
+stringMemcell::operator std::string() const {
+    return this->value;
+}
+
+stringMemcell::operator bool() const {
+    return this->value != "";
+}
 
 bool stringMemcell::operator==(const memcell *op) const {
-    assert(op && op->getType() != memcell_type::undefined_m);
+    assert(op && op->getType() == memcell_type::string_m);
 
-    switch (op->getType()) {
-
-    case memcell_type::bool_m:
-        return ((this->getString() != "") && op->getBool());
-
-    case memcell_type::nil_m:
-        return false;
-
-    case memcell_type::string_m:
-        return ((this->getString() != "") && (op->getString() != "") && (this->getString() == op->getString()));
-
-    default:
-        assert(false);
-    }
+    return this->value == op->getString();
 }
 
 // sub-class boolMemcell
