@@ -204,7 +204,7 @@ bool userfuncMemcell::operator==(const memcell *op) const {
 
 // sub-class libfuncMemcell
 libfuncMemcell::libfuncMemcell(const std::string &libfunc) {
-    setLibFunc(libfunc);
+    this->value = libfunc;
 }
 
 void libfuncMemcell::setLibFunc(const std::string &libfunc) {
@@ -224,29 +224,23 @@ std::string libfuncMemcell::getTypeName() const {
 }
 
 memcell *libfuncMemcell::copy(memcell const *b) {
+    assert(b->getType() == memcell_type::libfunc_m);
+
     return new libfuncMemcell(*dynamic_cast<libfuncMemcell const *>(b));
 }
 
-libfuncMemcell::operator std::string() const {}
-libfuncMemcell::operator bool() const {}
+libfuncMemcell::operator std::string() const {
+    return "library function " + this->value;
+}
+
+libfuncMemcell::operator bool() const {
+    return true;
+}
 
 bool libfuncMemcell::operator==(const memcell *op) const {
-    assert(op && op->getType() != memcell_type::undefined_m);
+    assert(op && op->getType() != memcell_type::libfunc_m);
 
-    switch (op->getType()) {
-
-    case memcell_type::nil_m:
-        return false;
-
-    case memcell_type::bool_m:
-        return op->getBool();
-
-    case memcell_type::libfunc_m:
-        return (this->getLibFunc() == op->getLibFunc());
-
-    default:
-        assert(false);
-    }
+    return (this->value == op->getLibFunc());
 }
 
 // sub-class nilMemcell
