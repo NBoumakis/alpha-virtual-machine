@@ -6,4 +6,4 @@ program_stack cpu::stack;
 environment cpu::env;
 code_segment cpu::code;
 const_values cpu::pools;
-char cpu::execution_finished;
+bool cpu::execution_finished;

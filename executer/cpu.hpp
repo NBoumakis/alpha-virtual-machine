@@ -12,7 +12,7 @@ public:
     static environment env;
     static code_segment code;
     static const_values pools;
-    static char execution_finished;
+    static bool execution_finished;
 
     cpu();
     ~cpu();
