@@ -1,7 +1,7 @@
 #include "executer/decode/decode.hpp"
 #include "executer/cpu.hpp"
 
-memcell *&translate_operand(vmarg *arg, memcell *&reg) {
+memcell *&translate_operand(const vmarg *arg, memcell *&reg) {
     switch (arg->type) {
     case const_num:
         delete reg;
@@ -39,7 +39,7 @@ memcell *&translate_operand(vmarg *arg, memcell *&reg) {
     }
 }
 
-memcell *&translate_operand(vmarg *arg) {
+memcell *&translate_operand(const vmarg *arg) {
     switch (arg->type) {
     case global_var:
         return cpu::stack[cpu::stack.size() - 1 - arg->val];
