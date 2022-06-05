@@ -45,3 +45,7 @@ memcell *&environment::get_actual(unsigned long i) {
 
     return cpu::stack[cpu::topsp + 4 + 1 + i];
 }
+
+unsigned long environment::get_totalactuals() {
+    return get_envvalue(cpu::topsp + 4);
+}
