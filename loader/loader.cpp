@@ -229,8 +229,15 @@ static bool code(std::ifstream &in_file) noexcept {
     return true;
 }
 
-bool load_text(std::ifstream &in_file) {
+static bool parse_text(std::ifstream &in_file) {
     assert(in_file.is_open());
 
     return magicnumber(in_file) && arrays(in_file) && code(in_file);
+}
+
+bool load_text(std::ifstream &in_file) {
+    assert(in_file.is_open());
+
+    parse_text(in_file);
+    cpu::code_size = cpu::code.size();
 }
