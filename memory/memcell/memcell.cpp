@@ -166,7 +166,7 @@ bool dynamicTableMemcell::operator==(const memcell *op) const {
 
 // sub-class userfuncMemcell
 userfuncMemcell::userfuncMemcell(const unsigned long userfunc) {
-    setUserFunc(userfunc);
+    this->value = userfunc;
 }
 
 void userfuncMemcell::setUserFunc(const unsigned long userfunc) {
@@ -189,26 +189,17 @@ memcell *userfuncMemcell::copy(memcell const *b) {
     return new userfuncMemcell(*dynamic_cast<userfuncMemcell const *>(b));
 }
 
-userfuncMemcell::operator std::string() const {}
-userfuncMemcell::operator bool() const {}
+userfuncMemcell::operator std::string() const {
+    return "user function " + std::to_string(this->value);
+}
+userfuncMemcell::operator bool() const {
+    return true;
+}
 
 bool userfuncMemcell::operator==(const memcell *op) const {
-    assert(op && op->getType() != memcell_type::undefined_m);
+    assert(op && op->getType() == memcell_type::userfunc_m);
 
-    switch (op->getType()) {
-
-    case memcell_type::nil_m:
-        return false;
-
-    case memcell_type::bool_m:
-        return op->getBool();
-
-    case memcell_type::userfunc_m:
-        return (this->getUserFunc() == op->getUserFunc());
-
-    default:
-        assert(false);
-    }
+    return (this->value == op->getUserFunc());
 }
 
 // sub-class libfuncMemcell
