@@ -39,3 +39,9 @@ unsigned long environment::get_envvalue(unsigned long index) {
 
     return val;
 }
+
+memcell *&environment::get_actual(unsigned long i) {
+    assert(i < get_totalactuals());
+
+    return cpu::stack[cpu::topsp + 4 + 1 + i];
+}

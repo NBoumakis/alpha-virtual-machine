@@ -22,7 +22,8 @@ public:
     unsigned long get_envvalue(unsigned long);
 
     unsigned long total_actuals;
-    memcell *get_actual(unsigned long);
+    memcell *&get_actual(unsigned long);
+    unsigned long get_totalactuals();
 
     void register_libfunc(const std::string &, std::function<void()>);
 };
