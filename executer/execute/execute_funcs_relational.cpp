@@ -22,6 +22,7 @@ void execute_jeq(instruction *instr) {
     if (rv1->getType() == memcell_type::undefined_m || rv2->getType() == memcell_type::undefined_m) {
         // FIXME
         std::cerr << "ERROR: 'undef' involved in equality!";
+        cpu::execution_finished = true;
     } else if (rv1->getType() == memcell_type::nil_m || rv2->getType() == memcell_type::nil_m) {
         result = (rv1->getType() == memcell_type::nil_m) && (rv2->getType() == memcell_type::nil_m);
     } else if (rv1->getType() == memcell_type::bool_m || rv2->getType() == memcell_type::bool_m) {
@@ -29,6 +30,7 @@ void execute_jeq(instruction *instr) {
     } else if (rv1->getType() != rv2->getType()) {
         // FIXME
         std::cerr << "ERROR: " << rv1->getTypeName() << " == " << rv2->getTypeName() << "is illegal!";
+        cpu::execution_finished = true;
     } else {
         result = (*rv1 == *rv2);
     }
@@ -48,6 +50,7 @@ void execute_jne(instruction *instr) {
     if (rv1->getType() == memcell_type::undefined_m || rv2->getType() == memcell_type::undefined_m) {
         // FIXME
         std::cerr << "ERROR: 'undef' involved in equality!";
+        cpu::execution_finished = true;
     } else if (rv1->getType() == memcell_type::nil_m || rv2->getType() == memcell_type::nil_m) {
         result = (rv1->getType() == memcell_type::nil_m) && (rv2->getType() == memcell_type::nil_m);
     } else if (rv1->getType() == memcell_type::bool_m || rv2->getType() == memcell_type::bool_m) {
@@ -55,6 +58,7 @@ void execute_jne(instruction *instr) {
     } else if (rv1->getType() != rv2->getType()) {
         // FIXME
         std::cerr << "ERROR: " << rv1->getTypeName() << " != " << rv2->getTypeName() << "is illegal!";
+        cpu::execution_finished = true;
     } else {
         result = (*rv1 != *rv2);
     }
@@ -86,6 +90,7 @@ void execute_ordered(instruction *instr) {
     } else {
         // FIXME
         std::cerr << "ERROR: comparisons are only allowed between numbers";
+        cpu::execution_finished = true;
     }
 
     if (!cpu::execution_finished && result)
