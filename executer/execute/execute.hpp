@@ -11,7 +11,7 @@ private:
 
 public:
     execute();
-    ~execute();
+    ~execute() = default;
 
     std::function<void(instruction *)> operator[](vmopcode);
 };
