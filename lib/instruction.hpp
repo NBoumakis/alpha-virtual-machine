@@ -1,7 +1,7 @@
 #ifndef __INSTRUCTION_H
 #define __INSTRUCTION_H
 
-#include "lib/vmarg.h"
+#include "lib/vmarg.hpp"
 
 enum vmopcode {
     assign_vmiop,

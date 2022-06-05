@@ -20,8 +20,6 @@ public:
     vmarg_t type;
     unsigned long val;
 
-    std::string to_string();
-
     vmarg(vmarg_t type);
     vmarg(vmarg_t type, unsigned long val);
 };

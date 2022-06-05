@@ -1,7 +1,7 @@
 #ifndef __MEMCELL_H
 #define __MEMCELL_H
 
-#include "lib/vmarg.h"
+#include "lib/vmarg.hpp"
 #include "table/dynamic_table.hpp"
 #include <cassert>
 #include <functional>
