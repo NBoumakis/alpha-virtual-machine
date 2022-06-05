@@ -21,9 +21,9 @@ static std::unordered_map<vmopcode, std::function<double(double, double)>> arith
     {mod_vmiop, mod_impl}};
 
 void execute_arithmetic(instruction *instr) {
-    memcell *lv = translate_operand(instr->arg1);
-    memcell *rv1 = translate_operand(instr->arg2, cpu::ax);
-    memcell *rv2 = translate_operand(instr->result, cpu::bx);
+    memcell *&lv = translate_operand(instr->arg1);
+    memcell *&rv1 = translate_operand(instr->arg2, cpu::ax);
+    memcell *&rv2 = translate_operand(instr->result, cpu::bx);
 
     assert(rv1 && rv2 && lv);
 
