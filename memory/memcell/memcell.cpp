@@ -86,7 +86,7 @@ bool stringMemcell::operator==(const memcell *op) const {
 
 // sub-class boolMemcell
 boolMemcell::boolMemcell(const bool boolean) {
-    setBool(boolean);
+    this->value = boolean;
 }
 
 void boolMemcell::setBool(const bool boolean) {
@@ -109,34 +109,17 @@ memcell *boolMemcell::copy(memcell const *b) {
     return new boolMemcell(*dynamic_cast<boolMemcell const *>(b));
 }
 
-boolMemcell::operator std::string() const {}
-boolMemcell::operator bool() const {}
+boolMemcell::operator std::string() const {
+    return (this->value) ? "true" : "false";
+}
+boolMemcell::operator bool() const {
+    return this->value;
+}
 
 bool boolMemcell::operator==(const memcell *op) const {
-    assert(op && op->getType() != memcell_type::undefined_m);
+    assert(op && op->getType() == memcell_type::bool_m);
 
-    switch (op->getType()) {
-
-    case memcell_type::nil_m:
-        return false;
-
-    case memcell_type::bool_m:
-        return (this->getBool() && op->getBool());
-
-    case memcell_type::table_m:
-    case memcell_type::userfunc_m:
-    case memcell_type::libfunc_m:
-        return (this->getBool());
-
-    case memcell_type::number_m:
-        return ((op->getNumber() != 0) && this->getBool());
-
-    case memcell_type::string_m:
-        return ((op->getString() != "") && this->getBool());
-
-    default:
-        assert(false);
-    }
+    return this->value == op->getBool();
 }
 
 // sub-class dynamicTableMemcell
