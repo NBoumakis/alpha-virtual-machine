@@ -1,7 +1,7 @@
 #include "executer/cpu.hpp"
 
 unsigned long cpu::pc, cpu::topsp, cpu::top, cpu::code_size;
-memcell *cpu::ax, *cpu::bx, *cpu::cx, *cpu::retval;
+memcell *cpu::ax = new undefMemcell(), *cpu::bx = new undefMemcell(), *cpu::cx, *cpu::retval = new undefMemcell();
 program_stack cpu::stack;
 environment cpu::env;
 code_segment cpu::code;
