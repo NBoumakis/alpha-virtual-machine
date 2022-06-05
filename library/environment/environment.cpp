@@ -26,3 +26,7 @@ void environment::call_libfunc(const std::string &id) {
         cpu::execution_finished = true;
     }
 }
+
+Function *environment::get_funcinfo(unsigned long address) {
+    return cpu::pools.get_userfunc(address);
+}
