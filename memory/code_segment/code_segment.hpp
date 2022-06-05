@@ -6,14 +6,14 @@
 
 class code_segment {
 private:
-    std::deque<instruction> instructions;
+    std::deque<instruction *> instructions;
 
 public:
     code_segment() = default;
     ~code_segment() = default;
 
-    void insert(instruction &);
-    instruction &operator[](unsigned long);
+    void insert(instruction *&);
+    instruction *&operator[](unsigned long);
 
     unsigned long size();
 };

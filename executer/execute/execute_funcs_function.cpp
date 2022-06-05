@@ -16,7 +16,7 @@ void execute_call(instruction *instr) {
     case memcell_type::userfunc_m: {
         cpu::pc = func->getUserFunc();
         assert(cpu::pc < cpu::code_size);
-        assert(cpu::code[cpu::pc].opcode == funcenter_vmiop);
+        assert(cpu::code[cpu::pc]->opcode == funcenter_vmiop);
         break;
     }
 

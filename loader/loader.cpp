@@ -222,7 +222,7 @@ static bool code(std::ifstream &in_file) noexcept {
             return false;
         }
 
-        instruction instr = instruction(op, arg1, arg2, result);
+        instruction *instr = new instruction(op, arg1, arg2, result);
         cpu::code.insert(instr);
     }
 
