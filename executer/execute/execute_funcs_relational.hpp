@@ -3,6 +3,8 @@
 
 #include "lib/instruction.hpp"
 
+extern void execute_jump(instruction *);
+
 extern void execute_jeq(instruction *);
 
 extern void execute_jne(instruction *);

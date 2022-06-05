@@ -15,6 +15,7 @@ execute::execute() {
     dispatch.insert({div_vmiop, execute_arithmetic});
     dispatch.insert({mod_vmiop, execute_arithmetic});
 
+    dispatch.insert({jump_vmiop, execute_jump});
     dispatch.insert({jeq_vmiop, execute_jeq});
     dispatch.insert({jne_vmiop, execute_jne});
     dispatch.insert({jle_vmiop, execute_ordered});

@@ -7,6 +7,10 @@
 #include <functional>
 #include <unordered_map>
 
+void execute_jump(instruction *instr) {
+    cpu::pc = instr->result->val;
+}
+
 void execute_jeq(instruction *instr) {
 
     assert(instr->result->type == vmarg_t::instruction_label);
