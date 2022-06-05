@@ -11,7 +11,7 @@ public:
 
 public:
     Function(std::string &id, unsigned long taddress, unsigned long localSize)
-        : taddress(taddress), id(id), totalLocals(localSize) {}
+        : id(id), taddress(taddress), totalLocals(localSize) {}
 
     std::string to_string();
     std::string type_string();
