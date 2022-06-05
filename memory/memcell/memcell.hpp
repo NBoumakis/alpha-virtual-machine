@@ -25,8 +25,6 @@ public:
     memcell() = default;
     virtual ~memcell() = default;
 
-    friend memcell *translate_operand(vmarg *, memcell *);
-
     virtual void setNumber(double number) {
         assert(false);
     }
