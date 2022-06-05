@@ -32,5 +32,10 @@ Function *environment::get_funcinfo(unsigned long address) {
 }
 
 unsigned long environment::get_envvalue(unsigned long index) {
-    return cpu::stack[index]->getNumber();
+    assert(cpu::stack[index]);
+
+    unsigned long val = static_cast<unsigned long>(cpu::stack[index]->getNumber());
+    assert(static_cast<double>(val) == cpu::stack[index]->getNumber());
+
+    return val;
 }
