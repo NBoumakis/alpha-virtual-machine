@@ -23,7 +23,7 @@ static bool globals(std::ifstream &in_file) {
     unsigned long number;
 
     in_file >> number;
-    cpu::top = 4095 - number;
+    cpu::topsp = cpu::top = 4095 - number;
 
     return true;
 }
