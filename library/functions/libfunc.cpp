@@ -19,6 +19,7 @@ void libfunc_print() {
 
     for (unsigned long i = 0; i < num_of_actuals; i++) {
         std::string s = static_cast<std::string>(*cpu::env.get_actual(i));
+        std::cout << s;
     }
 }
 void libfunc_totalarguments() {
