@@ -310,9 +310,23 @@ bool undefMemcell::operator==(const memcell *op) const {
 }; */
 
 memcell *assign(memcell *&lv, memcell *rv) {
+    if (lv == rv)
+        return lv;
+
+    if (lv->getType() == memcell_type::table_m &&
+        rv->getType() == memcell_type::table_m &&
+        lv->getDynamicTable() == rv->getDynamicTable())
+        return lv;
+
+    if (rv->getType() == memcell_type::undefined_m)
+        std::cerr << "Warning: Assigning from 'undefined'!" << std::endl;
+
     delete lv;
 
     lv = rv->copy(rv);
+
+    if (lv->getType() == memcell_type::table_m)
+        lv->getDynamicTable()->inc_ref_counter();
 
     return lv;
 }
