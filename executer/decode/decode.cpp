@@ -3,6 +3,17 @@
 
 memcell *&translate_operand(const vmarg *arg, memcell *&reg) {
     switch (arg->type) {
+    case global_var:
+        return cpu::stack[cpu::stack.size() - 1 - arg->val];
+
+    case local_var:
+        return cpu::stack[cpu::topsp - arg->val];
+
+    case formal_arg:
+        return cpu::stack[cpu::topsp + 4 + 1 + arg->val];
+
+    case retval:
+        return cpu::retval;
     case const_num:
         delete reg;
         reg = new numberMemcell(cpu::pools.get_number(arg->val));
