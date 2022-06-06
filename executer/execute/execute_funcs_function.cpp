@@ -66,6 +66,6 @@ void execute_funcexit(instruction *unused) {
 
     while (++oldTop <= cpu::top) {
         // warning memory leak !!
-        cpu::stack.pop();
+        cpu::stack.pop(oldTop);
     }
 }
