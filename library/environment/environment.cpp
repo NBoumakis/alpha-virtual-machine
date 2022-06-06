@@ -13,17 +13,20 @@ void environment::call_libfunc(const std::string &id) {
 
     try {
         func = dispatch.at(id);
+    } catch (const std::out_of_range &e) {
+        std::cerr << "ERROR: unsupported lib function " << id << " called!" << std::endl;
+        cpu::execution_finished = true;
+    }
 
+    if (!cpu::execution_finished) {
         cpu::topsp = cpu::top;
         total_actuals = 0;
 
         func();
 
+        // cpu::execution_finished might change in func, recheck
         if (!cpu::execution_finished)
             cpu::executer[funcexit_vmiop](nullptr);
-    } catch (const std::out_of_range &e) {
-        std::cerr << "ERROR: unsupported lib function " << id << " called!" << std::endl;
-        cpu::execution_finished = true;
     }
 }
 
@@ -32,7 +35,7 @@ Function *environment::get_funcinfo(unsigned long address) {
 }
 
 unsigned long environment::get_envvalue(unsigned long index) {
-    assert(cpu::stack[index]);
+    assert(cpu::stack[index]->getType() == memcell_type::number_m);
 
     unsigned long val = static_cast<unsigned long>(cpu::stack[index]->getNumber());
     assert(static_cast<double>(val) == cpu::stack[index]->getNumber());
