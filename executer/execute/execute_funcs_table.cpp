@@ -9,7 +9,7 @@ void execute_newtable(instruction *instr) {
     memcell *&lv = translate_operand(instr->arg1);
     assert(lv);
 
-    lv = new dynamicTableMemcell();
+    lv = new dynamicTableMemcell(new dynamic_table());
     lv->getDynamicTable()->inc_ref_counter();
 }
 
