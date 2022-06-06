@@ -4,7 +4,7 @@
 memcell *&translate_operand(const vmarg *arg, memcell *&reg) {
     switch (arg->type) {
     case global_var:
-        return cpu::stack[cpu::stack.size() - 1 - arg->val];
+        return cpu::stack[4096 - 1 - arg->val];
 
     case local_var:
         return cpu::stack[cpu::topsp - arg->val];
@@ -53,7 +53,7 @@ memcell *&translate_operand(const vmarg *arg, memcell *&reg) {
 memcell *&translate_operand(const vmarg *arg) {
     switch (arg->type) {
     case global_var:
-        return cpu::stack[cpu::stack.size() - 1 - arg->val];
+        return cpu::stack[4096 - 1 - arg->val];
 
     case local_var:
         return cpu::stack[cpu::topsp - arg->val];
