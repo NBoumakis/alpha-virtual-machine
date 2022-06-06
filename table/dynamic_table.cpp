@@ -55,7 +55,7 @@ void dynamic_table::dec_ref_counter() {
 }
 
 static void string_num_element(std::unordered_map<double, memcell *>::const_iterator elem, std::string &res) {
-    res += "\n\t" + std::to_string(elem->first) + ":\t";
+    res += "\t";
 
     if (elem->second->getType() == memcell_type::string_m)
         res += "\"" + static_cast<std::string>(*elem->second) + "\"";
@@ -76,13 +76,15 @@ void dynamic_table::numIndexed_toString(std::string &res) const {
     auto elem = this->numIndexed.begin();
 
     if (elem != this->numIndexed.end()) {
+        res += "\n";
         string_num_element(elem, res);
+        res += "\n";
 
         ++elem;
     }
     for (; elem != this->numIndexed.end(); ++elem) {
-        res += ",";
         string_num_element(elem, res);
+        res += ",\n";
     }
 }
 
