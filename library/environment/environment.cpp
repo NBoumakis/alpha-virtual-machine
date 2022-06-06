@@ -49,3 +49,7 @@ memcell *&environment::get_actual(unsigned long i) {
 unsigned long environment::get_totalactuals() {
     return get_envvalue(cpu::topsp + 4);
 }
+
+void environment::register_libfunc(const std::string &id, std::function<void()> libfunc) {
+    this->dispatch.insert({id, libfunc});
+}
