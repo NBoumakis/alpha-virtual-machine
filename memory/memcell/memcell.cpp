@@ -2,6 +2,8 @@
 #include "library/reporting/reporting.hpp"
 #include "table/dynamic_table.hpp"
 
+#include "executer/cpu.hpp"
+
 // sub-class numberMemcell
 numberMemcell::numberMemcell(double number) {
     this->value = number;
@@ -318,7 +320,7 @@ memcell *assign(memcell *&lv, memcell *rv) {
         lv->getDynamicTable() == rv->getDynamicTable())
         return lv;
 
-    if (rv->getType() == memcell_type::undefined_m)
+    if (rv != cpu::retval && rv->getType() == memcell_type::undefined_m)
         std::cerr << "Warning: Assigning from 'undefined'!" << std::endl;
 
     delete lv;
