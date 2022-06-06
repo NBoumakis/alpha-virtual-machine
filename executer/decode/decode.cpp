@@ -15,33 +15,26 @@ memcell *&translate_operand(const vmarg *arg, memcell *&reg) {
     case retval:
         return cpu::retval;
     case const_num:
-        delete reg;
         reg = new numberMemcell(cpu::pools.get_number(arg->val));
         return reg;
 
     case const_str:
-        delete reg;
         reg = new stringMemcell(cpu::pools.get_string(arg->val));
         return reg;
 
     case const_bool:
-        delete reg;
         reg = new boolMemcell(arg->val);
         return reg;
 
     case const_nil:
-        delete reg;
-
         reg = new nilMemcell();
         return reg;
 
     case user_func:
-        delete reg;
         reg = new userfuncMemcell(arg->val);
         return reg;
 
     case lib_func:
-        delete reg;
         reg = new libfuncMemcell(cpu::pools.get_libfunc(arg->val));
         return reg;
 
