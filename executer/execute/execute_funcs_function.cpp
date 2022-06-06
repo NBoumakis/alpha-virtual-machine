@@ -40,13 +40,11 @@ void execute_call(instruction *instr) {
 }
 
 void execute_pusharg(instruction *instr) {
-    memcell *&arg = translate_operand(instr->arg1, cpu::ax);
+    memcell *arg = translate_operand(instr->arg1, cpu::ax);
     assert(arg);
 
     cpu::stack.push(arg);
     ++cpu::env.total_actuals;
-
-    cpu::stack.push(arg);
 }
 
 void execute_funcenter(instruction *instr) {
