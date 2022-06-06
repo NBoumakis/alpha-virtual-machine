@@ -16,12 +16,14 @@ INC_DIRS = -I./
 
 PHONY := $(TARGET)
 $(TARGET): $(OBJS)
-	mkdir -p $(OUTDIR)
-	$(CC) -o $(OUTDIR)/$@ $(OBJS)
+	@echo "Linking $@"
+	@mkdir -p $(OUTDIR)
+	@$(CC) -o $(OUTDIR)/$@ $(OBJS)
 
 $(DIR_OBJ)/%.o: %.cpp $(INCS)
-	mkdir -p $(@D)
-	$(CC) -o $@ $(CFLAGS) -c $<
+	@echo "Building" $@
+	@mkdir -p $(@D)
+	@$(CC) -o $@ $(CFLAGS) -c $<
 
 PHONY += clean
 clean:
