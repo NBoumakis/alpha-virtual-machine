@@ -19,6 +19,15 @@ static bool magicnumber(std::ifstream &in_file) noexcept {
     return false;
 }
 
+static bool globals(std::ifstream &in_file) {
+    unsigned long number;
+
+    in_file >> number;
+    cpu::top = 4095 - number;
+
+    return true;
+}
+
 static std::string string(std::ifstream &in_file) {
     std::string token;
 
@@ -30,8 +39,14 @@ static std::string string(std::ifstream &in_file) {
 
     unsigned long total = std::stoul(token);
 
-    std::copy_n(std::istreambuf_iterator<char>(in_file.rdbuf()),
-                total, std::back_inserter(token));
+    /*
+    char str[total + 1];
+    in_file.get(str, total + 1);
+
+    return std::string(str);
+    */
+    in_file >> token;
+
     return token;
 }
 
@@ -232,12 +247,14 @@ static bool code(std::ifstream &in_file) noexcept {
 static bool parse_text(std::ifstream &in_file) {
     assert(in_file.is_open());
 
-    return magicnumber(in_file) && arrays(in_file) && code(in_file);
+    return magicnumber(in_file) && globals(in_file) && arrays(in_file) && code(in_file);
 }
 
 bool load_text(std::ifstream &in_file) {
     assert(in_file.is_open());
 
-    parse_text(in_file);
-    cpu::code_size = cpu::code.size();
+    bool loaded = parse_text(in_file);
+    if (loaded)
+        cpu::code_size = cpu::code.size();
+    return loaded;
 }
