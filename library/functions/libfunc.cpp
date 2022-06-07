@@ -216,3 +216,28 @@ void libfunc_sin() {
         }
     }
 }
+
+void libfunc_strtonum() {
+    unsigned long num_of_actuals = cpu::env.get_totalactuals();
+
+    if (num_of_actuals != 1) {
+        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'strtonum'";
+        cpu::execution_finished = true;
+        cpu::retval = new nilMemcell();
+    } else {
+        memcell *arg = cpu::env.get_actual(0);
+
+        if (arg->getType() != memcell_type::string_m) {
+            std::cerr << "ERROR: argument of type " << arg->getTypeName() << " not suitable for strtonum";
+            cpu::execution_finished = true;
+            cpu::retval = new nilMemcell();
+        } else {
+            if (is_number(arg->getString())) {
+                cpu::retval = new numberMemcell(std::stod(arg->getString()));
+            } else {
+                std::cerr << "WARNING: string " << arg->getString() << " not representing number";
+                cpu::retval = new nilMemcell();
+            }
+        }
+    }
+}

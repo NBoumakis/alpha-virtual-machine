@@ -18,6 +18,7 @@ int main() {
     cpu::env.register_libfunc("sqrt", libfunc_sqrt);
     cpu::env.register_libfunc("cos", libfunc_cos);
     cpu::env.register_libfunc("sin", libfunc_sin);
+    cpu::env.register_libfunc("strtonum", libfunc_strtonum);
 
     while (!cpu::execution_finished) {
         cpu::cycle();
