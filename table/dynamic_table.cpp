@@ -1,4 +1,5 @@
 #include "table/dynamic_table.hpp"
+#include "executer/cpu.hpp"
 #include "memory/memcell/memcell.hpp"
 
 dynamic_table::dynamic_table() {
@@ -14,12 +15,22 @@ dynamic_table::~dynamic_table() {
 memcell *dynamic_table::get_elem(const memcell *key) const {
     switch (key->getType()) {
 
-    case memcell_type::number_m:
-        return numIndexed.at(key->getNumber());
-
-    case memcell_type::string_m:
-        return strIndexed.at(key->getString());
-
+    case memcell_type::number_m: {
+        auto res = numIndexed.find(key->getNumber());
+        if (res != numIndexed.end()) {
+            return res->second;
+        } else {
+            return nullptr;
+        }
+    }
+    case memcell_type::string_m: {
+        auto res = strIndexed.find(key->getString());
+        if (res != strIndexed.end()) {
+            return res->second;
+        } else {
+            return nullptr;
+        }
+    }
     default:
         assert(false);
     }
@@ -29,13 +40,23 @@ void dynamic_table::set_elem(const memcell *key, memcell *value) {
 
     switch (key->getType()) {
 
-    case memcell_type::number_m:
-        numIndexed.insert({key->getNumber(), value});
+    case memcell_type::number_m: {
+        auto loc = numIndexed.find(key->getNumber());
+        if (loc != numIndexed.end())
+            loc->second = value->copy(value);
+        else
+            numIndexed.insert({key->getNumber(), value->copy(value)});
         break;
+    }
 
-    case memcell_type::string_m:
-        strIndexed.insert({key->getString(), value});
+    case memcell_type::string_m: {
+        auto loc = strIndexed.find(key->getString());
+        if (loc != strIndexed.end())
+            loc->second = value->copy(value);
+        else
+            strIndexed.insert({key->getString(), value->copy(value)});
         break;
+    }
 
     default:
         assert(false);
