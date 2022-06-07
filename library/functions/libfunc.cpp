@@ -1,6 +1,30 @@
 #include "executer/cpu.hpp"
 #include "memory/memcell/memcell.hpp"
 
+#include <algorithm>
+
+bool is_number(const std::string &s) {
+    bool found_dot = false;
+
+    if (!s.empty()) {
+        auto c_itr = s.begin();
+        if (!(*c_itr == '+' || *c_itr == '-' || isdigit(*c_itr))) {
+            return false;
+        }
+
+        for (; c_itr != s.end(); ++c_itr) {
+            if (!(isdigit(*c_itr) || (*c_itr == '.' && found_dot)))
+                return false;
+
+            found_dot = (*c_itr == '.');
+        }
+
+        return true;
+    } else {
+        return false;
+    }
+}
+
 void libfunc_typeof() {
     unsigned long num_of_actuals = cpu::env.get_totalactuals();
 
@@ -34,4 +58,25 @@ void libfunc_totalarguments() {
     } else {
         cpu::retval = new numberMemcell(cpu::env.get_envvalue(p_topsp + 4)); // AVM_NUMACTUALS_OFFSET
     }
+}
+
+static memcell *parse_input(const std::string &input) {
+    if (is_number(input))
+        return new numberMemcell(std::stod(input));
+    else if (input == "true")
+        return new boolMemcell(true);
+    else if (input == "false")
+        return new boolMemcell(false);
+    else if (input == "nil")
+        return new nilMemcell();
+    else
+        return new stringMemcell(input);
+}
+
+void libfunc_input() {
+    std::string line;
+
+    std::getline(std::cin, line);
+
+    cpu::retval = parse_input(line);
 }
