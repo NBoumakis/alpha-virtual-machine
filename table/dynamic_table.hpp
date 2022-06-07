@@ -2,6 +2,7 @@
 #define __DYNAMIC_TABLE_H
 
 #include <cassert>
+#include <map>
 #include <string>
 #include <unordered_map>
 
@@ -10,8 +11,8 @@ class memcell;
 class dynamic_table {
 private:
     unsigned long refCounter;
+    std::map<double, memcell *> numIndexed;
     std::unordered_map<std::string, memcell *> strIndexed;
-    std::unordered_map<double, memcell *> numIndexed;
 
     void numIndexed_toString(std::string &res) const;
     void strIndexed_toString(std::string &res) const;

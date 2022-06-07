@@ -75,13 +75,13 @@ void dynamic_table::dec_ref_counter() {
     }
 }
 
-static void string_num_element(std::unordered_map<double, memcell *>::const_iterator elem, std::string &res) {
     res += "\t";
 
     if (elem->second->getType() == memcell_type::string_m)
         res += "\"" + static_cast<std::string>(*elem->second) + "\"";
     else
         res += static_cast<std::string>(*elem->second);
+static void string_num_element(std::map<double, memcell *>::const_iterator elem, std::string &res) {
 }
 
 static void string_str_element(std::unordered_map<std::string, memcell *>::const_iterator elem, std::string &res) {
