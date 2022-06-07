@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-bool is_number(const std::string &s) {
+static bool is_number(const std::string &s) {
     bool found_dot = false;
 
     if (!s.empty()) {

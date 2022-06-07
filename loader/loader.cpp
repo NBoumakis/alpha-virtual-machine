@@ -5,7 +5,7 @@
 #include <cassert>
 #include <unordered_map>
 
-bool is_number(const std::string &s) {
+static bool is_number(const std::string &s) {
     return !s.empty() && std::all_of(s.begin(), s.end(), ::isdigit);
 }
 
