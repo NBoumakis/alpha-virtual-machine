@@ -69,8 +69,14 @@ static memcell *parse_input(const std::string &input) {
         return new boolMemcell(false);
     else if (input == "nil")
         return new nilMemcell();
-    else
-        return new stringMemcell(input);
+    else {
+        if (input.empty())
+            return new stringMemcell("");
+        else if (input[0] == '"' && input[input.size() - 1] == '"')
+            return new stringMemcell(input.substr(1, input.size() - 2));
+        else
+            return new stringMemcell(input);
+    }
 }
 
 void libfunc_input() {
