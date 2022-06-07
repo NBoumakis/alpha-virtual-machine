@@ -2,7 +2,7 @@
 #include "memory/memcell/memcell.hpp"
 #include "table/dynamic_table.hpp"
 
-#include <algorithm>
+#include <cmath>
 
 static bool is_number(const std::string &s) {
     bool found_dot = false;
@@ -149,6 +149,30 @@ void libfunc_objectcopy() {
                 value->getDynamicTable()->inc_ref_counter();
 
             cpu::retval->getDynamicTable()->set_elem(key, value);
+        }
+    }
+}
+
+void libfunc_sqrt() {
+    unsigned long num_of_actuals = cpu::env.get_totalactuals();
+
+    if (num_of_actuals != 1) {
+        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'";
+        cpu::execution_finished = true;
+        cpu::retval = new nilMemcell();
+    } else {
+        memcell *arg = cpu::env.get_actual(0);
+
+        if (arg->getType() != memcell_type::number_m) {
+            std::cerr << "ERROR: argument of type " << arg->getTypeName() << " not suitable for operation sqrt";
+            cpu::execution_finished = true;
+            cpu::retval = new nilMemcell();
+        } else if (arg->getNumber() < 0) {
+            std::cerr << "WARNING: sqrt of negative number " << arg->getNumber();
+            cpu::execution_finished = true;
+            cpu::retval = new nilMemcell();
+        } else {
+            cpu::retval = new numberMemcell(sqrt(arg->getNumber()));
         }
     }
 }

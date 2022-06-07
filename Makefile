@@ -18,7 +18,7 @@ PHONY := $(TARGET)
 $(TARGET): $(OBJS)
 	@echo "Linking $@"
 	@mkdir -p $(OUTDIR)
-	@$(CC) -o $(OUTDIR)/$@ $(OBJS)
+	@$(CC) -o $(OUTDIR)/$@ $(OBJS) -lm
 
 $(DIR_OBJ)/%.o: %.cpp $(INCS)
 	@echo "Building" $@
