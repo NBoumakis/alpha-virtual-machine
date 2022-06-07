@@ -1,5 +1,6 @@
 #include "executer/cpu.hpp"
 #include "memory/memcell/memcell.hpp"
+#include "table/dynamic_table.hpp"
 
 #include <algorithm>
 
@@ -48,6 +49,7 @@ void libfunc_print() {
         std::cout << s;
     }
 }
+
 void libfunc_totalarguments() {
     unsigned long p_topsp = cpu::env.get_envvalue(cpu::topsp + 1); // AVM_SAVEDTOPSP_OFFSET
     delete cpu::retval;
@@ -87,4 +89,16 @@ void libfunc_input() {
     std::getline(std::cin, line);
 
     cpu::retval = parse_input(line);
+}
+
+void libfunc_objectmemberkeys() {
+    unsigned long num_of_actuals = cpu::env.get_totalactuals();
+
+    if (num_of_actuals != 1) {
+        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'";
+        cpu::execution_finished = true;
+        cpu::retval = new nilMemcell();
+    } else {
+        cpu::retval = cpu::env.get_actual(0)->getDynamicTable()->get_keys(); // AVM_NUMACTUALS_OFFSET
+    }
 }

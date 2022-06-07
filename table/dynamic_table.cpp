@@ -75,12 +75,29 @@ void dynamic_table::dec_ref_counter() {
     }
 }
 
+memcell *dynamic_table::get_keys() const {
+    memcell *res = new dynamicTableMemcell(new dynamic_table());
+
+    unsigned long i = 0;
+    for (auto &&elem : this->numIndexed) {
+        res->getDynamicTable()->set_elem(new numberMemcell(i), new numberMemcell(elem.first));
+        ++i;
+    }
+
+    for (auto &&elem : this->strIndexed) {
+        res->getDynamicTable()->set_elem(new numberMemcell(i), new stringMemcell(elem.first));
+        ++i;
+    }
+
+    return res;
+}
+
 static void string_num_element(std::map<double, memcell *>::const_iterator elem, std::string &res) {
     res += "\t" + std::to_string(static_cast<unsigned long>(elem->first)) + ":\t" +
            static_cast<std::string>(*elem->second);
 }
 
-static void string_str_element(std::unordered_map<std::string, memcell *>::const_iterator elem, std::string &res) {
+static void string_str_element(std::map<std::string, memcell *>::const_iterator elem, std::string &res) {
     res += "\n\t{ \"" + elem->first + "\":\t";
     res += static_cast<std::string>(*elem->second) + " }";
 }

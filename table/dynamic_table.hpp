@@ -4,7 +4,6 @@
 #include <cassert>
 #include <map>
 #include <string>
-#include <unordered_map>
 
 class memcell;
 
@@ -12,7 +11,7 @@ class dynamic_table {
 private:
     unsigned long refCounter;
     std::map<double, memcell *> numIndexed;
-    std::unordered_map<std::string, memcell *> strIndexed;
+    std::map<std::string, memcell *> strIndexed;
 
     void numIndexed_toString(std::string &res) const;
     void strIndexed_toString(std::string &res) const;
@@ -23,6 +22,8 @@ public:
 
     memcell *get_elem(const memcell *) const;
     void set_elem(const memcell *, memcell *);
+
+    memcell *get_keys() const;
 
     std::string to_string() const;
 

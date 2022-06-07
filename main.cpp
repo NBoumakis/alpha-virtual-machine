@@ -12,6 +12,7 @@ int main() {
     cpu::env.register_libfunc("totalarguments", libfunc_totalarguments);
     cpu::env.register_libfunc("typeof", libfunc_typeof);
     cpu::env.register_libfunc("input", libfunc_input);
+    cpu::env.register_libfunc("objectmemberkeys", libfunc_objectmemberkeys);
 
     while (!cpu::execution_finished) {
         cpu::cycle();
