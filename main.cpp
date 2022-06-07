@@ -14,6 +14,7 @@ int main() {
     cpu::env.register_libfunc("input", libfunc_input);
     cpu::env.register_libfunc("objectmemberkeys", libfunc_objectmemberkeys);
     cpu::env.register_libfunc("objecttotalmembers", libfunc_objecttotalmembers);
+    cpu::env.register_libfunc("objectcopy", libfunc_objectcopy);
 
     while (!cpu::execution_finished) {
         cpu::cycle();

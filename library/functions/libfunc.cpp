@@ -114,3 +114,41 @@ void libfunc_objecttotalmembers() {
         cpu::retval = new numberMemcell(cpu::env.get_actual(0)->getDynamicTable()->size());
     }
 }
+
+void libfunc_objectcopy() {
+    unsigned long num_of_actuals = cpu::env.get_totalactuals();
+
+    if (num_of_actuals != 1) {
+        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'";
+        cpu::execution_finished = true;
+        cpu::retval = new nilMemcell();
+    } else {
+        memcell *arg = cpu::env.get_actual(0);
+
+        // We know that both arguments are in the location
+        libfunc_objectmemberkeys();
+        memcell *keys = cpu::retval;
+
+        libfunc_objecttotalmembers();
+
+        assert(cpu::retval->getType() == memcell_type::number_m);
+        unsigned long keys_n = static_cast<unsigned long>(cpu::retval->getNumber());
+        assert(static_cast<double>(keys_n) == cpu::retval->getNumber());
+
+        delete cpu::retval;
+        cpu::retval = new dynamicTableMemcell(new dynamic_table());
+
+        for (; keys_n; --keys_n) {
+            numberMemcell key_n(keys_n - 1);
+            memcell *key = keys->getDynamicTable()->get_elem(&key_n);
+            memcell *value = arg->getDynamicTable()->get_elem(key);
+
+            if (value->getType() != memcell_type::table_m)
+                value = value->copy(value);
+            else
+                value->getDynamicTable()->inc_ref_counter();
+
+            cpu::retval->getDynamicTable()->set_elem(key, value);
+        }
+    }
+}
