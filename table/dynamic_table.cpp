@@ -141,3 +141,7 @@ std::string dynamic_table::to_string() const {
 
     return res;
 }
+
+unsigned long dynamic_table::size() const {
+    return this->numIndexed.size() + this->strIndexed.size();
+}

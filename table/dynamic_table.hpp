@@ -27,6 +27,8 @@ public:
 
     std::string to_string() const;
 
+    unsigned long size() const;
+
     void inc_ref_counter();
     void dec_ref_counter();
 };

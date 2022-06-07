@@ -102,3 +102,15 @@ void libfunc_objectmemberkeys() {
         cpu::retval = cpu::env.get_actual(0)->getDynamicTable()->get_keys(); // AVM_NUMACTUALS_OFFSET
     }
 }
+
+void libfunc_objecttotalmembers() {
+    unsigned long num_of_actuals = cpu::env.get_totalactuals();
+
+    if (num_of_actuals != 1) {
+        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'";
+        cpu::execution_finished = true;
+        cpu::retval = new nilMemcell();
+    } else {
+        cpu::retval = new numberMemcell(cpu::env.get_actual(0)->getDynamicTable()->size());
+    }
+}
