@@ -16,6 +16,7 @@ int main() {
     cpu::env.register_libfunc("objecttotalmembers", libfunc_objecttotalmembers);
     cpu::env.register_libfunc("objectcopy", libfunc_objectcopy);
     cpu::env.register_libfunc("sqrt", libfunc_sqrt);
+    cpu::env.register_libfunc("cos", libfunc_cos);
 
     while (!cpu::execution_finished) {
         cpu::cycle();

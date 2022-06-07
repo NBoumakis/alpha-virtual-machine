@@ -176,3 +176,23 @@ void libfunc_sqrt() {
         }
     }
 }
+
+void libfunc_cos() {
+    unsigned long num_of_actuals = cpu::env.get_totalactuals();
+
+    if (num_of_actuals != 1) {
+        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'";
+        cpu::execution_finished = true;
+        cpu::retval = new nilMemcell();
+    } else {
+        memcell *arg = cpu::env.get_actual(0);
+
+        if (arg->getType() != memcell_type::number_m) {
+            std::cerr << "ERROR: argument of type " << arg->getTypeName() << " not suitable for operation sqrt";
+            cpu::execution_finished = true;
+            cpu::retval = new nilMemcell();
+        } else {
+            cpu::retval = new numberMemcell(cos(arg->getNumber() / 180 * M_PI));
+        }
+    }
+}
