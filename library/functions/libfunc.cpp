@@ -12,8 +12,10 @@ static bool is_number(const std::string &s) {
             return false;
         }
 
+        ++c_itr;
+
         for (; c_itr != s.end(); ++c_itr) {
-            if (!(isdigit(*c_itr) || (*c_itr == '.' && found_dot)))
+            if (!isdigit(*c_itr) && (*c_itr != '.' || found_dot))
                 return false;
 
             found_dot = (*c_itr == '.');
