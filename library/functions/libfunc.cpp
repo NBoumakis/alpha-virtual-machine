@@ -56,7 +56,7 @@ void libfunc_totalarguments() {
 
     if (!p_topsp) {
         // FIXME
-        std::cerr << "ERROR: 'totalarguments' called outside a function !";
+        std::cerr << "ERROR: totalarguments() function is called outside of a function block!";
         cpu::execution_finished = true;
         cpu::retval = new nilMemcell();
     } else {
