@@ -2,17 +2,22 @@
 #include "text_scanner.hpp"
 %}
 
+%option c++
 %option noyywrap
+
+DIGIT       [0-9]
+SPACE       [ ]
+NULLTERM    [\0]
+BYTE        [+-]?DIGIT{1,3}
+DOUBLE      DIGIT+\.DIGIT+
 
 %%
 
-[0-9]+   { yylval = atoi(yytext); return NUM; }
-[\+\-]   { yylval = yytext[0]; return OPA; }
-[\*/]    { yylval = yytext[0]; return OPM; }
-"("      { return LP; }
-")"      { return RP; }
-";"      { return STOP; }
-<<EOF>>  { return 0; }
-[ \t\n]+ { }
-.        { cerr << "Unrecognized token!" << endl; exit(1); }
+{DIGIT}+            { yylval = std::stod(yytext); return ULONG; }
+{SPACE}             { yylval = yytext[0]; return SPACE; }
+[.]                 { yylval = yytext[0]; return CHAR; }
+{NULLTERM}          { return NTERM; }
+{BYTE}              { return BYTE; }
+{DOUBLE}            { return DOUBLE; }
+<<EOF>>             { return END; }
 %%
