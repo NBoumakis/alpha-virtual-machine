@@ -33,7 +33,7 @@ void libfunc_typeof() {
 
     if (num_of_actuals != 1) {
         // FIXME
-        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'";
+        std::cerr << "ERROR: " << num_of_actuals << " is too many arguments in typeof() function!";
         cpu::execution_finished = true;
     } else {
         delete cpu::retval;
