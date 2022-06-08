@@ -21,7 +21,7 @@ void execute_jeq(instruction *instr) {
 
     if (rv1->getType() == memcell_type::undefined_m || rv2->getType() == memcell_type::undefined_m) {
         // FIXME
-        std::cerr << "ERROR: 'undef' involved in equality!";
+        std::cerr << "ERROR: cannot perform equal operation in an undefined operand!";
         cpu::execution_finished = true;
     } else if (rv1->getType() == memcell_type::nil_m || rv2->getType() == memcell_type::nil_m) {
         result = (rv1->getType() == memcell_type::nil_m) && (rv2->getType() == memcell_type::nil_m);
@@ -29,7 +29,7 @@ void execute_jeq(instruction *instr) {
         result = (static_cast<bool>(*rv1) == static_cast<bool>(*rv2));
     } else if (rv1->getType() != rv2->getType()) {
         // FIXME
-        std::cerr << "ERROR: " << rv1->getTypeName() << " == " << rv2->getTypeName() << "is illegal!";
+        std::cerr << "ERROR: cannot perform equal operation between " << rv1->getTypeName() << " and " << rv2->getTypeName() << "!";
         cpu::execution_finished = true;
     } else {
         result = (*rv1 == *rv2);
