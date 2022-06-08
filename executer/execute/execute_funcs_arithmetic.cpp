@@ -29,7 +29,7 @@ void execute_arithmetic(instruction *instr) {
 
     if (rv1->getType() != memcell_type::number_m || rv2->getType() != memcell_type::number_m) {
         // FIXME
-        std::cerr << "ERROR: not a number in arithmetic !";
+        std::cerr << "ERROR: arithmetic operation does not have operands of type number!";
         cpu::execution_finished = true;
     } else {
         lv = new numberMemcell();
