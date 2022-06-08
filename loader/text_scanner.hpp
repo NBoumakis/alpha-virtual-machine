@@ -1,14 +1,9 @@
 #include <iostream>
-using namespace std;
 
-enum text_type { END,
-                 ULONG,
-                 SPACE,
+enum text_type { INVALID = -1,
+                 END,
+                 LONG,
                  CHAR,
-                 NTERM,
-                 BYTE,
                  DOUBLE };
 
-extern double yylval; // All semantic values of tokens are int's
-
-int yylex();
+extern double yylval; // All semantic values of tokens are doubles
