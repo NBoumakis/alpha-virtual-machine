@@ -20,6 +20,10 @@ $(TARGET): $(OBJS)
 	@mkdir -p $(OUTDIR)
 	@$(CC) -o $(OUTDIR)/$@ $(OBJS) -lm
 
+loader/text_scanner.cpp: loader/text_scanner.l
+	@echo "Flexing the text parser"
+	@flex++ --outfile=$@ $<
+
 $(DIR_OBJ)/%.o: %.cpp $(INCS)
 	@echo "Building" $@
 	@mkdir -p $(@D)
@@ -27,7 +31,7 @@ $(DIR_OBJ)/%.o: %.cpp $(INCS)
 
 PHONY += clean
 clean:
-	rm -rf $(OUTDIR) $(DATADIR) $(DIR_OBJ)
+	rm -rf $(OUTDIR) $(DATADIR) $(DIR_OBJ) loader/text_scanner.cpp
 
 PHONY += echoes
 echoes:
