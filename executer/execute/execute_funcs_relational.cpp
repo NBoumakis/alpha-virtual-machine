@@ -89,7 +89,7 @@ void execute_ordered(instruction *instr) {
         result = ordered_funcs.at(instr->opcode)(rv1->getNumber(), rv2->getNumber());
     } else {
         // FIXME
-        std::cerr << "ERROR: comparisons are only allowed between numbers";
+        std::cerr << "ERROR: cannot perform compare operations between operands that are not numbers";
         cpu::execution_finished = true;
     }
 
