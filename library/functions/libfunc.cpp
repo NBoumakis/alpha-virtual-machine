@@ -241,3 +241,33 @@ void libfunc_strtonum() {
         }
     }
 }
+
+void libfunc_argument() {
+    unsigned long p_topsp = cpu::env.get_envvalue(cpu::topsp + 1); // AVM_SAVEDTOPSP_OFFSET
+    delete cpu::retval;
+
+    if (!p_topsp) {
+        // FIXME
+        std::cerr << "WARNING: 'argument' called outside a function !";
+        cpu::retval = new nilMemcell();
+    } else {
+        memcell *arg = cpu::env.get_actual(0);
+        assert(arg->getType() == memcell_type::number_m);
+        if (arg->getNumber() >= 0) {
+            unsigned long index = static_cast<unsigned long>(arg->getNumber());
+            assert(static_cast<double>(index) == arg->getNumber());
+
+            if (index < cpu::env.get_envvalue(p_topsp + 4))
+                cpu::retval = cpu::stack[p_topsp + 4 + 1 + index];
+            else {
+                std::cerr << "ERROR: argument " << index << " is inaccessible";
+                cpu::execution_finished = true;
+                cpu::retval = new nilMemcell();
+            }
+        } else {
+            std::cerr << "ERROR: index " << arg->getNumber() << " is invalid";
+            cpu::execution_finished = true;
+            cpu::retval = new nilMemcell();
+        }
+    }
+}

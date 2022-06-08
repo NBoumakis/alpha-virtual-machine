@@ -8,6 +8,8 @@ int main() {
 
     load_text(in_file);
 
+    cpu::stack[cpu::topsp + 1] = new numberMemcell(0);
+
     cpu::env.register_libfunc("print", libfunc_print);
     cpu::env.register_libfunc("totalarguments", libfunc_totalarguments);
     cpu::env.register_libfunc("typeof", libfunc_typeof);
@@ -19,6 +21,7 @@ int main() {
     cpu::env.register_libfunc("cos", libfunc_cos);
     cpu::env.register_libfunc("sin", libfunc_sin);
     cpu::env.register_libfunc("strtonum", libfunc_strtonum);
+    cpu::env.register_libfunc("argument", libfunc_argument);
 
     while (!cpu::execution_finished) {
         cpu::cycle();
