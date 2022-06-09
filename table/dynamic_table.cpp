@@ -143,6 +143,21 @@ memcell *dynamic_table::get_keys() const {
         ++i;
     }
 
+    for (auto &&elem : this->boolIndexed) {
+        res->getDynamicTable()->set_elem(new numberMemcell(i), new boolMemcell(elem.first));
+        ++i;
+    }
+
+    for (auto &&elem : this->userfuncIndexed) {
+        res->getDynamicTable()->set_elem(new numberMemcell(i), new userfuncMemcell(elem.first));
+        ++i;
+    }
+
+    for (auto &&elem : this->libfuncIndexed) {
+        res->getDynamicTable()->set_elem(new numberMemcell(i), new libfuncMemcell(elem.first));
+        ++i;
+    }
+
     return res;
 }
 
