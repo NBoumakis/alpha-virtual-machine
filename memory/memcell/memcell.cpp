@@ -129,6 +129,10 @@ dynamicTableMemcell::dynamicTableMemcell(dynamic_table *table) {
     this->value = table;
 }
 
+dynamicTableMemcell::~dynamicTableMemcell() {
+    this->value->dec_ref_counter();
+}
+
 void dynamicTableMemcell::setDynamicTable(dynamic_table *table) {
     this->value = table;
 }

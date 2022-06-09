@@ -161,7 +161,7 @@ public:
     dynamicTableMemcell() = default;
     dynamicTableMemcell(dynamicTableMemcell const &b) = default;
     dynamicTableMemcell(dynamic_table *);
-    ~dynamicTableMemcell() = default;
+    ~dynamicTableMemcell();
 
     memcell *copy(memcell const *b) override;
 
