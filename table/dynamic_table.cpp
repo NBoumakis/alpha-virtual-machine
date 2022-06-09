@@ -65,17 +65,18 @@ memcell *dynamic_table::get_elem(const memcell *key) const {
 }
 
 void dynamic_table::set_elem(const memcell *key, memcell *value) {
-
     switch (key->getType()) {
     case memcell_type::number_m: {
         auto loc = numIndexed.find(key->getNumber());
 
         if (value->getType() != memcell_type::nil_m) {
-            if (loc != numIndexed.end())
+            if (loc != numIndexed.end()) {
+                delete loc->second;
                 loc->second = value->copy(value);
-            else
+            } else
                 numIndexed.insert({key->getNumber(), value->copy(value)});
         } else if (loc != numIndexed.end()) {
+            delete loc->second;
             numIndexed.erase(key->getNumber());
         }
 
@@ -85,12 +86,14 @@ void dynamic_table::set_elem(const memcell *key, memcell *value) {
     case memcell_type::string_m: {
         auto loc = strIndexed.find(key->getString());
         if (value->getType() != memcell_type::nil_m) {
-            if (loc != strIndexed.end())
+            if (loc != strIndexed.end()) {
+                delete loc->second;
                 loc->second = value->copy(value);
-            else
+            } else
                 strIndexed.insert({key->getString(), value->copy(value)});
             break;
         } else if (loc != strIndexed.end()) {
+            delete loc->second;
             strIndexed.erase(key->getString());
         }
     }
@@ -98,12 +101,14 @@ void dynamic_table::set_elem(const memcell *key, memcell *value) {
     case memcell_type::bool_m: {
         auto loc = boolIndexed.find(key->getBool());
         if (value->getType() != memcell_type::nil_m) {
-            if (loc != boolIndexed.end())
+            if (loc != boolIndexed.end()) {
+                delete loc->second;
                 loc->second = value->copy(value);
-            else
+            } else
                 boolIndexed.insert({key->getBool(), value->copy(value)});
             break;
         } else if (loc != boolIndexed.end()) {
+            delete loc->second;
             boolIndexed.erase(key->getBool());
         }
     }
@@ -111,12 +116,14 @@ void dynamic_table::set_elem(const memcell *key, memcell *value) {
     case memcell_type::userfunc_m: {
         auto loc = userfuncIndexed.find(key->getUserFunc());
         if (value->getType() != memcell_type::nil_m) {
-            if (loc != userfuncIndexed.end())
+            if (loc != userfuncIndexed.end()) {
+                delete loc->second;
                 loc->second = value->copy(value);
-            else
+            } else
                 userfuncIndexed.insert({key->getUserFunc(), value->copy(value)});
             break;
         } else if (loc != userfuncIndexed.end()) {
+            delete loc->second;
             userfuncIndexed.erase(key->getUserFunc());
         }
     }
@@ -124,12 +131,14 @@ void dynamic_table::set_elem(const memcell *key, memcell *value) {
     case memcell_type::libfunc_m: {
         auto loc = libfuncIndexed.find(key->getLibFunc());
         if (value->getType() != memcell_type::nil_m) {
-            if (loc != libfuncIndexed.end())
+            if (loc != libfuncIndexed.end()) {
+                delete loc->second;
                 loc->second = value->copy(value);
-            else
+            } else
                 libfuncIndexed.insert({key->getLibFunc(), value->copy(value)});
             break;
         } else if (loc != libfuncIndexed.end()) {
+            delete loc->second;
             libfuncIndexed.erase(key->getLibFunc());
         }
     }
