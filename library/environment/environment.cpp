@@ -14,6 +14,7 @@ void environment::call_libfunc(const std::string &id) {
     try {
         func = dispatch.at(id);
     } catch (const std::out_of_range &e) {
+        // FIXME
         std::cerr << "ERROR: unsupported lib function " << id << " called!" << std::endl;
         cpu::execution_finished = true;
     }
