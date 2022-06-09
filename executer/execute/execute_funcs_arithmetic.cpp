@@ -15,16 +15,20 @@ double div_impl(double x, double y) {
         // FIXME
         std::cerr << BRED "ERROR: Division by zero" RST << std::endl;
         cpu::execution_finished = true;
+        return 0;
     }
+
     return x / y;
 }
 double mod_impl(double x, double y) {
-    if (((long)y) == 0) {
+    if ((static_cast<long>(y)) == 0) {
         // FIXME
         std::cerr << BRED "ERROR: Division by zero" RST << std::endl;
         cpu::execution_finished = true;
+        return 0;
     }
-    return ((long)x) % ((long)y);
+
+    return (static_cast<long>(x)) % (static_cast<long>(y));
 }
 
 static std::unordered_map<vmopcode, std::function<double(double, double)>> arithm_funcs = {
