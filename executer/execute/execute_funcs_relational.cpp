@@ -1,6 +1,7 @@
 #include "executer/execute/execute_funcs_relational.hpp"
 #include "executer/cpu.hpp"
 #include "executer/decode/decode.hpp"
+#include "lib/colors.hpp"
 #include "lib/vmarg.hpp"
 #include "memory/memcell/memcell.hpp"
 #include <cassert>
@@ -21,7 +22,7 @@ void execute_jeq(instruction *instr) {
 
     if (rv1->getType() == memcell_type::undefined_m || rv2->getType() == memcell_type::undefined_m) {
         // FIXME
-        std::cerr << "ERROR: cannot perform equal operation in an undefined operand!" << std::endl;
+        std::cerr << BRED "ERROR: cannot perform equal operation on an undefined operand!" RST << std::endl;
         cpu::execution_finished = true;
     } else if (rv1->getType() == memcell_type::nil_m || rv2->getType() == memcell_type::nil_m) {
         result = (rv1->getType() == memcell_type::nil_m) && (rv2->getType() == memcell_type::nil_m);
@@ -29,7 +30,7 @@ void execute_jeq(instruction *instr) {
         result = (static_cast<bool>(*rv1) == static_cast<bool>(*rv2));
     } else if (rv1->getType() != rv2->getType()) {
         // FIXME
-        std::cerr << "ERROR: cannot perform equal operation between " << rv1->getTypeName() << " and " << rv2->getTypeName() << "!" << std::endl;
+        std::cerr << BRED "ERROR: cannot perform equal operation between " << rv1->getTypeName() << " and " << rv2->getTypeName() << "!" RST << std::endl;
         cpu::execution_finished = true;
     } else {
         result = (*rv1 == *rv2);
@@ -49,7 +50,7 @@ void execute_jne(instruction *instr) {
 
     if (rv1->getType() == memcell_type::undefined_m || rv2->getType() == memcell_type::undefined_m) {
         // FIXME
-        std::cerr << "ERROR: cannot perform not equal operation in an undefined operand!" << std::endl;
+        std::cerr << BRED "ERROR: cannot perform not equal operation in an undefined operand!" RST << std::endl;
         cpu::execution_finished = true;
     } else if (rv1->getType() == memcell_type::nil_m || rv2->getType() == memcell_type::nil_m) {
         result = (rv1->getType() == memcell_type::nil_m) && (rv2->getType() == memcell_type::nil_m);
@@ -57,7 +58,7 @@ void execute_jne(instruction *instr) {
         result = (static_cast<bool>(*rv1) != static_cast<bool>(*rv2));
     } else if (rv1->getType() != rv2->getType()) {
         // FIXME
-        std::cerr << "ERROR: cannot perform not equal operation between " << rv1->getTypeName() << " and " << rv2->getTypeName() << "!" << std::endl;
+        std::cerr << BRED "ERROR: cannot perform not equal operation between " << rv1->getTypeName() << " and " << rv2->getTypeName() << "!" RST << std::endl;
         cpu::execution_finished = true;
     } else {
         result = (*rv1 != *rv2);
@@ -89,7 +90,7 @@ void execute_ordered(instruction *instr) {
         result = ordered_funcs.at(instr->opcode)(rv1->getNumber(), rv2->getNumber());
     } else {
         // FIXME
-        std::cerr << "ERROR: cannot perform compare operations between operands that are not numbers" << std::endl;
+        std::cerr << BRED "ERROR: cannot perform compare operations between operands that are not numbers" RST << std::endl;
         cpu::execution_finished = true;
     }
 

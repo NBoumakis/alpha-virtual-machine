@@ -1,9 +1,10 @@
 #include "memory/stack/program_stack.hpp"
 #include "executer/cpu.hpp"
+#include "lib/colors.hpp"
 
 void program_stack::push(memcell *cell) {
     if (!cpu::top) {
-        std::cerr << "ERROR: Stack overflow" << std::endl;
+        std::cerr << BRED "ERROR: Stack overflow" RST << std::endl;
         cpu::execution_finished = true;
     } else {
         this->stack.at(cpu::top--) = cell;

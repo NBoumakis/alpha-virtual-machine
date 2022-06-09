@@ -1,6 +1,7 @@
 #include "executer/execute/execute_funcs_table.hpp"
 #include "executer/cpu.hpp"
 #include "executer/decode/decode.hpp"
+#include "lib/colors.hpp"
 #include "memory/memcell/memcell.hpp"
 #include "table/dynamic_table.hpp"
 #include <assert.h>
@@ -26,7 +27,7 @@ void execute_tablegetelem(instruction *instr) {
 
     if (t->getType() != memcell_type::table_m) {
         // FIXME
-        std::cerr << "ERROR: cannot get the element of a non-table operand with name " << t->getTypeName() << "!" << std::endl;
+        std::cerr << BRED "ERROR: cannot get the element of a non-table operand with name " << t->getTypeName() << "!" RST << std::endl;
         cpu::execution_finished = true;
         assign(lv, new nilMemcell());
     } else {
@@ -39,7 +40,7 @@ void execute_tablegetelem(instruction *instr) {
             std::string ts = static_cast<std::string>(*t);
             std::string is = static_cast<std::string>(*i);
             // FIXME
-            std::cerr << "WARNING: the value of table " << ts << " with key " << is << " is undefined!" << std::endl;
+            std::cerr << BYEL "WARNING: the value of table " << ts << " with key " << is << " is undefined!" RST << std::endl;
         }
     }
 }
@@ -53,7 +54,7 @@ void execute_tablesetelem(instruction *instr) {
 
     if (t->getType() != memcell_type::table_m) {
         // FIXME
-        std::cerr << "ERROR: " << t->getTypeName() << " cannot be a value to the table with key " << i->getTypeName() << "!" << std::endl;
+        std::cerr << BRED "ERROR: " << t->getTypeName() << " cannot be a value to the table with key " << i->getTypeName() << "!" RST << std::endl;
         cpu::execution_finished = true;
     } else {
         t->getDynamicTable()->set_elem(i, c);

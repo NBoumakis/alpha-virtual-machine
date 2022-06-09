@@ -1,8 +1,8 @@
 #include "memory/memcell/memcell.hpp"
+#include "executer/cpu.hpp"
+#include "lib/colors.hpp"
 #include "library/reporting/reporting.hpp"
 #include "table/dynamic_table.hpp"
-
-#include "executer/cpu.hpp"
 
 // sub-class numberMemcell
 numberMemcell::numberMemcell(double number) {
@@ -320,7 +320,7 @@ memcell *assign(memcell *&lv, memcell *rv) {
 
     if (rv != cpu::retval && rv->getType() == memcell_type::undefined_m)
         // FIXME
-        std::cerr << "Warning: Assigning from 'undefined'!" << std::endl;
+        std::cerr << BYEL "WARNING: Assigning from undefined!" RST << std::endl;
 
     delete lv;
 

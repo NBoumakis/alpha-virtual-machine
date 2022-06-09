@@ -1,5 +1,6 @@
 #include "library/environment/environment.hpp"
 #include "executer/cpu.hpp"
+#include "lib/colors.hpp"
 
 void environment::call_save_environment() {
     cpu::stack.push(new numberMemcell(total_actuals));
@@ -15,7 +16,7 @@ void environment::call_libfunc(const std::string &id) {
         func = dispatch.at(id);
     } catch (const std::out_of_range &e) {
         // FIXME
-        std::cerr << "ERROR: unsupported lib function " << id << " called!" << std::endl;
+        std::cerr << BRED "ERROR: unsupported lib function " << id << " called!" RST << std::endl;
         cpu::execution_finished = true;
     }
 

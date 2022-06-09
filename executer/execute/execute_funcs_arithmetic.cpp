@@ -1,6 +1,7 @@
 #include "executer/execute/execute_funcs_arithmetic.hpp"
 #include "executer/cpu.hpp"
 #include "executer/decode/decode.hpp"
+#include "lib/colors.hpp"
 #include "memory/memcell/memcell.hpp"
 #include <assert.h>
 #include <functional>
@@ -12,7 +13,7 @@ double mul_impl(double x, double y) { return x * y; }
 double div_impl(double x, double y) {
     if (y == 0) {
         // FIXME
-        std::cerr << "ERROR: Division by zero" << std::endl;
+        std::cerr << BRED "ERROR: Division by zero" RST << std::endl;
         cpu::execution_finished = true;
     }
     return x / y;
@@ -20,7 +21,7 @@ double div_impl(double x, double y) {
 double mod_impl(double x, double y) {
     if (((long)y) == 0) {
         // FIXME
-        std::cerr << "ERROR: Division by zero" << std::endl;
+        std::cerr << BRED "ERROR: Division by zero" RST << std::endl;
         cpu::execution_finished = true;
     }
     return ((long)x) % ((long)y);
@@ -42,7 +43,7 @@ void execute_arithmetic(instruction *instr) {
 
     if (rv1->getType() != memcell_type::number_m || rv2->getType() != memcell_type::number_m) {
         // FIXME
-        std::cerr << "ERROR: arithmetic operation does not have operands of type number!" << std::endl;
+        std::cerr << BRED "ERROR: arithmetic operation does not have operands of type number!" RST << std::endl;
         cpu::execution_finished = true;
     } else {
         lv = new numberMemcell();

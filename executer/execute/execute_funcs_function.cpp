@@ -1,6 +1,7 @@
 #include "executer/execute/execute_funcs_function.hpp"
 #include "executer/cpu.hpp"
 #include "executer/decode/decode.hpp"
+#include "lib/colors.hpp"
 #include "library/environment/environment.hpp"
 #include "memory/memcell/memcell.hpp"
 #include <assert.h>
@@ -33,7 +34,7 @@ void execute_call(instruction *instr) {
     default: {
         std::string s = static_cast<std::string>(*func);
         // FIXME
-        std::cerr << "ERROR: cannot call a undefined function with name " << s << "!" << std::endl;
+        std::cerr << BRED "ERROR: cannot call a undefined function with name " << s << "!" RST << std::endl;
         cpu::execution_finished = true;
     }
     }
