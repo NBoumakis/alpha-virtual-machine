@@ -1,260 +1,350 @@
 #include "loader/loader.hpp"
 #include "executer/cpu.hpp"
 #include "lib/function.hpp"
-#include <algorithm>
+#include "loader/text_scanner.hpp"
+#include <FlexLexer.h>
 #include <cassert>
-#include <unordered_map>
+#include <functional>
+#include <string>
 
-static bool is_number(const std::string &s) {
-    return !s.empty() && std::all_of(s.begin(), s.end(), ::isdigit);
+double yylval;
+static text_type next_type = INVALID;
+
+static text_type peek(yyFlexLexer &lexer, double &next_val) {
+    static double peeked_val;
+    if (next_type == INVALID) {
+        text_type next = static_cast<text_type>(lexer.yylex());
+        peeked_val = next_val = yylval;
+
+        return next;
+    } else {
+        next_val = peeked_val;
+        return next_type;
+    }
 }
 
-static bool magicnumber(std::ifstream &in_file) noexcept {
-    unsigned number;
+static bool match(text_type tok, yyFlexLexer &lexer, double &next_val) {
+    if (tok == peek(lexer, next_val)) {
+        next_type = INVALID;
+        return true;
+    } else {
+        return false;
+    }
+}
 
-    if (in_file >> number) {
-        return number == 340200501;
+/* Eats up to n characters from lexer until a character in delim is found or
+ * something different than a character is met. */
+static void eatup(yyFlexLexer &lexer, std::string delim = "", unsigned n = -1) {
+    double val;
+    text_type next;
+
+    while (n) {
+        next = peek(lexer, val);
+        if (next == CHAR) {
+            --n;
+            if (delim.find_first_of(static_cast<char>(val)) != delim.npos) {
+                break;
+            }
+        } else {
+            next_type = next;
+            break;
+        }
+    }
+}
+
+static bool string(yyFlexLexer &lexer, std::string &res) {
+    double val;
+    bool matched = match(LONG, lexer, val);
+
+    unsigned long number = val;
+    if (!matched) {
+        return false;
     }
 
-    return false;
+    eatup(lexer, "", 1);
+
+    res = "";
+
+    for (unsigned long i = 0; i < number; ++i) {
+        match(CHAR, lexer, val);
+        char chr = val;
+        if (static_cast<double>(chr) != val) {
+            return false;
+        }
+
+        res += chr;
+    }
+
+    return true;
 }
 
-static bool globals(std::ifstream &in_file) {
-    unsigned long number;
+static bool strings(yyFlexLexer &lexer, std::function<void(unsigned long, std::string &)> insert) {
+    double val;
+    bool matched = match(LONG, lexer, val);
 
-    in_file >> number;
+    unsigned long number = val;
+
+    // If it didn't match, this won't run
+    for (unsigned long i = 0; i < number && matched; ++i) {
+        eatup(lexer, "", 1);
+        std::string res;
+        matched = string(lexer, res);
+        if (matched) {
+            insert(i, res);
+        }
+    }
+
+    return matched;
+}
+
+static bool numbers(yyFlexLexer &lexer, std::function<void(unsigned long, double)> insert) {
+    double val;
+    bool matched = match(LONG, lexer, val);
+
+    unsigned long number = val;
+
+    // If it didn't match, this won't run
+    for (unsigned long i = 0; i < number && matched; ++i) {
+        eatup(lexer, "", 1);
+        matched = match(DOUBLE, lexer, val);
+        if (matched)
+            insert(i, val);
+    }
+
+    return matched;
+}
+
+static bool userfunc(yyFlexLexer &lexer, unsigned long index, std::function<void(unsigned long, Function *)> insert) {
+    double val;
+
+    bool matched = match(LONG, lexer, val);
+
+    unsigned long localsize = val;
+    if (!matched) {
+        return false;
+    }
+    eatup(lexer, "", 1);
+
+    matched = match(LONG, lexer, val);
+
+    unsigned long address = val;
+    if (!matched) {
+        return false;
+    }
+
+    eatup(lexer, "", 1);
+
+    std::string id = "";
+
+    if (!string(lexer, id))
+        return false;
+
+    insert(index, new Function(id, address, localsize));
+    return true;
+}
+
+static bool userfuncs(yyFlexLexer &lexer, std::function<void(unsigned long, Function *)> insert) {
+    double val;
+    bool matched = match(LONG, lexer, val);
+
+    unsigned long number = val;
+
+    // If it didn't match, this won't run
+    for (unsigned long i = 0; i < number && matched; ++i) {
+        eatup(lexer, "", 1);
+        matched = userfunc(lexer, i, insert);
+    }
+
+    return matched;
+}
+
+static bool libfuncs(yyFlexLexer &lexer, std::function<void(unsigned long, std::string &)> insert) {
+    return strings(lexer, insert);
+}
+
+static bool magicnumber(yyFlexLexer &lexer) noexcept {
+    double val;
+
+    return match(LONG, lexer, val) && val == 340200501;
+}
+
+static void insert_string_array(unsigned long index, std::string &str) {
+    cpu::pools.insert_string(index, str);
+}
+
+static void insert_number_array(unsigned long index, double num) {
+    cpu::pools.insert_number(index, num);
+}
+
+static void insert_userfunc_array(unsigned long index, Function *func) {
+    cpu::pools.insert_userfunc(index, func);
+}
+
+static void insert_libfunc_array(unsigned long index, std::string &id) {
+    cpu::pools.insert_libfunc(index, id);
+}
+
+static bool arrays(yyFlexLexer &lexer) {
+    if (!strings(lexer, insert_string_array))
+        return false;
+    eatup(lexer);
+
+    if (!numbers(lexer, insert_number_array))
+        return false;
+    eatup(lexer);
+
+    if (!userfuncs(lexer, insert_userfunc_array))
+        return false;
+    eatup(lexer);
+
+    if (!libfuncs(lexer, insert_libfunc_array))
+        return false;
+
+    return true;
+}
+
+static void insert_instruction(instruction *instr) {
+    cpu::code.insert(instr);
+}
+
+static bool operand_type(yyFlexLexer &lexer, char &type) {
+    double val;
+    bool matched = match(LONG, lexer, val);
+
+    type = val;
+    if (!matched) {
+        return false;
+    }
+
+    return true;
+}
+
+static bool operand_value(yyFlexLexer &lexer, unsigned long &value) {
+    double val;
+    bool matched = match(LONG, lexer, val);
+
+    if (!matched) {
+        return false;
+    }
+
+    value = val;
+    return true;
+}
+
+static bool code_instruction(yyFlexLexer &lexer, std::function<void(instruction *)> insert) {
+    double val;
+    bool matched = match(LONG, lexer, val);
+    vmarg *arg1 = nullptr, *arg2 = nullptr, *result = nullptr;
+
+    vmopcode opcode = static_cast<vmopcode>(val);
+    if (!matched || val < 0 || static_cast<double>(opcode) != val) {
+        return false;
+    }
+
+    char arg1_type, arg2_type, result_type;
+
+    eatup(lexer, "", 1);
+    operand_type(lexer, arg1_type);
+
+    eatup(lexer, "", 1);
+    operand_type(lexer, arg2_type);
+
+    eatup(lexer, "", 1);
+    operand_type(lexer, result_type);
+
+    unsigned long value;
+
+    eatup(lexer, "", 2);
+    if (arg1_type != -1) {
+        operand_value(lexer, value);
+        arg1 = new vmarg(static_cast<vmarg_t>(arg1_type), value);
+    } else {
+        // If no argument present, eat up the -1
+        operand_type(lexer, arg1_type);
+    }
+
+    eatup(lexer, "", 1);
+    if (arg2_type != -1) {
+        operand_value(lexer, value);
+        arg2 = new vmarg(static_cast<vmarg_t>(arg2_type), value);
+    } else {
+        // If no argument present, eat up the -1
+        operand_type(lexer, arg2_type);
+    }
+
+    eatup(lexer, "", 1);
+    if (result_type != -1) {
+        operand_value(lexer, value);
+        result = new vmarg(static_cast<vmarg_t>(result_type), value);
+    } else {
+        // If no argument present, eat up the -1
+        operand_type(lexer, arg1_type);
+    }
+
+    instruction *instr = new instruction(opcode, arg1, arg2, result);
+    insert(instr);
+
+    return true;
+}
+
+static bool code(yyFlexLexer &lexer) {
+    double val;
+    bool matched = match(LONG, lexer, val);
+
+    unsigned long number = val;
+
+    // If it didn't match, this won't run
+    for (unsigned long i = 0; i < number && matched; ++i) {
+        eatup(lexer, "", 1);
+        code_instruction(lexer, insert_instruction);
+    }
+
+    return matched;
+}
+
+static bool globals(yyFlexLexer &lexer) {
+    double val;
+    bool matched = match(LONG, lexer, val);
+
+    unsigned long number = val;
+    if (!matched || static_cast<double>(number) != val) {
+        return false;
+    }
+
     cpu::topsp = 0;
     cpu::top = 4095 - number;
 
     return true;
 }
 
-static std::string string(std::ifstream &in_file) {
-    std::string token;
+static bool avmtextfile(std::ifstream &in_file) {
+    yyFlexLexer lexer(in_file, std::cout);
 
-    in_file >> token;
-
-    if (!is_number(token)) {
-        throw std::out_of_range("Invalid size, not an integer");
-    }
-
-    unsigned long total = std::stoul(token);
-
-    /*
-    char str[total + 1];
-    in_file.get(str, total + 1);
-
-    return std::string(str);
-    */
-    in_file >> token;
-
-    return token;
-}
-
-static bool strings(std::ifstream &in_file, std::unordered_map<unsigned long, std::string> &buf) {
-    unsigned long total;
-    std::string token;
-
-    in_file >> token;
-
-    if (!is_number(token)) {
-        throw std::out_of_range("Invalid number of string, not an integer");
-    }
-
-    total = std::stoul(token);
-
-    for (unsigned long i = total; i; --i) {
-        try {
-            buf.insert({total - i, string(in_file)});
-        } catch (const std::out_of_range &e) {
-            std::cerr << e.what() << '\n';
-            return false;
-        }
-    }
-
-    return true;
-}
-
-static bool numbers(std::ifstream &in_file) noexcept {
-    unsigned long total;
-    std::string token;
-
-    in_file >> token;
-
-    if (!is_number(token)) {
-        throw std::out_of_range("Invalid number of string, not an integer");
-    }
-
-    total = std::stoul(token);
-
-    for (unsigned long i = total; i; --i) {
-        double number;
-
-        try {
-            in_file >> token;
-            number = std::stod(token);
-        } catch (const std::invalid_argument &e) {
-            return false;
-        }
-
-        cpu::pools.insert_number(total - i, number);
-    }
-
-    return true;
-}
-
-static bool userFunctions(std::ifstream &in_file) {
-    unsigned long total;
-    std::string token;
-
-    in_file >> token;
-
-    if (!is_number(token)) {
-        throw std::out_of_range("Invalid number of string, not an integer");
-    }
-
-    total = std::stoul(token);
-
-    for (unsigned long i = total; i; --i) {
-        unsigned long address, localsize;
-
-        try {
-            in_file >> token;
-            address = std::stoul(token);
-        } catch (const std::invalid_argument &e) {
-            return false;
-        }
-
-        try {
-            in_file >> token;
-            localsize = std::stoul(token);
-        } catch (const std::invalid_argument &e) {
-            return false;
-        }
-
-        in_file >> token;
-
-        cpu::pools.insert_userfunc(address, new Function(token, address, localsize));
-    }
-
-    return true;
-}
-
-static bool libfunctions(std::ifstream &in_file) {
-    std::unordered_map<unsigned long, std::string> string_map;
-
-    try {
-        if (strings(in_file, string_map)) {
-            for (auto &str : string_map) {
-                cpu::pools.insert_libfunc(str.first, str.second);
-            }
-        } else {
-            return false;
-        }
-    } catch (const std::out_of_range &e) {
-        std::cerr << e.what() << '\n';
+    if (!magicnumber(lexer))
         return false;
-    }
+
+    eatup(lexer);
+
+    if (!globals(lexer))
+        return false;
+
+    eatup(lexer);
+
+    if (!arrays(lexer))
+        return false;
+
+    eatup(lexer);
+
+    if (!code(lexer))
+        return false;
 
     return true;
-}
-
-static bool arrays(std::ifstream &in_file) noexcept {
-    std::unordered_map<unsigned long, std::string> string_map;
-
-    try {
-        if (strings(in_file, string_map)) {
-            for (auto &str : string_map) {
-                cpu::pools.insert_string(str.first, str.second);
-            }
-        } else {
-            return false;
-        }
-    } catch (const std::out_of_range &e) {
-        std::cerr << e.what() << '\n';
-        return false;
-    }
-
-    string_map.clear();
-
-    try {
-        if (!numbers(in_file)) {
-            return false;
-        }
-    } catch (const std::out_of_range &e) {
-        std::cerr << e.what() << '\n';
-        return false;
-    }
-
-    return userFunctions(in_file) && libfunctions(in_file);
-}
-
-static bool code(std::ifstream &in_file) noexcept {
-    unsigned long total;
-    std::string token;
-
-    in_file >> token;
-
-    if (!is_number(token)) {
-        return false;
-    }
-
-    total = std::stoul(token);
-
-    for (unsigned long i = total; i; --i) {
-        vmopcode op;
-        std::string arg1TypeStr, arg2TypeStr, resultTypeStr;
-        vmarg *arg1 = nullptr, *arg2 = nullptr, *result = nullptr;
-
-        // Read opcode
-        in_file >> token;
-        op = static_cast<vmopcode>(std::stoi(token));
-
-        // Read argument types
-        in_file >> arg1TypeStr >> arg2TypeStr >> resultTypeStr;
-
-        // Parse arguments
-        try {
-            in_file >> token;
-            if (arg1TypeStr != "-1") {
-                if (arg1TypeStr != std::to_string(vmarg_t::user_func))
-                    arg1 = new vmarg(static_cast<vmarg_t>(std::stoi(arg1TypeStr)), std::stoul(token));
-                else
-                    arg1 = new vmarg(static_cast<vmarg_t>(std::stoi(arg1TypeStr)), cpu::pools.get_userfunc(std::stoul(token))->taddress);
-            }
-
-            in_file >> token;
-            if (arg2TypeStr != "-1") {
-                arg2 = new vmarg(static_cast<vmarg_t>(std::stoi(arg2TypeStr)), std::stoul(token));
-            }
-
-            in_file >> token;
-            if (resultTypeStr != "-1") {
-                result = new vmarg(static_cast<vmarg_t>(std::stoi(resultTypeStr)), std::stoul(token));
-            }
-        } catch (const std::invalid_argument &e) {
-            std::cerr << e.what() << '\n';
-
-            return false;
-        }
-
-        instruction *instr = new instruction(op, arg1, arg2, result);
-        cpu::code.insert(instr);
-    }
-
-    return true;
-}
-
-static bool parse_text(std::ifstream &in_file) {
-    assert(in_file.is_open());
-
-    return magicnumber(in_file) && globals(in_file) && arrays(in_file) && code(in_file);
 }
 
 bool load_text(std::ifstream &in_file) {
     assert(in_file.is_open());
 
-    bool loaded = parse_text(in_file);
+    bool loaded = avmtextfile(in_file);
     if (loaded)
         cpu::code_size = cpu::code.size();
     return loaded;
