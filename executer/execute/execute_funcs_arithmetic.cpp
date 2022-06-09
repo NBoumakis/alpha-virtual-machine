@@ -10,8 +10,20 @@ double add_impl(double x, double y) { return x + y; }
 double sub_impl(double x, double y) { return x - y; }
 double mul_impl(double x, double y) { return x * y; }
 // TODO error checking
-double div_impl(double x, double y) { return x / y; }
-double mod_impl(double x, double y) { return ((long)x) % ((long)y); }
+double div_impl(double x, double y) {
+    if (y == 0) {
+        // FIXME
+        std::cerr << "ERROR: Division by zero" << std::endl;
+    }
+    return x / y;
+}
+double mod_impl(double x, double y) {
+    if (((long)y) == 0) {
+        // FIXME
+        std::cerr << "ERROR: Division by zero" << std::endl;
+    }
+    return ((long)x) % ((long)y);
+}
 
 static std::unordered_map<vmopcode, std::function<double(double, double)>> arithm_funcs = {
     {add_vmiop, add_impl},
