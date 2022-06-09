@@ -9,7 +9,6 @@
 double add_impl(double x, double y) { return x + y; }
 double sub_impl(double x, double y) { return x - y; }
 double mul_impl(double x, double y) { return x * y; }
-// TODO error checking
 double div_impl(double x, double y) {
     if (y == 0) {
         // FIXME
