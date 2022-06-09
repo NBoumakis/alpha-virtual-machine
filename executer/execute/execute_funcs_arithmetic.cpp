@@ -23,7 +23,7 @@ double div_impl(double x, double y) {
 double mod_impl(double x, double y) {
     if ((static_cast<long>(y)) == 0) {
         // FIXME
-        std::cerr << BRED "ERROR: Division by zero" RST << std::endl;
+        std::cerr << BRED "ERROR: Modulo by zero" RST << std::endl;
         cpu::execution_finished = true;
         return 0;
     }
@@ -47,7 +47,7 @@ void execute_arithmetic(instruction *instr) {
 
     if (rv1->getType() != memcell_type::number_m || rv2->getType() != memcell_type::number_m) {
         // FIXME
-        std::cerr << BRED "ERROR: arithmetic operation does not have operands of type number!" RST << std::endl;
+        std::cerr << BRED "ERROR: Arithmetic operation does not have operands of type number!" RST << std::endl;
         cpu::execution_finished = true;
     } else {
         lv = new numberMemcell();
