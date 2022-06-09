@@ -174,7 +174,7 @@ void libfunc_sqrt() {
             cpu::retval = new nilMemcell();
         } else if (arg->getNumber() < 0) {
             // FIXME
-            std::cerr << BYEL "WARNING: Squart root of negative number " << arg->getNumber() << RST << std::endl;
+            std::cerr << BYEL "WARNING: Square root of negative number " << arg->getNumber() << RST << std::endl;
             cpu::retval = new nilMemcell();
         } else {
             cpu::retval = new numberMemcell(sqrt(arg->getNumber()));
