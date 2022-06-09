@@ -12,6 +12,9 @@ private:
     unsigned long refCounter;
     std::map<double, memcell *> numIndexed;
     std::map<std::string, memcell *> strIndexed;
+    std::map<bool, memcell *> boolIndexed;
+    std::map<unsigned long, memcell *> userfuncIndexed;
+    std::map<std::string, memcell *> libfuncIndexed;
 
     void numIndexed_toString(std::string &res) const;
     void strIndexed_toString(std::string &res) const;
