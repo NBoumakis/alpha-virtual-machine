@@ -7,6 +7,9 @@
 #include <functional>
 #include <string>
 
+// Author: Voldemort
+// Note: Dark magic, do not touch
+
 double yylval;
 static text_type next_type = INVALID;
 
@@ -114,12 +117,12 @@ static bool numbers(yyFlexLexer &lexer, std::function<void(unsigned long, double
     return matched;
 }
 
-static bool userfunc(yyFlexLexer &lexer, unsigned long index, std::function<void(unsigned long, Function *)> insert) {
+static bool userfunc(yyFlexLexer &lexer, std::function<void(unsigned long, Function *)> insert) {
     double val;
 
     bool matched = match(LONG, lexer, val);
 
-    unsigned long localsize = val;
+    unsigned long address = val;
     if (!matched) {
         return false;
     }
@@ -127,11 +130,10 @@ static bool userfunc(yyFlexLexer &lexer, unsigned long index, std::function<void
 
     matched = match(LONG, lexer, val);
 
-    unsigned long address = val;
+    unsigned long localsize = val;
     if (!matched) {
         return false;
     }
-
     eatup(lexer, "", 1);
 
     std::string id = "";
@@ -139,7 +141,7 @@ static bool userfunc(yyFlexLexer &lexer, unsigned long index, std::function<void
     if (!string(lexer, id))
         return false;
 
-    insert(index, new Function(id, address, localsize));
+    insert(address, new Function(id, address, localsize));
     return true;
 }
 
@@ -150,9 +152,9 @@ static bool userfuncs(yyFlexLexer &lexer, std::function<void(unsigned long, Func
     unsigned long number = val;
 
     // If it didn't match, this won't run
-    for (unsigned long i = 0; i < number && matched; ++i) {
+    for (; number && matched; --number) {
         eatup(lexer, "", 1);
-        matched = userfunc(lexer, i, insert);
+        matched = userfunc(lexer, insert);
     }
 
     return matched;
