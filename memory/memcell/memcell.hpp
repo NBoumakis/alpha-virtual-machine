@@ -159,7 +159,7 @@ private:
 
 public:
     dynamicTableMemcell() = default;
-    dynamicTableMemcell(dynamicTableMemcell const &b) = default;
+    dynamicTableMemcell(dynamicTableMemcell const &b);
     dynamicTableMemcell(dynamic_table *);
     ~dynamicTableMemcell();
 

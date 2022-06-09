@@ -129,6 +129,12 @@ dynamicTableMemcell::dynamicTableMemcell(dynamic_table *table) {
     this->value = table;
 }
 
+dynamicTableMemcell::dynamicTableMemcell(dynamicTableMemcell const &table) {
+    this->value = table.value;
+
+    this->value->inc_ref_counter();
+}
+
 dynamicTableMemcell::~dynamicTableMemcell() {
     this->value->dec_ref_counter();
 }
@@ -319,9 +325,6 @@ memcell *assign(memcell *&lv, memcell *rv) {
     delete lv;
 
     lv = rv->copy(rv);
-
-    if (lv->getType() == memcell_type::table_m)
-        lv->getDynamicTable()->inc_ref_counter();
 
     return lv;
 }
