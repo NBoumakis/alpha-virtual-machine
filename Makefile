@@ -11,7 +11,7 @@ DIR_OBJ = ./obj
 INCS = $(wildcard *.hpp $(foreach fd, $(SUBDIR), $(fd)/*.hpp))
 SRCS = $(wildcard *.cpp $(foreach fd, $(SUBDIR), $(fd)/*.cpp))
 NODIR_SRC = $(notdir $(SRCS))
-OBJS = $(addprefix $(DIR_OBJ)/, $(SRCS:cpp=o)) 
+OBJS = $(addprefix $(DIR_OBJ)/, $(SRCS:cpp=o)) $(DIR_OBJ)/loader/text_scanner.o
 INC_DIRS = -I./
 
 PHONY := $(TARGET)
