@@ -299,18 +299,6 @@ bool undefMemcell::operator==(const memcell *op) const {
     assert(false);
 }
 
-// avm_assign
-/* const std::unordered_map<memcell_type, std::function<memcell *(memcell const &)>> dispatch = {
-    {memcell_type::number_m, [](memcell const &) -> memcell * { return new numberMemcell; }},
-    {memcell_type::string_m, [](memcell const &) -> memcell * { return new stringMemcell; }},
-    {memcell_type::bool_m, [](memcell const &) -> memcell * { return new boolMemcell; }},
-    {memcell_type::table_m, [](memcell const &) -> memcell * { return new dynamicTableMemcell; }},
-    {memcell_type::userfunc_m, [](memcell const &) -> memcell * { return new userfuncMemcell; }},
-    {memcell_type::libfunc_m, [](memcell const &) -> memcell * { return new libfuncMemcell; }},
-    {memcell_type::nil_m, [](memcell const &) -> memcell * { return new nilMemcell; }},
-    {memcell_type::undefined_m, [](memcell const &) -> memcell * { return new undefMemcell; }},
-}; */
-
 memcell *assign(memcell *&lv, memcell *rv) {
     if (lv == rv)
         return lv;
