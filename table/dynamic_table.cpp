@@ -31,6 +31,34 @@ memcell *dynamic_table::get_elem(const memcell *key) const {
             return nullptr;
         }
     }
+
+    case memcell_type::bool_m: {
+        auto res = boolIndexed.find(key->getBool());
+        if (res != boolIndexed.end()) {
+            return res->second;
+        } else {
+            return nullptr;
+        }
+    }
+
+    case memcell_type::userfunc_m: {
+        auto res = userfuncIndexed.find(key->getUserFunc());
+        if (res != userfuncIndexed.end()) {
+            return res->second;
+        } else {
+            return nullptr;
+        }
+    }
+
+    case memcell_type::libfunc_m: {
+        auto res = libfuncIndexed.find(key->getLibFunc());
+        if (res != libfuncIndexed.end()) {
+            return res->second;
+        } else {
+            return nullptr;
+        }
+    }
+
     default:
         assert(false);
     }
