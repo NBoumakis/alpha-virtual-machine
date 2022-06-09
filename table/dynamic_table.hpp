@@ -18,6 +18,9 @@ private:
 
     void numIndexed_toString(std::string &res) const;
     void strIndexed_toString(std::string &res) const;
+    void boolIndexed_toString(std::string &res) const;
+    void userfuncIndexed_toString(std::string &res) const;
+    void libfuncIndexed_toString(std::string &res) const;
 
 public:
     dynamic_table();

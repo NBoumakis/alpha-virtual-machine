@@ -171,6 +171,18 @@ static void string_str_element(std::map<std::string, memcell *>::const_iterator 
     res += static_cast<std::string>(*elem->second) + " }";
 }
 
+static void string_bool_element(std::map<bool, memcell *>::const_iterator elem, std::string &res) {
+    res += "\n\t{ \"";
+    res += ((elem->first) ? "true" : "false");
+    res += "\":\t" + static_cast<std::string>(*elem->second) + " }";
+}
+
+static void string_userfunc_element(std::map<unsigned long, memcell *>::const_iterator elem, std::string &res) {
+    res += "\n\t{ \"";
+    res += cpu::env.get_funcinfo(elem->first)->id;
+    res += "\":\t" + static_cast<std::string>(*elem->second) + " }";
+}
+
 void dynamic_table::numIndexed_toString(std::string &res) const {
     auto elem = this->numIndexed.begin();
 
@@ -200,11 +212,56 @@ void dynamic_table::strIndexed_toString(std::string &res) const {
     }
 }
 
+void dynamic_table::boolIndexed_toString(std::string &res) const {
+    auto elem = this->boolIndexed.begin();
+
+    if (elem != this->boolIndexed.end()) {
+        string_bool_element(elem, res);
+
+        ++elem;
+    }
+    for (; elem != this->boolIndexed.end(); ++elem) {
+        res += ",";
+        string_bool_element(elem, res);
+    }
+}
+
+void dynamic_table::userfuncIndexed_toString(std::string &res) const {
+    auto elem = this->userfuncIndexed.begin();
+
+    if (elem != this->userfuncIndexed.end()) {
+        string_userfunc_element(elem, res);
+
+        ++elem;
+    }
+    for (; elem != this->userfuncIndexed.end(); ++elem) {
+        res += ",";
+        string_userfunc_element(elem, res);
+    }
+}
+
+void dynamic_table::libfuncIndexed_toString(std::string &res) const {
+    auto elem = this->libfuncIndexed.begin();
+
+    if (elem != this->libfuncIndexed.end()) {
+        string_str_element(elem, res);
+
+        ++elem;
+    }
+    for (; elem != this->libfuncIndexed.end(); ++elem) {
+        res += ",";
+        string_str_element(elem, res);
+    }
+}
+
 std::string dynamic_table::to_string() const {
     std::string res = "[";
 
     numIndexed_toString(res);
     strIndexed_toString(res);
+    boolIndexed_toString(res);
+    userfuncIndexed_toString(res);
+    libfuncIndexed_toString(res);
 
     res += "]";
 
