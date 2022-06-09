@@ -313,6 +313,7 @@ memcell *assign(memcell *&lv, memcell *rv) {
         return lv;
 
     if (rv != cpu::retval && rv->getType() == memcell_type::undefined_m)
+        // FIXME
         std::cerr << "Warning: Assigning from 'undefined'!" << std::endl;
 
     delete lv;
