@@ -21,6 +21,7 @@ $(TARGET): $(OBJS)  $(DIR_OBJ)/loader/text_scanner.o
 	@$(CC) -o $(OUTDIR)/$@ $^ -lm
 
 $(DIR_OBJ)/loader/text_scanner.o: loader/text_scanner.cpp
+	@echo "Building" $@
 	@$(CC) -o $@ $(CFLAGS) -c $<
 	
 loader/text_scanner.cpp: loader/text_scanner.l
