@@ -33,7 +33,7 @@ void libfunc_typeof() {
 
     if (num_of_actuals != 1) {
         // FIXME
-        std::cerr << "ERROR: " << num_of_actuals << " is too many arguments in typeof() function!";
+        std::cerr << "ERROR: " << num_of_actuals << " is too many arguments in typeof() function!" << std::endl;
         cpu::execution_finished = true;
     } else {
         delete cpu::retval;
@@ -56,7 +56,7 @@ void libfunc_totalarguments() {
 
     if (!p_topsp) {
         // FIXME
-        std::cerr << "ERROR: totalarguments() function is called outside of a function block!";
+        std::cerr << "ERROR: totalarguments() function is called outside of a function block!" << std::endl;
         cpu::execution_finished = true;
         cpu::retval = new nilMemcell();
     } else {
@@ -95,7 +95,8 @@ void libfunc_objectmemberkeys() {
     unsigned long num_of_actuals = cpu::env.get_totalactuals();
 
     if (num_of_actuals != 1) {
-        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'";
+        // FIXME
+        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'" << std::endl;
         cpu::execution_finished = true;
         cpu::retval = new nilMemcell();
     } else {
@@ -107,7 +108,8 @@ void libfunc_objecttotalmembers() {
     unsigned long num_of_actuals = cpu::env.get_totalactuals();
 
     if (num_of_actuals != 1) {
-        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'";
+        // FIXME
+        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'" << std::endl;
         cpu::execution_finished = true;
         cpu::retval = new nilMemcell();
     } else {
@@ -119,7 +121,8 @@ void libfunc_objectcopy() {
     unsigned long num_of_actuals = cpu::env.get_totalactuals();
 
     if (num_of_actuals != 1) {
-        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'";
+        // FIXME
+        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'" << std::endl;
         cpu::execution_finished = true;
         cpu::retval = new nilMemcell();
     } else {
@@ -157,18 +160,21 @@ void libfunc_sqrt() {
     unsigned long num_of_actuals = cpu::env.get_totalactuals();
 
     if (num_of_actuals != 1) {
-        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'";
+        // FIXME
+        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'" << std::endl;
         cpu::execution_finished = true;
         cpu::retval = new nilMemcell();
     } else {
         memcell *arg = cpu::env.get_actual(0);
 
         if (arg->getType() != memcell_type::number_m) {
-            std::cerr << "ERROR: argument of type " << arg->getTypeName() << " not suitable for operation sqrt";
+            // FIXME
+            std::cerr << "ERROR: argument of type " << arg->getTypeName() << " not suitable for operation sqrt" << std::endl;
             cpu::execution_finished = true;
             cpu::retval = new nilMemcell();
         } else if (arg->getNumber() < 0) {
-            std::cerr << "WARNING: sqrt of negative number " << arg->getNumber();
+            // FIXME
+            std::cerr << "WARNING: sqrt of negative number " << arg->getNumber() << std::endl;
             cpu::execution_finished = true;
             cpu::retval = new nilMemcell();
         } else {
@@ -181,14 +187,16 @@ void libfunc_cos() {
     unsigned long num_of_actuals = cpu::env.get_totalactuals();
 
     if (num_of_actuals != 1) {
-        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'";
+        // FIXME
+        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'" << std::endl;
         cpu::execution_finished = true;
         cpu::retval = new nilMemcell();
     } else {
         memcell *arg = cpu::env.get_actual(0);
 
         if (arg->getType() != memcell_type::number_m) {
-            std::cerr << "ERROR: argument of type " << arg->getTypeName() << " not suitable for operation sqrt";
+            // FIXME
+            std::cerr << "ERROR: argument of type " << arg->getTypeName() << " not suitable for operation sqrt" << std::endl;
             cpu::execution_finished = true;
             cpu::retval = new nilMemcell();
         } else {
@@ -201,14 +209,16 @@ void libfunc_sin() {
     unsigned long num_of_actuals = cpu::env.get_totalactuals();
 
     if (num_of_actuals != 1) {
-        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'";
+        // FIXME
+        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'typeof'" << std::endl;
         cpu::execution_finished = true;
         cpu::retval = new nilMemcell();
     } else {
         memcell *arg = cpu::env.get_actual(0);
 
         if (arg->getType() != memcell_type::number_m) {
-            std::cerr << "ERROR: argument of type " << arg->getTypeName() << " not suitable for operation sqrt";
+            // FIXME
+            std::cerr << "ERROR: argument of type " << arg->getTypeName() << " not suitable for operation sqrt" << std::endl;
             cpu::execution_finished = true;
             cpu::retval = new nilMemcell();
         } else {
@@ -221,21 +231,24 @@ void libfunc_strtonum() {
     unsigned long num_of_actuals = cpu::env.get_totalactuals();
 
     if (num_of_actuals != 1) {
-        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'strtonum'";
+        // FIXME
+        std::cerr << "ERROR: one argument (not " << num_of_actuals << ") expected in 'strtonum'" << std::endl;
         cpu::execution_finished = true;
         cpu::retval = new nilMemcell();
     } else {
         memcell *arg = cpu::env.get_actual(0);
 
         if (arg->getType() != memcell_type::string_m) {
-            std::cerr << "ERROR: argument of type " << arg->getTypeName() << " not suitable for strtonum";
+            // FIXME
+            std::cerr << "ERROR: argument of type " << arg->getTypeName() << " not suitable for strtonum" << std::endl;
             cpu::execution_finished = true;
             cpu::retval = new nilMemcell();
         } else {
             if (is_number(arg->getString())) {
                 cpu::retval = new numberMemcell(std::stod(arg->getString()));
             } else {
-                std::cerr << "WARNING: string " << arg->getString() << " not representing number";
+                // FIXME
+                std::cerr << "WARNING: string " << arg->getString() << " not representing number" << std::endl;
                 cpu::retval = new nilMemcell();
             }
         }
@@ -248,7 +261,7 @@ void libfunc_argument() {
 
     if (!p_topsp) {
         // FIXME
-        std::cerr << "WARNING: 'argument' called outside a function !";
+        std::cerr << "WARNING: 'argument' called outside a function !" << std::endl;
         cpu::retval = new nilMemcell();
     } else {
         memcell *arg = cpu::env.get_actual(0);
@@ -260,12 +273,14 @@ void libfunc_argument() {
             if (index < cpu::env.get_envvalue(p_topsp + 4))
                 cpu::retval = cpu::stack[p_topsp + 4 + 1 + index];
             else {
-                std::cerr << "ERROR: argument " << index << " is inaccessible";
+                // FIXME
+                std::cerr << "ERROR: argument " << index << " is inaccessible" << std::endl;
                 cpu::execution_finished = true;
                 cpu::retval = new nilMemcell();
             }
         } else {
-            std::cerr << "ERROR: index " << arg->getNumber() << " is invalid";
+            // FIXME
+            std::cerr << "ERROR: index " << arg->getNumber() << " is invalid" << std::endl;
             cpu::execution_finished = true;
             cpu::retval = new nilMemcell();
         }
