@@ -6,3 +6,4 @@ obj
 test*
 *.abc
 parser
+loader/text_parser.cpp
