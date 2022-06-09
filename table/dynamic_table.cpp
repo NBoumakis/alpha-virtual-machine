@@ -67,7 +67,6 @@ memcell *dynamic_table::get_elem(const memcell *key) const {
 void dynamic_table::set_elem(const memcell *key, memcell *value) {
 
     switch (key->getType()) {
-
     case memcell_type::number_m: {
         auto loc = numIndexed.find(key->getNumber());
         if (loc != numIndexed.end())
@@ -83,6 +82,33 @@ void dynamic_table::set_elem(const memcell *key, memcell *value) {
             loc->second = value->copy(value);
         else
             strIndexed.insert({key->getString(), value->copy(value)});
+        break;
+    }
+
+    case memcell_type::bool_m: {
+        auto loc = boolIndexed.find(key->getBool());
+        if (loc != boolIndexed.end())
+            loc->second = value->copy(value);
+        else
+            boolIndexed.insert({key->getBool(), value->copy(value)});
+        break;
+    }
+
+    case memcell_type::userfunc_m: {
+        auto loc = userfuncIndexed.find(key->getUserFunc());
+        if (loc != userfuncIndexed.end())
+            loc->second = value->copy(value);
+        else
+            userfuncIndexed.insert({key->getUserFunc(), value->copy(value)});
+        break;
+    }
+
+    case memcell_type::libfunc_m: {
+        auto loc = libfuncIndexed.find(key->getLibFunc());
+        if (loc != libfuncIndexed.end())
+            loc->second = value->copy(value);
+        else
+            libfuncIndexed.insert({key->getLibFunc(), value->copy(value)});
         break;
     }
 
