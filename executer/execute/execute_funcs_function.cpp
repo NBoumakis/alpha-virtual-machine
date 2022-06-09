@@ -33,7 +33,7 @@ void execute_call(instruction *instr) {
     default: {
         std::string s = static_cast<std::string>(*func);
         // FIXME
-        std::cerr << "ERROR: cannot call a undefined function with name " << s << "!";
+        std::cerr << "ERROR: cannot call a undefined function with name " << s << "!" << std::endl;
         cpu::execution_finished = true;
     }
     }
