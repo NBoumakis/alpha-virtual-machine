@@ -196,7 +196,7 @@ memcell *userfuncMemcell::copy(memcell const *b) {
 }
 
 userfuncMemcell::operator std::string() const {
-    return "user function " + std::to_string(this->value);
+    return "user function " + cpu::pools.get_userfunc(this->value)->id;
 }
 userfuncMemcell::operator bool() const {
     return true;
