@@ -172,15 +172,15 @@ static void string_str_element(std::map<std::string, memcell *>::const_iterator 
 }
 
 static void string_bool_element(std::map<bool, memcell *>::const_iterator elem, std::string &res) {
-    res += "\n\t{ \"";
+    res += "\n\t{ ";
     res += ((elem->first) ? "true" : "false");
-    res += "\":\t" + static_cast<std::string>(*elem->second) + " }";
+    res += ":\t" + static_cast<std::string>(*elem->second) + " }";
 }
 
 static void string_userfunc_element(std::map<unsigned long, memcell *>::const_iterator elem, std::string &res) {
-    res += "\n\t{ \"";
+    res += "\n\t{ ";
     res += cpu::env.get_funcinfo(elem->first)->id;
-    res += "\":\t" + static_cast<std::string>(*elem->second) + " }";
+    res += ":\t" + static_cast<std::string>(*elem->second) + " }";
 }
 
 void dynamic_table::numIndexed_toString(std::string &res) const {
