@@ -11,15 +11,18 @@ DIR_OBJ = ./obj
 INCS = $(wildcard *.hpp $(foreach fd, $(SUBDIR), $(fd)/*.hpp))
 SRCS = $(wildcard *.cpp $(foreach fd, $(SUBDIR), $(fd)/*.cpp))
 NODIR_SRC = $(notdir $(SRCS))
-OBJS = $(addprefix $(DIR_OBJ)/, $(SRCS:cpp=o)) $(DIR_OBJ)/loader/text_scanner.o
+OBJS = $(addprefix $(DIR_OBJ)/, $(SRCS:cpp=o))
 INC_DIRS = -I./
 
 PHONY := $(TARGET)
-$(TARGET): $(OBJS)
+$(TARGET): $(OBJS)  $(DIR_OBJ)/loader/text_scanner.o
 	@echo "Linking $@"
 	@mkdir -p $(OUTDIR)
-	@$(CC) -o $(OUTDIR)/$@ $(OBJS) -lm
+	@$(CC) -o $(OUTDIR)/$@ $^ -lm
 
+$(DIR_OBJ)/loader/text_scanner.o: loader/text_scanner.cpp
+	@$(CC) -o $@ $(CFLAGS) -c $<
+	
 loader/text_scanner.cpp: loader/text_scanner.l
 	@echo "Flexing the text parser"
 	@flex++ --outfile=$@ $<
