@@ -11,7 +11,18 @@ static bool magicnumber(std::ifstream &in_file) {
 
     in_file.read(reinterpret_cast<char *>(&ulong), sizeof(ulong));
 
-    return ulong == 340200501;
+    return ulong == 340200501 && in_file.good();
+}
+
+static bool globals(std::ifstream &in_file) {
+    unsigned long ulong;
+
+    in_file.read(reinterpret_cast<char *>(&ulong), sizeof(ulong));
+
+    cpu::topsp = 0;
+    cpu::top = 4095 - ulong;
+
+    return in_file.good();
 }
 
 static bool avmbinaryfile(std::ifstream &in_file) {
