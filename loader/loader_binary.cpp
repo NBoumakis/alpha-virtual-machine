@@ -25,6 +25,10 @@ static bool globals(std::ifstream &in_file) {
     return in_file.good();
 }
 
+static bool arrays(std::ifstream &in_file) {
+    return strings(in_file) && numbers(in_file) && userfuncs(in_file) && libfuncs(in_file);
+}
+
 static bool avmbinaryfile(std::ifstream &in_file) {
     if (!magicnumber(in_file))
         return false;
