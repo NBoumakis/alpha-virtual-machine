@@ -116,6 +116,10 @@ static bool userfuncs(std::ifstream &in_file, std::function<void(unsigned long, 
     return load_success;
 }
 
+static bool libfuncs(std::ifstream &in_file, std::function<void(unsigned long, std::string &)> insert) {
+    return strings(in_file, insert);
+}
+
 static void insert_string_array(unsigned long index, std::string &str) {
     cpu::pools.insert_string(index, str);
 }
