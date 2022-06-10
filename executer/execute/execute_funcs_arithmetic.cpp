@@ -47,7 +47,7 @@ void execute_arithmetic(instruction *instr) {
         std::cerr << BRED "ERROR: Arithmetic operation does not have operands of type number!" RST << std::endl;
         cpu::execution_finished = true;
     } else {
-        lv = new numberMemcell();
-        lv->setNumber((arithm_funcs.at(instr->opcode))(rv1->getNumber(), rv2->getNumber()));
+        numberMemcell tmp((arithm_funcs.at(instr->opcode))(rv1->getNumber(), rv2->getNumber()));
+        assign(lv, &tmp);
     }
 }

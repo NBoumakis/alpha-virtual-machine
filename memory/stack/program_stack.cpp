@@ -7,7 +7,7 @@ void program_stack::push(memcell *cell) {
         std::cerr << BRED "ERROR: Stack overflow" RST << std::endl;
         cpu::execution_finished = true;
     } else {
-        this->stack.at(cpu::top--) = cell;
+        assign(this->stack.at(cpu::top--), cell);
     }
 }
 

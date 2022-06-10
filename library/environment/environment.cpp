@@ -2,11 +2,16 @@
 #include "executer/cpu.hpp"
 #include "lib/colors.hpp"
 
+static void push_envvalue(unsigned long val) {
+    numberMemcell tmp(val);
+    cpu::stack.push(&tmp);
+}
+
 void environment::call_save_environment() {
-    cpu::stack.push(new numberMemcell(total_actuals));
-    cpu::stack.push(new numberMemcell(cpu::pc + 1));
-    cpu::stack.push(new numberMemcell(cpu::top + total_actuals + 2));
-    cpu::stack.push(new numberMemcell(cpu::topsp));
+    push_envvalue(total_actuals);
+    push_envvalue(cpu::pc + 1);
+    push_envvalue(cpu::top + total_actuals + 2);
+    push_envvalue(cpu::topsp);
 }
 
 void environment::call_libfunc(const std::string &id) {
