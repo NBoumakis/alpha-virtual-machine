@@ -33,10 +33,11 @@ static bool string(std::ifstream &in_file, std::string &res) {
         return false;
     }
 
-    char temp[length + 1];
+    char *temp = new char[length + 1];
     in_file.read(temp, length);
     temp[length] = '\0';
     res = temp;
+    delete[] temp;
 
     return in_file.good();
 }
@@ -64,9 +65,8 @@ static bool numbers(std::ifstream &in_file, std::function<void(unsigned long, do
     in_file.read(reinterpret_cast<char *>(&number_count), sizeof(number_count));
 
     bool load_success = in_file.good();
-    double number;
-
-    for (unsigned long i = 0; i < number && load_success; ++i) {
+    for (unsigned long i = 0; i < number_count && load_success; ++i) {
+        double number;
         in_file.read(reinterpret_cast<char *>(&number), sizeof(number));
 
         load_success = in_file.good();

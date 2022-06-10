@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
                 return -1;
             }
 
-            if (!load_text(in_file)) {
+            if (!load_binary(in_file)) {
                 std::cerr << "Error loading binary executable " << in_fname << "." << std::endl;
                 return -1;
             }
