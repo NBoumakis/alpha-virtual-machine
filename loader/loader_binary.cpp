@@ -140,6 +140,80 @@ static bool arrays(std::ifstream &in_file) {
     return strings(in_file, insert_string_array) && numbers(in_file, insert_number_array) && userfuncs(in_file, insert_userfunc_array) && libfuncs(in_file, insert_libfunc_array);
 }
 
+static void insert_instruction(instruction *instr) {
+    cpu::code.insert(instr);
+}
+
+static bool operand_type(std::ifstream &in_file, int &type) {
+    in_file.read(reinterpret_cast<char *>(&type), sizeof(type));
+
+    return in_file.good();
+}
+
+static bool operand_value(std::ifstream &in_file, unsigned long &value) {
+    in_file.read(reinterpret_cast<char *>(&value), sizeof(value));
+    return in_file.good();
+}
+
+static bool code_instruction(std::ifstream &in_file, std::function<void(instruction *)> insert) {
+    int opcode_int;
+    vmarg *arg1 = nullptr, *arg2 = nullptr, *result = nullptr;
+
+    in_file.read(reinterpret_cast<char *>(&opcode_int), sizeof(opcode_int));
+    vmopcode opcode = static_cast<vmopcode>(opcode_int);
+
+    if (!in_file.good() || opcode_int < 0 || static_cast<int>(opcode) != opcode_int) {
+        return false;
+    }
+
+    int arg1_type, arg2_type, result_type;
+
+    operand_type(in_file, arg1_type);
+    operand_type(in_file, arg2_type);
+    operand_type(in_file, result_type);
+
+    unsigned long value;
+
+    if (arg1_type != -1) {
+        if (operand_value(in_file, value))
+            arg1 = new vmarg(static_cast<vmarg_t>(arg1_type), value);
+        else
+            return false;
+    }
+
+    if (arg2_type != -1) {
+        if (operand_value(in_file, value))
+            arg2 = new vmarg(static_cast<vmarg_t>(arg2_type), value);
+        else
+            return false;
+    }
+
+    if (result_type != -1) {
+        if (operand_value(in_file, value))
+            result = new vmarg(static_cast<vmarg_t>(result_type), value);
+        else
+            return false;
+    }
+
+    instruction *instr = new instruction(opcode, arg1, arg2, result);
+    insert(instr);
+
+    return true;
+}
+
+static bool code(std::ifstream &in_file) {
+    unsigned long instruction_n;
+
+    in_file.read(reinterpret_cast<char *>(&instruction_n), sizeof(instruction_n));
+
+    // If it didn't match, this won't run
+    for (unsigned long i = 0; i < instruction_n && in_file.good(); ++i) {
+        code_instruction(in_file, insert_instruction);
+    }
+
+    return in_file.good();
+}
+
 static bool avmbinaryfile(std::ifstream &in_file) {
     if (!magicnumber(in_file))
         return false;
