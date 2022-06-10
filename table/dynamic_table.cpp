@@ -157,29 +157,36 @@ void dynamic_table::dec_ref_counter() {
 memcell *dynamic_table::get_keys() const {
     memcell *res = new dynamicTableMemcell(new dynamic_table());
 
+    numberMemcell index(0);
+
     unsigned long i = 0;
     for (auto &&elem : this->numIndexed) {
-        res->getDynamicTable()->set_elem(new numberMemcell(i), new numberMemcell(elem.first));
+        index.setNumber(i);
+        res->getDynamicTable()->set_elem(&index, new numberMemcell(elem.first));
         ++i;
     }
 
     for (auto &&elem : this->strIndexed) {
-        res->getDynamicTable()->set_elem(new numberMemcell(i), new stringMemcell(elem.first));
+        index.setNumber(i);
+        res->getDynamicTable()->set_elem(&index, new stringMemcell(elem.first));
         ++i;
     }
 
     for (auto &&elem : this->boolIndexed) {
-        res->getDynamicTable()->set_elem(new numberMemcell(i), new boolMemcell(elem.first));
+        index.setNumber(i);
+        res->getDynamicTable()->set_elem(&index, new boolMemcell(elem.first));
         ++i;
     }
 
     for (auto &&elem : this->userfuncIndexed) {
-        res->getDynamicTable()->set_elem(new numberMemcell(i), new userfuncMemcell(elem.first));
+        index.setNumber(i);
+        res->getDynamicTable()->set_elem(&index, new userfuncMemcell(elem.first));
         ++i;
     }
 
     for (auto &&elem : this->libfuncIndexed) {
-        res->getDynamicTable()->set_elem(new numberMemcell(i), new libfuncMemcell(elem.first));
+        index.setNumber(i);
+        res->getDynamicTable()->set_elem(&index, new libfuncMemcell(elem.first));
         ++i;
     }
 
