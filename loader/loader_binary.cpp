@@ -25,6 +25,22 @@ static bool globals(std::ifstream &in_file) {
     return in_file.good();
 }
 
+static bool string(std::ifstream &in_file, std::string &res) {
+    unsigned long length;
+
+    in_file.read(reinterpret_cast<char *>(length), sizeof(length));
+    if (!in_file.good()) {
+        return false;
+    }
+
+    char temp[length + 1];
+    in_file.read(temp, length);
+    temp[length] = '\0';
+    res = temp;
+
+    return in_file.good();
+}
+
 static bool strings(std::ifstream &in_file, std::function<void(unsigned long, std::string &)> insert) {
     unsigned long number;
 
