@@ -57,6 +57,24 @@ static bool strings(std::ifstream &in_file, std::function<void(unsigned long, st
     }
 }
 
+static bool numbers(std::ifstream &in_file, std::function<void(unsigned long, double)> insert) {
+    unsigned long number_count;
+    in_file.read(reinterpret_cast<char *>(&number_count), sizeof(number_count));
+
+    bool load_success = in_file.good();
+    double number;
+
+    for (unsigned long i = 0; i < number && load_success; ++i) {
+        in_file.read(reinterpret_cast<char *>(&number), sizeof(number));
+
+        load_success = in_file.good();
+        if (load_success)
+            insert(i, number);
+    }
+
+    return in_file.good();
+}
+
 static void insert_string_array(unsigned long index, std::string &str) {
     cpu::pools.insert_string(index, str);
 }
