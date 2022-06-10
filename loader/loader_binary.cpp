@@ -176,25 +176,25 @@ static bool code_instruction(std::ifstream &in_file, std::function<void(instruct
 
     unsigned long value;
 
+    if (!operand_value(in_file, value)) {
+        return false;
+    }
     if (arg1_type != -1) {
-        if (operand_value(in_file, value))
-            arg1 = new vmarg(static_cast<vmarg_t>(arg1_type), value);
-        else
-            return false;
+        arg1 = new vmarg(static_cast<vmarg_t>(arg1_type), value);
     }
 
+    if (!operand_value(in_file, value)) {
+        return false;
+    }
     if (arg2_type != -1) {
-        if (operand_value(in_file, value))
-            arg2 = new vmarg(static_cast<vmarg_t>(arg2_type), value);
-        else
-            return false;
+        arg2 = new vmarg(static_cast<vmarg_t>(arg2_type), value);
     }
 
+    if (!operand_value(in_file, value)) {
+        return false;
+    }
     if (result_type != -1) {
-        if (operand_value(in_file, value))
-            result = new vmarg(static_cast<vmarg_t>(result_type), value);
-        else
-            return false;
+        result = new vmarg(static_cast<vmarg_t>(result_type), value);
     }
 
     instruction *instr = new instruction(opcode, arg1, arg2, result);
