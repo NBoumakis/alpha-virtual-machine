@@ -162,31 +162,36 @@ memcell *dynamic_table::get_keys() const {
     unsigned long i = 0;
     for (auto &&elem : this->numIndexed) {
         index.setNumber(i);
-        res->getDynamicTable()->set_elem(&index, new numberMemcell(elem.first));
+        numberMemcell key(elem.first);
+        res->getDynamicTable()->set_elem(&index, &key);
         ++i;
     }
 
     for (auto &&elem : this->strIndexed) {
         index.setNumber(i);
-        res->getDynamicTable()->set_elem(&index, new stringMemcell(elem.first));
+        stringMemcell key(elem.first);
+        res->getDynamicTable()->set_elem(&index, &key);
         ++i;
     }
 
     for (auto &&elem : this->boolIndexed) {
         index.setNumber(i);
-        res->getDynamicTable()->set_elem(&index, new boolMemcell(elem.first));
+        boolMemcell key(elem.first);
+        res->getDynamicTable()->set_elem(&index, &key);
         ++i;
     }
 
     for (auto &&elem : this->userfuncIndexed) {
         index.setNumber(i);
-        res->getDynamicTable()->set_elem(&index, new userfuncMemcell(elem.first));
+        userfuncMemcell key(elem.first);
+        res->getDynamicTable()->set_elem(&index, &key);
         ++i;
     }
 
     for (auto &&elem : this->libfuncIndexed) {
         index.setNumber(i);
-        res->getDynamicTable()->set_elem(&index, new libfuncMemcell(elem.first));
+        libfuncMemcell key(elem.first);
+        res->getDynamicTable()->set_elem(&index, &key);
         ++i;
     }
 
