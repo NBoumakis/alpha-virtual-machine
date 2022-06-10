@@ -24,7 +24,7 @@ private:
 
 public:
     dynamic_table();
-    ~dynamic_table();
+    ~dynamic_table() = default;
 
     memcell *get_elem(const memcell *) const;
     void set_elem(const memcell *, memcell *);

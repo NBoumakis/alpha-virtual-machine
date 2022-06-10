@@ -6,12 +6,6 @@ dynamic_table::dynamic_table() {
     refCounter = 0;
 }
 
-dynamic_table::~dynamic_table() {
-    strIndexed.clear();
-
-    numIndexed.clear();
-}
-
 memcell *dynamic_table::get_elem(const memcell *key) const {
     switch (key->getType()) {
 
