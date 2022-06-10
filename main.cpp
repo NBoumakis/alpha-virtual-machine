@@ -3,11 +3,7 @@
 #include "loader/loader.hpp"
 #include <fstream>
 
-int main() {
-    std::ifstream in_file("bin.abc");
-
-    load_text(in_file);
-
+void init_libfuncs() {
     cpu::env.register_libfunc("print", libfunc_print);
     cpu::env.register_libfunc("totalarguments", libfunc_totalarguments);
     cpu::env.register_libfunc("typeof", libfunc_typeof);
@@ -20,6 +16,14 @@ int main() {
     cpu::env.register_libfunc("sin", libfunc_sin);
     cpu::env.register_libfunc("strtonum", libfunc_strtonum);
     cpu::env.register_libfunc("argument", libfunc_argument);
+}
+
+int main() {
+    std::ifstream in_file("bin.abc");
+
+    load_text(in_file);
+
+    init_libfuncs();
 
     while (!cpu::execution_finished) {
         cpu::cycle();
