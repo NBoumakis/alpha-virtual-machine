@@ -28,7 +28,7 @@ static bool globals(std::ifstream &in_file) {
 static bool string(std::ifstream &in_file, std::string &res) {
     unsigned long length;
 
-    in_file.read(reinterpret_cast<char *>(length), sizeof(length));
+    in_file.read(reinterpret_cast<char *>(&length), sizeof(length));
     if (!in_file.good()) {
         return false;
     }
