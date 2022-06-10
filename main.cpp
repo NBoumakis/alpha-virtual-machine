@@ -8,8 +8,6 @@ int main() {
 
     load_text(in_file);
 
-    cpu::stack[cpu::topsp + 1] = new numberMemcell(0);
-
     cpu::env.register_libfunc("print", libfunc_print);
     cpu::env.register_libfunc("totalarguments", libfunc_totalarguments);
     cpu::env.register_libfunc("typeof", libfunc_typeof);
