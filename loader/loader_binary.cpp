@@ -75,6 +75,47 @@ static bool numbers(std::ifstream &in_file, std::function<void(unsigned long, do
     return in_file.good();
 }
 
+static bool userfunc(std::ifstream &in_file, std::function<void(unsigned long, Function *)> insert) {
+    unsigned long address;
+
+    in_file.read(reinterpret_cast<char *>(&address), sizeof(address));
+
+    if (!in_file.good()) {
+        return false;
+    }
+
+    unsigned long localsize;
+
+    in_file.read(reinterpret_cast<char *>(&localsize), sizeof(localsize));
+
+    if (!in_file.good()) {
+        return false;
+    }
+
+    std::string id;
+
+    if (!string(in_file, id))
+        return false;
+
+    insert(address, new Function(id, address, localsize));
+    return true;
+}
+
+static bool userfuncs(std::ifstream &in_file, std::function<void(unsigned long, Function *)> insert) {
+    unsigned long number;
+
+    in_file.read(reinterpret_cast<char *>(&number), sizeof(number));
+
+    bool load_success = in_file.good();
+
+    // If it didn't match, this won't run
+    for (; number && load_success; --number) {
+        load_success = userfunc(in_file, insert);
+    }
+
+    return load_success;
+}
+
 static void insert_string_array(unsigned long index, std::string &str) {
     cpu::pools.insert_string(index, str);
 }
