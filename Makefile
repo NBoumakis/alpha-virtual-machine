@@ -18,7 +18,7 @@ PHONY := $(TARGET)
 $(TARGET): $(OBJS)  $(DIR_OBJ)/loader/text_scanner.o
 	@echo "Linking $@"
 	@mkdir -p $(OUTDIR)
-	@$(CC) -o $(OUTDIR)/$@ $^ -lm
+	@$(CC) -o $(OUTDIR)/$@ $^ -lm $(CFLAGS)
 
 $(DIR_OBJ)/loader/text_scanner.o: loader/text_scanner.cpp
 	@echo "Building" $@
