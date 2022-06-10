@@ -306,5 +306,9 @@ std::string dynamic_table::to_string() const {
 }
 
 unsigned long dynamic_table::size() const {
-    return this->numIndexed.size() + this->strIndexed.size();
+    return this->numIndexed.size() +
+           this->strIndexed.size() +
+           this->boolIndexed.size() +
+           this->userfuncIndexed.size() +
+           this->libfuncIndexed.size();
 }
