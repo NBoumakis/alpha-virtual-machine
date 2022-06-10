@@ -6,6 +6,30 @@
 #include <functional>
 #include <string>
 
+static bool magicnumber(std::ifstream &in_file) {
+    unsigned long ulong;
+
+    in_file.read(reinterpret_cast<char *>(&ulong), sizeof(ulong));
+
+    return ulong == 340200501;
+}
+
+static bool avmbinaryfile(std::ifstream &in_file) {
+    if (!magicnumber(in_file))
+        return false;
+
+    if (!globals(in_file))
+        return false;
+
+    if (!arrays(in_file))
+        return false;
+
+    if (!code(in_file))
+        return false;
+
+    return true;
+}
+
 bool load_binary(std::ifstream &in_file) {
     assert(in_file.is_open());
 
