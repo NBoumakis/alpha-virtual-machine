@@ -55,6 +55,8 @@ static bool strings(std::ifstream &in_file, std::function<void(unsigned long, st
             insert(i, res);
         }
     }
+
+    return in_file.good();
 }
 
 static bool numbers(std::ifstream &in_file, std::function<void(unsigned long, double)> insert) {
