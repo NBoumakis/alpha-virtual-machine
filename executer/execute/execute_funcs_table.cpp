@@ -26,7 +26,6 @@ void execute_tablegetelem(instruction *instr) {
     assert(i);
 
     if (t->getType() != memcell_type::table_m) {
-        // FIXME
         std::cerr << BRED "ERROR: Cannot index " << t->getTypeName() << "!" RST << std::endl;
         cpu::execution_finished = true;
         assign(lv, new nilMemcell());
@@ -39,7 +38,6 @@ void execute_tablegetelem(instruction *instr) {
             assign(lv, new nilMemcell());
             std::string ts = static_cast<std::string>(*t);
             std::string is = static_cast<std::string>(*i);
-            // FIXME
             std::cerr << BYEL "WARNING: Key " << is << " not in table " << ts << "!" RST << std::endl;
         }
     }
@@ -53,7 +51,6 @@ void execute_tablesetelem(instruction *instr) {
     assert(t && c && i);
 
     if (t->getType() != memcell_type::table_m) {
-        // FIXME
         std::cerr << BRED "ERROR: Cannot index " << t->getTypeName() << ". Not a table!" RST << std::endl;
         cpu::execution_finished = true;
     } else {

@@ -22,8 +22,6 @@ public:
     void pop(unsigned long i);
 
     memcell *&operator[](unsigned long);
-
-    // unsigned long size();
 };
 
 #endif /* __PROGRAM_STACK_H */

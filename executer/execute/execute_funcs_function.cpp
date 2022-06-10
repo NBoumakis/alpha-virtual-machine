@@ -33,7 +33,6 @@ void execute_call(instruction *instr) {
 
     default: {
         std::string s = static_cast<std::string>(*func);
-        // FIXME
         std::cerr << BRED "ERROR: Function with name " << s << " is undefined!" RST << std::endl;
         cpu::execution_finished = true;
     }
@@ -66,7 +65,6 @@ void execute_funcexit(instruction *unused) {
     cpu::topsp = cpu::env.get_envvalue(cpu::topsp + 1); // AVM_SAVEDTOPSP_OFFSET
 
     while (++oldTop <= cpu::top) {
-        // warning memory leak !!
         cpu::stack.pop(oldTop);
     }
 }

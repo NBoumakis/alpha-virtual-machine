@@ -18,7 +18,3 @@ void program_stack::pop(unsigned long i) {
 memcell *&program_stack::operator[](unsigned long index) {
     return this->stack.at(index);
 }
-
-// unsigned long program_stack::size() {
-//     return this->stack_size;
-// }
