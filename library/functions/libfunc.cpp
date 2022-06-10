@@ -100,7 +100,15 @@ void libfunc_objectmemberkeys() {
         cpu::execution_finished = true;
         cpu::retval = new nilMemcell();
     } else {
-        cpu::retval = cpu::env.get_actual(0)->getDynamicTable()->get_keys(); // AVM_NUMACTUALS_OFFSET
+        memcell *arg = cpu::env.get_actual(0);
+
+        if (arg->getType() != memcell_type::table_m) {
+            std::cerr << BRED "ERROR: Function 'objectmemberkeys' called with argument of type " << arg->getTypeName() << "!" RST << std::endl;
+            cpu::execution_finished = true;
+            cpu::retval = new nilMemcell();
+        } else {
+            cpu::retval = arg->getDynamicTable()->get_keys(); // AVM_NUMACTUALS_OFFSET
+        }
     }
 }
 
@@ -113,7 +121,15 @@ void libfunc_objecttotalmembers() {
         cpu::execution_finished = true;
         cpu::retval = new nilMemcell();
     } else {
-        cpu::retval = new numberMemcell(cpu::env.get_actual(0)->getDynamicTable()->size());
+        memcell *arg = cpu::env.get_actual(0);
+
+        if (arg->getType() != memcell_type::table_m) {
+            std::cerr << BRED "ERROR: Function 'objecttotalmembers' called with argument of type " << arg->getTypeName() << "!" RST << std::endl;
+            cpu::execution_finished = true;
+            cpu::retval = new nilMemcell();
+        } else {
+            cpu::retval = new numberMemcell(arg->getDynamicTable()->size());
+        }
     }
 }
 
@@ -128,30 +144,36 @@ void libfunc_objectcopy() {
     } else {
         memcell *arg = cpu::env.get_actual(0);
 
-        // We know that both arguments are in the location
-        libfunc_objectmemberkeys();
-        memcell *keys = cpu::retval;
+        if (arg->getType() != memcell_type::table_m) {
+            std::cerr << BRED "ERROR: Function 'objectcopy' called with argument of type " << arg->getTypeName() << "!" RST << std::endl;
+            cpu::execution_finished = true;
+            cpu::retval = new nilMemcell();
+        } else {
+            // We know that both arguments are in the location
+            libfunc_objectmemberkeys();
+            memcell *keys = cpu::retval;
 
-        libfunc_objecttotalmembers();
+            libfunc_objecttotalmembers();
 
-        assert(cpu::retval->getType() == memcell_type::number_m);
-        unsigned long keys_n = static_cast<unsigned long>(cpu::retval->getNumber());
-        assert(static_cast<double>(keys_n) == cpu::retval->getNumber());
+            assert(cpu::retval->getType() == memcell_type::number_m);
+            unsigned long keys_n = static_cast<unsigned long>(cpu::retval->getNumber());
+            assert(static_cast<double>(keys_n) == cpu::retval->getNumber());
 
-        delete cpu::retval;
-        cpu::retval = new dynamicTableMemcell(new dynamic_table());
+            delete cpu::retval;
+            cpu::retval = new dynamicTableMemcell(new dynamic_table());
 
-        for (; keys_n; --keys_n) {
-            numberMemcell key_n(keys_n - 1);
-            memcell *key = keys->getDynamicTable()->get_elem(&key_n);
-            memcell *value = arg->getDynamicTable()->get_elem(key);
+            for (; keys_n; --keys_n) {
+                numberMemcell key_n(keys_n - 1);
+                memcell *key = keys->getDynamicTable()->get_elem(&key_n);
+                memcell *value = arg->getDynamicTable()->get_elem(key);
 
-            if (value->getType() != memcell_type::table_m)
-                value = value->copy(value);
-            else
-                value->getDynamicTable()->inc_ref_counter();
+                if (value->getType() != memcell_type::table_m)
+                    value = value->copy(value);
+                else
+                    value->getDynamicTable()->inc_ref_counter();
 
-            cpu::retval->getDynamicTable()->set_elem(key, value);
+                cpu::retval->getDynamicTable()->set_elem(key, value);
+            }
         }
     }
 }
