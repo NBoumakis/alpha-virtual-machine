@@ -55,7 +55,7 @@ void libfunc_totalarguments() {
     delete cpu::retval;
 
     if (!p_topsp) {
-        std::cerr << BRED "WARNING: Function 'totalarguments' called outside of function!" RST << std::endl;
+        std::cerr << BYEL "WARNING: Function 'totalarguments' called outside of function!" RST << std::endl;
         cpu::retval = new nilMemcell();
     } else {
         cpu::retval = new numberMemcell(cpu::env.get_envvalue(p_topsp + 4)); // AVM_NUMACTUALS_OFFSET
@@ -266,7 +266,7 @@ void libfunc_argument() {
     delete cpu::retval;
 
     if (!p_topsp) {
-        std::cerr << BRED "WARNING: Function 'argument' called outside of function!" RST << std::endl;
+        std::cerr << BYEL "WARNING: Function 'argument' called outside of function!" RST << std::endl;
         cpu::retval = new nilMemcell();
     } else {
         memcell *arg = cpu::env.get_actual(0);
