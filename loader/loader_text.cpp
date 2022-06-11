@@ -317,21 +317,6 @@ static bool code(yyFlexLexer &lexer) {
     return matched;
 }
 
-static bool globals(yyFlexLexer &lexer) {
-    double val;
-    bool matched = match(LONG, lexer, val);
-
-    unsigned long number = val;
-    if (!matched || static_cast<double>(number) != val) {
-        return false;
-    }
-
-    cpu::topsp = 0;
-    cpu::top = 4095 - number;
-
-    return true;
-}
-
 static bool avmtextfile(std::ifstream &in_file) {
     yyFlexLexer lexer(in_file, std::cout);
 
@@ -339,9 +324,6 @@ static bool avmtextfile(std::ifstream &in_file) {
         return false;
 
     eatup(lexer);
-
-    if (!globals(lexer))
-        return false;
 
     eatup(lexer);
 
