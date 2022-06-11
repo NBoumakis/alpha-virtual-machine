@@ -31,4 +31,11 @@ avm --in test.atc
 
 -   Run and tested in papaya.csd.uoc.gr
 -   Use `hexdump` to examine the executable
--   The preferred method of loading is using the binary format
+-   The preferred method of loading is using the binary format. The text loader is not fully functional
+-   Bonus implemented: Every described library function, table keys can be functions, booleans, strings and numbers.
+-   All Warnings and Errors are printed in stderr.
+
+# Limitations
+
+-   Functors where not implemented
+-   Tables that contain themselves (both implicitly and explicitly) are not supported, they cause segmentation faults.
