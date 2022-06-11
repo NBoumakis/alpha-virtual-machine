@@ -50,7 +50,7 @@ void execute_jne(instruction *instr) {
         std::cerr << BRED "ERROR: Cannot perform inequality comparison on an undefined operand!" RST << std::endl;
         cpu::execution_finished = true;
     } else if (rv1->getType() == memcell_type::nil_m || rv2->getType() == memcell_type::nil_m) {
-        result = (rv1->getType() == memcell_type::nil_m) && (rv2->getType() == memcell_type::nil_m);
+        result = !((rv1->getType() == memcell_type::nil_m) && (rv2->getType() == memcell_type::nil_m));
     } else if (rv1->getType() == memcell_type::bool_m || rv2->getType() == memcell_type::bool_m) {
         result = (static_cast<bool>(*rv1) != static_cast<bool>(*rv2));
     } else if (rv1->getType() != rv2->getType()) {
