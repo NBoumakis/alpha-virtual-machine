@@ -39,10 +39,10 @@ numberMemcell::operator bool() const {
     return this->value != 0;
 }
 
-bool numberMemcell::operator==(const memcell *op) const {
-    assert(op && op->getType() == memcell_type::number_m);
+bool numberMemcell::operator==(const memcell &op) const {
+    assert(op.getType() == memcell_type::number_m);
 
-    return this->value == op->getNumber();
+    return std::abs(this->value - op.getNumber()) < 0.000000001;
 }
 
 // sub-class stringMemcell
@@ -80,10 +80,10 @@ stringMemcell::operator bool() const {
     return this->value != "";
 }
 
-bool stringMemcell::operator==(const memcell *op) const {
-    assert(op && op->getType() == memcell_type::string_m);
+bool stringMemcell::operator==(const memcell &op) const {
+    assert(op.getType() == memcell_type::string_m);
 
-    return this->value == op->getString();
+    return this->value == op.getString();
 }
 
 // sub-class boolMemcell
@@ -118,10 +118,10 @@ boolMemcell::operator bool() const {
     return this->value;
 }
 
-bool boolMemcell::operator==(const memcell *op) const {
-    assert(op && op->getType() == memcell_type::bool_m);
+bool boolMemcell::operator==(const memcell &op) const {
+    assert(op.getType() == memcell_type::bool_m);
 
-    return this->value == op->getBool();
+    return this->value == op.getBool();
 }
 
 // sub-class dynamicTableMemcell
@@ -169,9 +169,9 @@ dynamicTableMemcell::operator bool() const {
     return true;
 }
 
-bool dynamicTableMemcell::operator==(const memcell *op) const {
+bool dynamicTableMemcell::operator==(const memcell &op) const {
     // Redundant to check equality with nil
-    assert(op && op->getType() == memcell_type::table_m);
+    assert(op.getType() == memcell_type::table_m);
 
     return true;
 }
@@ -208,10 +208,10 @@ userfuncMemcell::operator bool() const {
     return true;
 }
 
-bool userfuncMemcell::operator==(const memcell *op) const {
-    assert(op && op->getType() == memcell_type::userfunc_m);
+bool userfuncMemcell::operator==(const memcell &op) const {
+    assert(op.getType() == memcell_type::userfunc_m);
 
-    return (this->value == op->getUserFunc());
+    return (this->value == op.getUserFunc());
 }
 
 // sub-class libfuncMemcell
@@ -249,10 +249,10 @@ libfuncMemcell::operator bool() const {
     return true;
 }
 
-bool libfuncMemcell::operator==(const memcell *op) const {
-    assert(op && op->getType() != memcell_type::libfunc_m);
+bool libfuncMemcell::operator==(const memcell &op) const {
+    assert(op.getType() == memcell_type::libfunc_m);
 
-    return (this->value == op->getLibFunc());
+    return (this->value == op.getLibFunc());
 }
 
 // sub-class nilMemcell
@@ -278,8 +278,8 @@ nilMemcell::operator bool() const {
     return false;
 }
 
-bool nilMemcell::operator==(const memcell *op) const {
-    assert(op && op->getType() == memcell_type::nil_m);
+bool nilMemcell::operator==(const memcell &op) const {
+    assert(op.getType() == memcell_type::nil_m);
 
     return false;
 }
@@ -305,7 +305,7 @@ undefMemcell::operator bool() const {
     assert(false);
 }
 
-bool undefMemcell::operator==(const memcell *op) const {
+bool undefMemcell::operator==(const memcell &op) const {
     assert(false);
 }
 

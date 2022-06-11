@@ -81,9 +81,9 @@ public:
     virtual operator std::string() const = 0;
     virtual operator bool() const = 0;
 
-    virtual bool operator==(const memcell *op) const = 0;
-    virtual bool operator!=(const memcell *op) const {
-        return !(*this == *op);
+    virtual bool operator==(const memcell &op) const = 0;
+    virtual bool operator!=(const memcell &op) const {
+        return !(*this == op);
     }
 };
 
@@ -106,7 +106,7 @@ public:
 
     operator std::string() const override;
     operator bool() const override;
-    bool operator==(const memcell *op) const override;
+    bool operator==(const memcell &op) const override;
 };
 
 class stringMemcell final : public memcell {
@@ -128,7 +128,7 @@ public:
 
     operator std::string() const override;
     operator bool() const override;
-    bool operator==(const memcell *op) const override;
+    bool operator==(const memcell &op) const override;
 };
 
 class boolMemcell final : public memcell {
@@ -150,7 +150,7 @@ public:
 
     operator std::string() const override;
     operator bool() const override;
-    bool operator==(const memcell *op) const override;
+    bool operator==(const memcell &op) const override;
 };
 
 class dynamicTableMemcell final : public memcell {
@@ -172,7 +172,7 @@ public:
 
     operator std::string() const override;
     operator bool() const override;
-    bool operator==(const memcell *op) const override;
+    bool operator==(const memcell &op) const override;
 };
 
 class userfuncMemcell final : public memcell {
@@ -194,7 +194,7 @@ public:
 
     operator std::string() const override;
     operator bool() const override;
-    bool operator==(const memcell *op) const override;
+    bool operator==(const memcell &op) const override;
 };
 
 class libfuncMemcell final : public memcell {
@@ -216,7 +216,7 @@ public:
 
     operator std::string() const override;
     operator bool() const override;
-    bool operator==(const memcell *op) const override;
+    bool operator==(const memcell &op) const override;
 };
 
 class nilMemcell final : public memcell {
@@ -232,7 +232,7 @@ public:
 
     operator std::string() const override;
     operator bool() const override;
-    bool operator==(const memcell *op) const override;
+    bool operator==(const memcell &op) const override;
 };
 
 class undefMemcell final : public memcell {
@@ -248,7 +248,7 @@ public:
 
     operator std::string() const override;
     operator bool() const override;
-    bool operator==(const memcell *op) const override;
+    bool operator==(const memcell &op) const override;
 };
 
 memcell *assign(memcell *&, memcell *);
