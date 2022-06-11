@@ -30,6 +30,18 @@ void execute_tablegetelem(instruction *instr) {
         cpu::execution_finished = true;
         assign(lv, new nilMemcell());
     } else {
+        memcell_type key_type = i->getType();
+        if (key_type != memcell_type::string_m &&
+            key_type != memcell_type::number_m &&
+            key_type != memcell_type::bool_m &&
+            key_type != memcell_type::userfunc_m &&
+            key_type != memcell_type::libfunc_m) {
+            assign(lv, new nilMemcell());
+            std::cerr << BRED "ERROR: Key type " << i->getTypeName() << " is not supported!" RST << std::endl;
+            cpu::execution_finished = true;
+            return;
+        }
+
         memcell *content = t->getDynamicTable()->get_elem(i);
 
         if (content) {
@@ -54,6 +66,17 @@ void execute_tablesetelem(instruction *instr) {
         std::cerr << BRED "ERROR: Cannot index " << t->getTypeName() << ". Not a table!" RST << std::endl;
         cpu::execution_finished = true;
     } else {
+        memcell_type key_type = i->getType();
+        if (key_type != memcell_type::string_m &&
+            key_type != memcell_type::number_m &&
+            key_type != memcell_type::bool_m &&
+            key_type != memcell_type::userfunc_m &&
+            key_type != memcell_type::libfunc_m) {
+            std::cerr << BRED "ERROR: Key type " << i->getTypeName() << " is not supported!" RST << std::endl;
+            cpu::execution_finished = true;
+            return;
+        }
+
         t->getDynamicTable()->set_elem(i, c);
     }
 }

@@ -32,8 +32,7 @@ void execute_call(instruction *instr) {
     }
 
     default: {
-        std::string s = static_cast<std::string>(*func);
-        std::cerr << BRED "ERROR: Function with name " << s << " is undefined!" RST << std::endl;
+        std::cerr << BRED "ERROR: Variable at offset " << instr->arg1->val << " is not a function!" RST << std::endl;
         cpu::execution_finished = true;
     }
     }
