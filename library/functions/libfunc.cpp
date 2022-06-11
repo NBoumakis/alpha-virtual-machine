@@ -270,7 +270,15 @@ void libfunc_argument() {
         cpu::retval = new nilMemcell();
     } else {
         memcell *arg = cpu::env.get_actual(0);
-        assert(arg->getType() == memcell_type::number_m);
+
+        if (arg->getType() != memcell_type::number_m) {
+            std::cerr << BRED "ERROR: Index with type " << arg->getTypeName() << " incompatible with 'argument'!" RST << std::endl;
+            cpu::execution_finished = true;
+            cpu::retval = new nilMemcell();
+
+            return;
+        }
+
         if (arg->getNumber() >= 0) {
             unsigned long index = static_cast<unsigned long>(arg->getNumber());
             assert(static_cast<double>(index) == arg->getNumber());
@@ -278,13 +286,11 @@ void libfunc_argument() {
             if (index < cpu::env.get_envvalue(p_topsp + 4))
                 cpu::retval = cpu::stack[p_topsp + 4 + 1 + index];
             else {
-                std::cerr << BRED "ERROR: Argument with index " << index << " doesn't belong to most recently called function!" RST << std::endl;
-                cpu::execution_finished = true;
+                std::cerr << BYEL "WARNING: Argument with index " << index << " doesn't belong to the most recently called function!" RST << std::endl;
                 cpu::retval = new nilMemcell();
             }
         } else {
-            std::cerr << BRED "ERROR: Argument with index " << arg->getNumber() << " doesn't belong to most recently called function!" RST << std::endl;
-            cpu::execution_finished = true;
+            std::cerr << BYEL "WARNING: Argument with index " << arg->getNumber() << " doesn't belong to the most recently called function!" RST << std::endl;
             cpu::retval = new nilMemcell();
         }
     }
