@@ -6,6 +6,8 @@
 #include <functional>
 #include <string>
 
+static unsigned long max_global = 0;
+
 static bool magicnumber(std::ifstream &in_file) {
     unsigned long ulong;
 
@@ -181,6 +183,10 @@ static bool code_instruction(std::ifstream &in_file, std::function<void(instruct
     }
     if (arg1_type != -1) {
         arg1 = new vmarg(static_cast<vmarg_t>(arg1_type), value);
+
+        if (arg1_type == vmarg_t::global_var && value + 1 > max_global) {
+            max_global = value + 1;
+        }
     }
 
     if (!operand_value(in_file, value)) {
@@ -188,6 +194,10 @@ static bool code_instruction(std::ifstream &in_file, std::function<void(instruct
     }
     if (arg2_type != -1) {
         arg2 = new vmarg(static_cast<vmarg_t>(arg2_type), value);
+
+        if (arg2_type == vmarg_t::global_var && value + 1 > max_global) {
+            max_global = value + 1;
+        }
     }
 
     if (!operand_value(in_file, value)) {
@@ -195,6 +205,10 @@ static bool code_instruction(std::ifstream &in_file, std::function<void(instruct
     }
     if (result_type != -1) {
         result = new vmarg(static_cast<vmarg_t>(result_type), value);
+
+        if (result_type == vmarg_t::global_var && value + 1 > max_global) {
+            max_global = value + 1;
+        }
     }
 
     instruction *instr = new instruction(opcode, arg1, arg2, result);
@@ -212,6 +226,9 @@ static bool code(std::ifstream &in_file) {
     for (unsigned long i = 0; i < instruction_n && in_file.good(); ++i) {
         code_instruction(in_file, insert_instruction);
     }
+
+    cpu::topsp = 0;
+    cpu::top = 4095 - max_global;
 
     return in_file.good();
 }

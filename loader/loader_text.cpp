@@ -1,6 +1,6 @@
-#include "loader/loader.hpp"
 #include "executer/cpu.hpp"
 #include "lib/function.hpp"
+#include "loader/loader.hpp"
 #include "loader/text_scanner.hpp"
 #include <FlexLexer.h>
 #include <cassert>
@@ -12,6 +12,7 @@
 
 double yylval;
 static text_type next_type = INVALID;
+static unsigned long max_global = 0;
 
 static text_type peek(yyFlexLexer &lexer, double &next_val) {
     static double peeked_val;
@@ -260,6 +261,9 @@ static bool code_instruction(yyFlexLexer &lexer, std::function<void(instruction 
     if (arg1_type != -1) {
         operand_value(lexer, value);
         arg1 = new vmarg(static_cast<vmarg_t>(arg1_type), value);
+
+        if (arg1_type == vmarg_t::global_var && value + 1 > max_global)
+            max_global = value + 1;
     } else {
         // If no argument present, eat up the -1
         operand_type(lexer, arg1_type);
@@ -269,6 +273,9 @@ static bool code_instruction(yyFlexLexer &lexer, std::function<void(instruction 
     if (arg2_type != -1) {
         operand_value(lexer, value);
         arg2 = new vmarg(static_cast<vmarg_t>(arg2_type), value);
+
+        if (arg2_type == vmarg_t::global_var && value + 1 > max_global)
+            max_global = value + 1;
     } else {
         // If no argument present, eat up the -1
         operand_type(lexer, arg2_type);
@@ -278,6 +285,9 @@ static bool code_instruction(yyFlexLexer &lexer, std::function<void(instruction 
     if (result_type != -1) {
         operand_value(lexer, value);
         result = new vmarg(static_cast<vmarg_t>(result_type), value);
+
+        if (result_type == vmarg_t::global_var && value + 1 > max_global)
+            max_global = value + 1;
     } else {
         // If no argument present, eat up the -1
         operand_type(lexer, arg1_type);
@@ -300,6 +310,9 @@ static bool code(yyFlexLexer &lexer) {
         eatup(lexer, "", 1);
         code_instruction(lexer, insert_instruction);
     }
+
+    cpu::topsp = 0;
+    cpu::top = 4095 - max_global;
 
     return matched;
 }
