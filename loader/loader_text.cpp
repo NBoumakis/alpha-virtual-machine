@@ -325,8 +325,6 @@ static bool avmtextfile(std::ifstream &in_file) {
 
     eatup(lexer);
 
-    eatup(lexer);
-
     if (!arrays(lexer))
         return false;
 
